@@ -21,6 +21,7 @@ import { drawStageBackground } from '../hud/draw';
 import { injectBrandTags } from '../mp4tags';
 import { makeRecordingFilename } from '../wavEncoder';
 import {
+  trackCaptionCopied,
   trackRecording,
   trackRecordingModeChanged,
   trackRecordingViewed,
@@ -31,6 +32,11 @@ import {
 import { saveWork } from '../works/workStore';
 import { RECORD_SECONDS, VIDEO_REC_SUPPORTED, REC_RATIO_DIMS } from './constants';
 import { makeCoverBlob, pickRecMimeType } from './utils';
+
+/** Brand caption for sharing (2026-10-07): used by the mobile share sheet
+ *  AND the desktop copy-caption button — one string, one voice. */
+export const POST_CAPTION =
+  'I just played this with Gesture Synth Weld 🎹 — play music with hand gestures. gesturesynthweld.com';
 
 export interface UseRecordingDeps {
   isRunning: boolean;
@@ -74,6 +80,7 @@ export function useRecording(deps: UseRecordingDeps) {
   const [endCount, setEndCount] = useState<number | null>(null); // 3-2-1 wrap-up overlay (last 3s)
   const [recBlob, setRecBlob] = useState<{ blob: Blob; filename: string } | null>(null);
   const [shareFailed, setShareFailed] = useState(false);
+  const [captionCopied, setCaptionCopied] = useState(false); // desktop share path feedback
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
 
@@ -289,7 +296,7 @@ export function useRecording(deps: UseRecordingDeps) {
     const file = new File([recBlob.blob], recBlob.filename, {
       type: recBlob.blob.type || 'application/octet-stream',
     });
-    const brandText = 'I just played this with Gesture Synth Weld 🎹 — play music with hand gestures. gesturesynthweld.com';
+    const brandText = POST_CAPTION;
     try {
       await navigator.share({
         files: [file],
@@ -323,6 +330,21 @@ export function useRecording(deps: UseRecordingDeps) {
       }
     }
   }, [recBlob]);
+
+  // Desktop share path (2026-10-07): no Web Share API on most desktops, so
+  // the loop is "download the video → upload it → paste the caption".
+  // Copies POST_CAPTION and flashes feedback; the caption is also rendered
+  // next to the button, so a blocked clipboard still leaves a manual path.
+  const copyCaption = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(POST_CAPTION);
+      trackCaptionCopied();
+      setCaptionCopied(true);
+      window.setTimeout(() => setCaptionCopied(false), 4000);
+    } catch {
+      /* clipboard blocked — caption text is visible beside the button */
+    }
+  }, []);
 
   const canFileShare = !!recBlob &&
     typeof navigator.share === 'function' &&
@@ -649,7 +671,7 @@ export function useRecording(deps: UseRecordingDeps) {
     // state
     recPhase, setRecPhase, recMode, setRecMode, recRatio, setRecRatio, recCount, endCount,
     savedRecModeExists,
-    recBlob, recPreviewUrl, shareFailed, isRecording, recordingTime,
+    recBlob, recPreviewUrl, shareFailed, captionCopied, isRecording, recordingTime,
     micOn, setMicOn, micLevel, micPermState, micDevices, micDeviceId,
     recVoice, setRecVoice, recPolish, setRecPolish,
     // refs the App touches (rAF loop reads recModeRef/skeletonCanvasRef;
@@ -659,7 +681,7 @@ export function useRecording(deps: UseRecordingDeps) {
     micStreamRef, recModeRef, skeletonCanvasRef, recDownloadedRef,
     mediaRecorderRef, recordingAbortedRef, countdownTimerRef,
     // actions
-    requestMic, switchMicDevice, downloadRec, shareRec, canFileShare,
+    requestMic, switchMicDevice, downloadRec, shareRec, canFileShare, copyCaption,
     onRecordButton, handleStartRecording, drawRecFrame,
   };
 }

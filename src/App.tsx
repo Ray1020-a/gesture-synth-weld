@@ -1009,12 +1009,12 @@ export default function App() {
   });
   const {
     recPhase, setRecPhase, recMode, setRecMode, recRatio, setRecRatio, recCount, endCount,
-    savedRecModeExists, recBlob, recPreviewUrl, shareFailed,
+    savedRecModeExists, recBlob, recPreviewUrl, shareFailed, captionCopied,
     isRecording, recordingTime, micOn, setMicOn, micLevel, micPermState,
     micDevices, micDeviceId, recVoice, setRecVoice, recPolish, setRecPolish,
     micStreamRef, recModeRef, skeletonCanvasRef, recDownloadedRef,
     mediaRecorderRef, recordingAbortedRef, countdownTimerRef,
-    requestMic, switchMicDevice, downloadRec, shareRec, canFileShare,
+    requestMic, switchMicDevice, downloadRec, shareRec, canFileShare, copyCaption,
     onRecordButton, handleStartRecording, drawRecFrame,
   } = rec;
   // rAF-loop mirror of isRecording (avoid re-running the loop on change)
@@ -2082,6 +2082,8 @@ export default function App() {
           recPreviewUrl={recPreviewUrl}
           shareFailed={shareFailed}
           canFileShare={canFileShare}
+          copyCaption={copyCaption}
+          captionCopied={captionCopied}
           downloadRec={() => { recDownloadedRef.current = true; downloadRec(); }}
           shareRec={shareRec}
           handleStartRecording={handleStartRecording}

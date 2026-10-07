@@ -25,6 +25,7 @@ import {
   trackWorksListSeen,
 } from '../analytics';
 import { REC_RATIO_HINTS, REC_SVG_PREVIEWS, VIDEO_REC_SUPPORTED } from './constants';
+import { POST_CAPTION } from './useRecording';
 
 /** sessionStorage guard shared with WorksPanel (same key) - whichever
  *  works list the player meets first in a session wins (2026-08-18). */
@@ -60,6 +61,10 @@ export interface RecSheetProps {
   recPreviewUrl: string | null;
   shareFailed: boolean;
   canFileShare: boolean;
+  /** Desktop share path (2026-10-07): copies the post caption; the flag
+   *  drives the "✓ copied" feedback line. */
+  copyCaption: () => void;
+  captionCopied: boolean;
   downloadRec: () => void;
   shareRec: () => void;
   handleStartRecording: () => void;
@@ -75,7 +80,7 @@ export function RecSheet(props: RecSheetProps) {
     recMode, setRecMode, recRatio, setRecRatio, savedRecModeExists, keyboardMode,
     micStreamRef, micOn, setMicOn, micLevel, micPermState, micDevices, micDeviceId,
     recVoice, setRecVoice, recPolish, setRecPolish, requestMic, switchMicDevice,
-    recBlob, recPreviewUrl, shareFailed, canFileShare, downloadRec, shareRec,
+    recBlob, recPreviewUrl, shareFailed, canFileShare, copyCaption, captionCopied, downloadRec, shareRec,
     handleStartRecording, works, onDeleteWork,
   } = props;
 
@@ -346,12 +351,24 @@ export function RecSheet(props: RecSheetProps) {
           <div className="rec-actions">
             <button className="rec-btn" onClick={() => setRecPhase('idle')}>Close</button>
             <button className="rec-btn primary" onClick={() => { trackDownload(); downloadRec(); }}>💾 Download</button>
-            {canFileShare && <button className="rec-btn primary" onClick={shareRec}>📤 Share</button>}
+            {/* Share: mobile gets the Web Share sheet; desktop has no
+                Web Share API — the caption button opens that loop
+                (2026-10-07; before this, desktop had NO share path). */}
+            {canFileShare
+              ? <button className="rec-btn primary" onClick={shareRec}>📤 Share</button>
+              : <button className="rec-btn primary" onClick={copyCaption}>📋 Copy caption</button>}
           </div>
-          {canFileShare && (
+          {canFileShare ? (
             <div className="rec-sheet-sub" style={{ marginTop: 10, lineHeight: 1.6 }}>
               Share directly: WhatsApp · WeChat · Telegram<br />
               TikTok · Instagram · 抖音: Save to Photos, then upload in-app
+            </div>
+          ) : (
+            <div className="rec-sheet-sub" style={{ marginTop: 10, lineHeight: 1.6 }}>
+              Post it: download it, upload on TikTok · Instagram · YouTube Shorts, then paste the caption:<br />
+              {captionCopied
+                ? <span style={{ color: 'var(--neon-cyan)' }}>✓ Caption copied — ready to paste</span>
+                : <em style={{ color: 'var(--text-muted)' }}>{POST_CAPTION}</em>}
             </div>
           )}
           {shareFailed && (

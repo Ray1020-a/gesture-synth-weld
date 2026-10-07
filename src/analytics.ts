@@ -175,6 +175,17 @@ export function trackShare(result: 'success' | 'canceled' | 'failed', mode: 'fil
   track('share_attempted', { result, mode });
 }
 
+/**
+ * Caption copied (desktop share path, 2026-10-07). Desktop browsers have
+ * no Web Share API — the loop there is download the video, upload it,
+ * paste this caption. Own event name (not a share_attempted mode) so it
+ * shows up in the standard eventName breakdown without registering a
+ * custom dimension.
+ */
+export function trackCaptionCopied(): void {
+  track('caption_copied');
+}
+
 /** Record button pressed with idle → chooser (the funnel entry). */
 export function trackRecordButtonClicked(): void {
   track('record_button_clicked');
