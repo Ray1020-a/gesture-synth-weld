@@ -20,7 +20,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>How to Play Gesture Synth Weld — Complete Gesture Tutorial & Guide</title>
-<meta name="description" content="Learn to play Gesture Synth Weld: left hand picks chords (degrees I–VII), right hand shapes expression. Full gesture tables, keyboard mode, recording tips. Free, in-browser." />
+<meta name="description" content="Play Gesture Synth Weld: left hand picks chords, right hand shapes expression — plus 5 song progressions (I–V–vi–IV and friends) to jam on. Gesture tables, keyboard mode, recording tips." />
 <meta name="keywords" content="gesture synth weld, gesture synth weld tutorial, gesture synth weld guide, how to play gesture synth weld, hand gesture music synthesizer" />
 <meta name="author" content="Gesture Synth Weld" />
 <link rel="author" href="https://github.com/rainbow686" />
@@ -157,6 +157,13 @@ td em{color:#9090b8}
 .mode-card.theremin{border-color:rgba(0,255,204,.3)}
 .mode-card.piano{border-color:rgba(255,0,255,.3)}
 .mode-card.keyboard{border-color:rgba(120,80,255,.4);background:rgba(120,80,255,.05)}
+/* songs */
+.song-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.9rem;margin-top:.8rem}
+.song-card{border-radius:10px;padding:1rem 1.1rem;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02)}
+.song-card h3{margin:0 0 .3rem;font-size:.9rem}
+.song-card .prog{display:block;font-family:Orbitron,monospace;font-size:.82rem;color:#00ffcc;letter-spacing:.06em;margin:.1rem 0 .4rem}
+.song-card p{font-size:.82rem;color:#a0a0d0;margin:0}
+.song-card em{color:#ff6ec7;font-style:normal}
 /* faq */
 details.faq{background:rgba(10,20,40,.6);border:1px solid rgba(0,255,204,.08);border-radius:10px;padding:.95rem 1.3rem;margin-bottom:.7rem}
 details.faq summary{font-weight:600;cursor:pointer;color:#e0e0ff;list-style:none;font-size:.9rem}
@@ -199,7 +206,7 @@ details.faq p{margin:.7rem 0 0;font-size:.86rem}
   </div>
 </header>
 
-<nav class="toc"><span>ON THIS PAGE · </span><a href="#quickstart">Quick start</a><a href="#left">Left hand</a><a href="#right">Right hand</a><a href="#modes">Modes</a><a href="#recording">Recording</a><a href="#faq">FAQ</a></nav>
+<nav class="toc"><span>ON THIS PAGE · </span><a href="#quickstart">Quick start</a><a href="#left">Left hand</a><a href="#right">Right hand</a><a href="#modes">Modes</a><a href="#songs">Songs</a><a href="#recording">Recording</a><a href="#faq">FAQ</a></nav>
 
 <section class="card" id="quickstart">
   <h2>⚡ Quick start — playing in 30 seconds</h2>
@@ -280,6 +287,39 @@ details.faq p{margin:.7rem 0 0;font-size:.86rem}
   <div class="callout tip"><p><b>Worth knowing:</b> <b>Arpeggiator</b> (Off/Slow/Normal/Fast) sweeps chord notes like a harp · <b>Auto Bass</b> adds a root note two octaves down with its own volume · <b>Metronome</b> (BPM 40–240, several time signatures — audible in recordings when on).</p></div>
 </section>
 
+<section class="card" id="songs">
+  <h2>🎵 Songs to play</h2>
+  <p>You don't need sheet music. This instrument plays chords by <strong>scale degree</strong>, so most songs reduce to a short loop of left-hand shapes: show <strong>1–5 fingers</strong> for degrees I–V, index+pinky for <strong>VI</strong>, index+pinky+thumb for <strong>VII</strong> — and <strong>tilt your wrist</strong> for minor chords. The shapes work in any key, so learn a loop and you can jam along.</p>
+  <div class="song-grid">
+    <div class="song-card">
+      <h3>🌞 The four chords</h3>
+      <span class="prog">I → V → vi → IV</span>
+      <p><b>Left hand:</b> 1 · 5 · 6 <em>(tilt)</em> · 4 — one wrist tilt on the vi is the whole trick. <b>Heard in:</b> Let It Be · With or Without You · Someone Like You.</p>
+    </div>
+    <div class="song-card">
+      <h3>🌧 The sad order</h3>
+      <span class="prog">vi → IV → I → V</span>
+      <p><b>Left hand:</b> 6 <em>(tilt)</em> · 4 · 1 · 5 — same four chords, minor first. <b>Heard in:</b> Numb · Grenade · countless movie trailers.</p>
+    </div>
+    <div class="song-card">
+      <h3>💃 Doo-wop</h3>
+      <span class="prog">I → vi → IV → V</span>
+      <p><b>Left hand:</b> 1 · 6 <em>(tilt)</em> · 4 · 5 — the slow-dance loop. <b>Heard in:</b> Stand By Me · Every Breath You Take · Duke of Earl.</p>
+    </div>
+    <div class="song-card">
+      <h3>🎷 Jazz turnaround</h3>
+      <span class="prog">ii → V → I</span>
+      <p><b>Left hand:</b> 2 <em>(tilt)</em> · 5 · 1 — where every jazz standard lands. <b>Right hand:</b> add fingers for 7th/9th voicings for instant jazz color.</p>
+    </div>
+    <div class="song-card">
+      <h3>🪜 The walk-down</h3>
+      <span class="prog">i → VII → VI → V</span>
+      <p><b>Left hand:</b> 1 <em>(tilt)</em> · 7 · 6 · 5 — a descending staircase, the V landing major for that flamenco pull. <b>Heard in:</b> Hit the Road Jack.</p>
+    </div>
+  </div>
+  <div class="callout tip"><p><b>Practice tip:</b> turn on the <b>metronome</b> (BPM 40–240) to keep time and <b>auto bass</b> to fill the low end — both are audible in recordings. Prefer melodies over chords? Switch to <b>Mono Piano</b>.</p></div>
+</section>
+
 <section class="card" id="recording">
   <h2 class="red">🔴 Recording your performance</h2>
   <p>Press <strong>Record</strong>: a 3-2-1 countdown, up to <strong>120 seconds</strong>, a 3-2-1 wrap-up before it stops. Capture <strong>audio only</strong>, <strong>full video</strong> (camera + neon skeleton), or <strong>skeleton animation</strong> (privacy-friendly, no camera feed). Aspect ratios 9:16 / 16:9 / 1:1 for TikTok, YouTube, Instagram.</p>
@@ -292,6 +332,7 @@ details.faq p{margin:.7rem 0 0;font-size:.86rem}
   <details class="faq"><summary>Do I need a camera?</summary><p>No — Keyboard mode (desktop) plays the synth with physical keys only: no permission, no model download. On a phone? There is <a href="/gesture-synth#no-app">no app to install — the URL is the app</a>.</p></details>
   <details class="faq"><summary>Which browsers work?</summary><p>Chrome 90+, Edge 90+, Firefox 90+, Safari 15+. Chrome or Edge recommended for the smoothest hand tracking.</p></details>
   <details class="faq"><summary>Is my video uploaded anywhere?</summary><p>Never — hand tracking runs locally on your device; the camera feed leaves nothing behind.</p></details>
+  <details class="faq"><summary>What songs can I play on Gesture Synth Weld?</summary><p>Most songs built on common chord progressions — the <a href="#songs">five loops above</a> (I–V–vi–IV, ii–V–I and friends) cover a huge slice of pop, rock and jazz. Learn one loop and you can jam along to a surprising number of tracks.</p></details>
   <details class="faq"><summary>What is Gesture Synth Weld vs a generic "gesture synth"?</summary><p>Gesture Synth Weld is this site's two-hand instrument — left hand harmony, right hand expression — with 3 modes, arpeggiator, auto bass and built-in recording. Not a hardware glove, not a DAW plugin. New to the category? Start with <a href="/gesture-synth">what a gesture synth is</a>.</p></details>
 </section>
 
