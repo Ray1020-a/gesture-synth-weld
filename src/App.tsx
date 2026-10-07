@@ -87,7 +87,7 @@ import { AFFILIATE_CARD_URL, ENABLE_AFFILIATE_CARD } from './config';
 // src/recording/useRecording.ts (extracted 2026-08-09, pure move).
 
 function getErrorMessage(err: unknown): string {
-  if (err instanceof Error) return err.message || err.name || 'Unknown error';
+  if (err instanceof Error) return err.message || err.name || '未知錯誤';
   if (typeof err === 'string') return err;
   if (err && typeof err === 'object') {
     const e = err as Record<string, unknown>;
@@ -269,14 +269,14 @@ export default function App() {
   // optional mode explained under the table).
   // Loading-screen carousel rows (one table row per step, 5s each).
   const LOADING_STEPS = [
-    { art: '1', row: 0, hint: 'Any 1 finger raised' },
-    { art: '2', row: 1, hint: 'Any 2 fingers' },
-    { art: '3', row: 2, hint: 'Any 3 fingers' },
-    { art: '4', row: 3, hint: 'Any 4 fingers' },
-    { art: '5', row: 4, hint: 'All 5 fingers' },
-    { art: 'VI', row: 5, hint: 'Index + Pinky ONLY' },
-    { art: 'VII', row: 6, hint: 'Index + Pinky + Thumb' },
-    { art: 'mute', row: 7, hint: 'Fist = mute — notes held' },
+    { art: '1', row: 0, hint: '任意伸出 1 指' },
+    { art: '2', row: 1, hint: '任意 2 指' },
+    { art: '3', row: 2, hint: '任意 3 指' },
+    { art: '4', row: 3, hint: '任意 4 指' },
+    { art: '5', row: 4, hint: '五指全開' },
+    { art: 'VI', row: 5, hint: '只伸食指 + 小指' },
+    { art: 'VII', row: 6, hint: '食指 + 小指 + 拇指' },
+    { art: 'mute', row: 7, hint: '握拳 = 靜音（保持和弦）' },
   ] as const;
   // Chord name in the currently selected key (e.g. key C → "I · C",
   // key G → "I · G"); follows the toolbar key selector.
@@ -961,8 +961,8 @@ export default function App() {
     // crop = the video's cover-crop rect (from the loop's drawImage math)
     // — without it the skeleton maps to the full canvas and drifts toward
     // the center on cropped frames (bug 2026-08-09, mobile).
-    if (g.left) drawHandSkeleton(ctx, g.left, w, h, '#00ffcc', 'rgba(0,255,204,0.4)', 3, 8, s, crop);
-    if (g.right) drawHandSkeleton(ctx, g.right, w, h, '#ff00ff', 'rgba(255,0,255,0.4)', 3, 8, s, crop);
+    if (g.left) drawHandSkeleton(ctx, g.left, w, h, '#5271ff', 'rgba(82, 113, 255,0.4)', 3, 8, s, crop);
+    if (g.right) drawHandSkeleton(ctx, g.right, w, h, '#0099ff', 'rgba(0, 153, 255,0.4)', 3, 8, s, crop);
   };
 
   // Video version of the skeleton: soft palette + thinner lines + weak
@@ -972,8 +972,8 @@ export default function App() {
   drawOverlayVideoRef.current = (ctx, w, h) => {
     if (!showSkeleton) return;
     const g = gestureRef.current;
-    if (g.left) drawHandSkeleton(ctx, g.left, w, h, '#00e6c0', 'rgba(0,230,192,0.35)', 2, 5);
-    if (g.right) drawHandSkeleton(ctx, g.right, w, h, '#ff6ec7', 'rgba(255,110,199,0.3)', 2, 4);
+    if (g.left) drawHandSkeleton(ctx, g.left, w, h, '#5271ff', 'rgba(82, 113, 255,0.35)', 2, 5);
+    if (g.right) drawHandSkeleton(ctx, g.right, w, h, '#0099ff', 'rgba(0, 153, 255,0.3)', 2, 4);
   };
 
   // Draw waveform visualization — three-channel HUD. The drawing body
@@ -1095,7 +1095,7 @@ export default function App() {
       ctx.drawImage(cam, -dx - dw, dy, dw, dh);
       ctx.restore();
 
-      ctx.fillStyle = 'rgba(10, 10, 26, 0.15)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       if (!isDetectingRef.current && timestamp - lastDetectRef.current > detectIntervalRef.current) {
@@ -1180,13 +1180,13 @@ export default function App() {
                 const wf = waveformCanvasRef.current;
                 if (wf) sctx.drawImage(wf, 0, 0, sc.width, sc.height);
               } else {
-              sctx.fillStyle = '#050510';
+              sctx.fillStyle = '#f7f8ff';
               sctx.fillRect(0, 0, sc.width, sc.height);
               sctx.save();
               sctx.scale(-1, 1);
               sctx.drawImage(v0, -sc.width, 0, sc.width, sc.height);
               sctx.restore();
-              sctx.fillStyle = 'rgba(10, 10, 26, 0.15)';
+              sctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
               sctx.fillRect(0, 0, sc.width, sc.height);
               drawOverlayVideoRef.current?.(sctx, sc.width, sc.height);
               }
@@ -1317,7 +1317,7 @@ export default function App() {
 
     try {
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        throw new Error('Your browser does not support camera access.');
+        throw new Error('你的瀏覽器不支援相機存取。');
       }
 
       // Download the model in parallel with the camera permission prompt
@@ -1354,7 +1354,7 @@ export default function App() {
       await requestMic();
 
       const video = videoRef.current;
-      if (!video) throw new Error('Video element not found');
+      if (!video) throw new Error('找不到影像元件');
 
       video.srcObject = stream;
       await new Promise<void>((resolve, reject) => {
@@ -1366,15 +1366,15 @@ export default function App() {
         video.onerror = () => {
           video.onloadedmetadata = null;
           video.onerror = null;
-          reject(new Error('Video playback error'));
+          reject(new Error('影像播放錯誤'));
         };
-        setTimeout(() => reject(new Error('Video loading timed out')), 10000);
+        setTimeout(() => reject(new Error('影像載入逾時')), 10000);
       });
 
       try {
         await video.play();
       } catch (playErr) {
-        throw new Error(`Video playback failed: ${getErrorMessage(playErr)}`);
+        throw new Error(`影像播放失敗：${getErrorMessage(playErr)}`);
       }
 
       // Wait for hand tracking before starting the detection loop
@@ -1416,25 +1416,25 @@ export default function App() {
         errorType = 'permission_denied';
         trackCameraPermission('denied');
         setError(isMobile
-          ? 'Camera access was denied. On mobile, check your browser app permissions or system Settings > Privacy > Camera.'
-          : 'Camera access was denied. Click the lock icon in the address bar to allow camera access.');
+          ? '相機權限被拒絕。手機請到瀏覽器 App 權限，或系統「設定 > 隱私權 > 相機」開啟。'
+          : '相機權限被拒絕。請點網址列的鎖頭圖示，允許相機存取。');
       } else if (isDomError(err, 'NotFoundError')) {
         errorType = 'no_camera';
         setError(isMobile
-          ? 'No camera found. Make sure your device has a front-facing camera and it is not in use by another app.'
-          : 'No camera found. Connect a webcam and try again.');
+          ? '找不到相機。請確認裝置有前鏡頭，且沒有被其他 App 佔用。'
+          : '找不到相機。請連接網路攝影機後再試一次。');
       } else {
         const msg = getErrorMessage(err);
         if (msg.includes('support') || msg.includes('not supported')) {
           errorType = 'unsupported_browser';
           setError(isMobile
-            ? 'Your browser does not support camera access. Try Chrome or Edge on Android, or Safari on iOS.'
-            : 'Your browser does not support camera access. Try Chrome, Edge, or Firefox.');
+            ? '你的瀏覽器不支援相機存取。Android 請改用 Chrome 或 Edge，iOS 請用 Safari。'
+            : '你的瀏覽器不支援相機存取。請改用 Chrome、Edge 或 Firefox。');
         } else {
           errorType = 'other';
           setError(isMobile
-            ? `Camera error: ${msg}. Try a different browser like Chrome or Safari.`
-            : `Camera error: ${msg}. Check that your webcam is connected and not in use.`);
+            ? `相機錯誤：${msg}。請換個瀏覽器（如 Chrome 或 Safari）再試。`
+            : `相機錯誤：${msg}。請確認攝影機已連接且未被佔用。`);
         }
       }
       trackCameraStartFailed(errorType, getErrorMessage(err));
@@ -1716,18 +1716,18 @@ export default function App() {
         {/* ─── Top Toolbar — always visible ─────────────────────────── */}
         <div style={{ position: 'absolute', top: '12px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px', zIndex: 20 }}>
           <div className="frost-toolbar" style={{ position: 'relative', top: 'auto', left: 'auto', transform: 'none', gap: '3px', padding: '6px 14px', fontSize: '0.6rem', whiteSpace: 'nowrap', overflow: 'visible' }}>
-            <span className="brand" style={{ fontSize: '0.6rem' }}>Gesture Synth Weld</span>
-            <button className={`mobile-collapse ${synthState.appMode === 'gesture' ? 'active' : ''}`} onClick={() => { trackSettingChanged('app_mode', 'gesture'); setSynthState(prev => ({ ...prev, appMode: 'gesture' })); }} data-tip="Two-hand chord mode — left hand picks harmony, right hand controls expression">Gesture</button>
-            <button className={`mobile-collapse ${synthState.appMode === 'theremin' ? 'active' : ''}`} onClick={() => { trackSettingChanged('app_mode', 'theremin'); setSynthState(prev => ({ ...prev, appMode: 'theremin' })); }} data-tip="Theremin mode — right hand Y-axis = pitch, left hand Y-axis = volume">Theremin</button>
-            <button className={`mobile-collapse ${synthState.appMode === 'monoPiano' ? 'active' : ''}`} onClick={() => { trackSettingChanged('app_mode', 'monoPiano'); setSynthState(prev => ({ ...prev, appMode: 'monoPiano' })); }} data-tip="Mono Piano mode — finger count selects a single note interval">Piano</button>
+            <span className="brand" style={{ fontSize: '0.6rem' }}>數實資研社附設資音組樂器</span>
+            <button className={`mobile-collapse ${synthState.appMode === 'gesture' ? 'active' : ''}`} onClick={() => { trackSettingChanged('app_mode', 'gesture'); setSynthState(prev => ({ ...prev, appMode: 'gesture' })); }} data-tip="雙手和弦模式 — 左手選和聲，右手控制表情">手勢</button>
+            <button className={`mobile-collapse ${synthState.appMode === 'theremin' ? 'active' : ''}`} onClick={() => { trackSettingChanged('app_mode', 'theremin'); setSynthState(prev => ({ ...prev, appMode: 'theremin' })); }} data-tip="特雷門模式 — 右手高度 = 音高，左手高度 = 音量">特雷門</button>
+            <button className={`mobile-collapse ${synthState.appMode === 'monoPiano' ? 'active' : ''}`} onClick={() => { trackSettingChanged('app_mode', 'monoPiano'); setSynthState(prev => ({ ...prev, appMode: 'monoPiano' })); }} data-tip="單音鋼琴模式 — 手指數決定單一音程">鋼琴</button>
             <span className="divider mobile-collapse" />
-            <select className="mobile-collapse" value={KEYS[synthState.keyOffset]?.name ?? 'C'} onChange={(e) => { const ki = KEYS.findIndex(k => k.name === e.target.value); setSynthState(prev => ({ ...prev, keyOffset: ki })); }} data-tip="Transpose all chords to a different key">
+            <select className="mobile-collapse" value={KEYS[synthState.keyOffset]?.name ?? 'C'} onChange={(e) => { const ki = KEYS.findIndex(k => k.name === e.target.value); setSynthState(prev => ({ ...prev, keyOffset: ki })); }} data-tip="將所有和弦移到其他調">
               {KEYS.map(key => <option key={key.name} value={key.name}>{key.name}</option>)}
             </select>
             <span className="divider mobile-collapse" />
-            <button className={`icon-btn mobile-collapse ${synthState.arpeggiate ? 'active' : ''}`} onClick={() => { trackSettingChanged('arpeggiate', synthState.arpeggiate ? 'off' : 'on'); setSynthState(prev => ({ ...prev, arpeggiate: !prev.arpeggiate })); }} data-tip="Arpeggiator — sweep chord notes like a harp">⟿</button>
-            <button className={`icon-btn mobile-collapse ${synthState.autoBass ? 'active' : ''}`} onClick={() => { trackSettingChanged('auto_bass', synthState.autoBass ? 'off' : 'on'); setSynthState(prev => ({ ...prev, autoBass: !prev.autoBass })); }} data-tip="Auto Bass — root note two octaves below">∿</button>
-            <button className={`icon-btn mobile-collapse ${showSkeleton ? 'active' : ''}`} onClick={() => setShowSkeleton(!showSkeleton)} data-tip="Hand skeleton — show/hide tracking lines" style={showSkeleton ? {background:'rgba(0,255,204,0.12)',borderColor:'rgba(0,255,204,0.3)',color:'var(--neon-cyan)'} : {}}>
+            <button className={`icon-btn mobile-collapse ${synthState.arpeggiate ? 'active' : ''}`} onClick={() => { trackSettingChanged('arpeggiate', synthState.arpeggiate ? 'off' : 'on'); setSynthState(prev => ({ ...prev, arpeggiate: !prev.arpeggiate })); }} data-tip="琶音 — 像豎琴一樣逐音撥奏和弦">⟿</button>
+            <button className={`icon-btn mobile-collapse ${synthState.autoBass ? 'active' : ''}`} onClick={() => { trackSettingChanged('auto_bass', synthState.autoBass ? 'off' : 'on'); setSynthState(prev => ({ ...prev, autoBass: !prev.autoBass })); }} data-tip="自動低音 — 低兩個八度的根音">∿</button>
+            <button className={`icon-btn mobile-collapse ${showSkeleton ? 'active' : ''}`} onClick={() => setShowSkeleton(!showSkeleton)} data-tip="手部骨架 — 顯示／隱藏追蹤線" style={showSkeleton ? {background:'rgba(82, 113, 255,0.12)',borderColor:'rgba(82, 113, 255,0.3)',color:'var(--neon-cyan)'} : {}}>
               {/* Hand-tracking skeleton: the MediaPipe 21-landmark graph
                   (this IS what the toggle shows over the hands) */}
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -1761,8 +1761,8 @@ export default function App() {
               role="switch"
               aria-checked={keyboardMode}
               data-tip={keyboardMode
-                ? 'Switch to camera mode — play with hand gestures'
-                : 'Switch to keyboard mode — no camera needed'}
+                ? '切換到相機模式 — 用手勢演奏'
+                : '切換到鍵盤模式 — 不需要相機'}
             >
               {/* Camera pictogram (Apple-style) — no magenta slash (that
                   slash marks STOP on the button next to it) */}
@@ -1794,7 +1794,7 @@ export default function App() {
             <button
               className="icon-btn mobile-collapse"
               onClick={stopCamera}
-              data-tip="Stop camera and audio"
+              data-tip="停止相機與聲音"
               style={keyboardMode ? { visibility: 'hidden' } : undefined}
             >
               {/* video.slash — camera pictogram + magenta cross (Apple-style) */}
@@ -1805,7 +1805,7 @@ export default function App() {
                 <line x1="21" y1="3" x2="3.5" y2="21" stroke="var(--neon-magenta)" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </button>
-            <button className="icon-btn mobile-collapse" onClick={() => { setShowSettings(!showSettings); }} data-tip={showSettings ? 'Hide settings panel' : 'Show settings panel'} style={showSettings ? {background:'rgba(0,255,204,0.12)',borderColor:'rgba(0,255,204,0.3)',color:'var(--neon-cyan)'} : {}}>
+            <button className="icon-btn mobile-collapse" onClick={() => { setShowSettings(!showSettings); }} data-tip={showSettings ? '隱藏設定面板' : '顯示設定面板'} style={showSettings ? {background:'rgba(82, 113, 255,0.12)',borderColor:'rgba(82, 113, 255,0.3)',color:'var(--neon-cyan)'} : {}}>
               {/* Gear like the iOS Settings / clockwork cog: a thick ring
                   with many short fat teeth and an open center */}
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
@@ -1832,18 +1832,18 @@ export default function App() {
               <button
                 className="icon-btn mobile-collapse"
                 onClick={openRecordings}
-                data-tip={`My recordings (${works.length}) — replay, re-download, or delete`}
-                aria-label={`Open my recordings (${works.length})`}
+                data-tip={`我的錄音（${works.length}）— 重播、重新下載或刪除`}
+                aria-label={`開啟我的錄音（${works.length}）`}
               >
                 <RecordingsIcon size={19} />
               </button>
             )}
-            <button className={`icon-btn ${showHelpPulse ? 'help-pulse' : ''}`} onClick={() => { if (!showHelp) trackHelpButtonClicked(); dismissHelpPulse(); setShowHelp(!showHelp); }} data-tip="How to play — hand gesture guide" style={showHelp ? {background:'rgba(0,255,204,0.12)',borderColor:'rgba(0,255,204,0.3)',color:'var(--neon-cyan)'} : {}}>?</button>
+            <button className={`icon-btn ${showHelpPulse ? 'help-pulse' : ''}`} onClick={() => { if (!showHelp) trackHelpButtonClicked(); dismissHelpPulse(); setShowHelp(!showHelp); }} data-tip="怎麼玩 — 手勢教學" style={showHelp ? {background:'rgba(82, 113, 255,0.12)',borderColor:'rgba(82, 113, 255,0.3)',color:'var(--neon-cyan)'} : {}}>?</button>
             <span className="divider" />
             {/* Record capsule — a horizontal bar with a red dot (REC), the most
                 prominent button at the end of the toolbar. Shows countdown
                 seconds while recording. */}
-            <button className={`icon-btn rec-capsule ${isRecording ? 'recording' : ''}`} onClick={onRecordButton} data-tip={isRecording ? `Recording — ${recordingTime}s left` : `Record — audio, video or skeleton (max ${RECORD_SECONDS}s)`} style={isRecording && recordingTime <= 3 ? { color: 'var(--neon-magenta)', textShadow: '0 0 12px rgba(255, 110, 199, 0.6)' } : undefined}>
+            <button className={`icon-btn rec-capsule ${isRecording ? 'recording' : ''}`} onClick={onRecordButton} data-tip={isRecording ? `錄製中 — 剩 ${recordingTime} 秒` : `錄製 — 音訊、影片或骨架（最長 ${RECORD_SECONDS} 秒）`} style={isRecording && recordingTime <= 3 ? { color: 'var(--neon-magenta)', textShadow: '0 0 12px rgba(0, 153, 255, 0.6)' } : undefined}>
               {/* Abstract record: frosted pill + red dot (Apple Camera-app language) */}
               {isRecording ? `${recordingTime}s` : (
                 <svg width="11" height="11" viewBox="0 0 11 11">
@@ -1862,8 +1862,8 @@ export default function App() {
                 if (!moreOpen) setShowSettings(false);
                 setMoreOpen(!moreOpen);
               }}
-              data-tip={moreOpen ? 'Close more options' : 'More options'}
-              style={moreOpen ? {background:'rgba(0,255,204,0.12)',borderColor:'rgba(0,255,204,0.3)',color:'var(--neon-cyan)'} : {}}
+              data-tip={moreOpen ? '關閉更多選項' : '更多選項'}
+              style={moreOpen ? {background:'rgba(82, 113, 255,0.12)',borderColor:'rgba(82, 113, 255,0.3)',color:'var(--neon-cyan)'} : {}}
             >{moreOpen ? '✕' : '⋯'}</button>
           </div>
 
@@ -1876,9 +1876,9 @@ export default function App() {
               <div className="frost-panel mobile-more-panel">
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.62rem' }}>
                   <div style={{ display: 'flex', gap: '4px' }}>
-                    <button className={synthState.appMode === 'gesture' ? 'active' : ''} onClick={() => { trackSettingChanged('app_mode', 'gesture'); setSynthState(prev => ({ ...prev, appMode: 'gesture' })); setMoreOpen(false); }}>Gesture</button>
-                    <button className={synthState.appMode === 'theremin' ? 'active' : ''} onClick={() => { trackSettingChanged('app_mode', 'theremin'); setSynthState(prev => ({ ...prev, appMode: 'theremin' })); setMoreOpen(false); }}>Theremin</button>
-                    <button className={synthState.appMode === 'monoPiano' ? 'active' : ''} onClick={() => { trackSettingChanged('app_mode', 'monoPiano'); setSynthState(prev => ({ ...prev, appMode: 'monoPiano' })); setMoreOpen(false); }}>Piano</button>
+                    <button className={synthState.appMode === 'gesture' ? 'active' : ''} onClick={() => { trackSettingChanged('app_mode', 'gesture'); setSynthState(prev => ({ ...prev, appMode: 'gesture' })); setMoreOpen(false); }}>手勢</button>
+                    <button className={synthState.appMode === 'theremin' ? 'active' : ''} onClick={() => { trackSettingChanged('app_mode', 'theremin'); setSynthState(prev => ({ ...prev, appMode: 'theremin' })); setMoreOpen(false); }}>特雷門</button>
+                    <button className={synthState.appMode === 'monoPiano' ? 'active' : ''} onClick={() => { trackSettingChanged('app_mode', 'monoPiano'); setSynthState(prev => ({ ...prev, appMode: 'monoPiano' })); setMoreOpen(false); }}>鋼琴</button>
                   </div>
                   {/* One row of icon buttons — same glyphs as the landscape/desktop toolbar */}
                   <div style={{ display: 'flex', gap: '4px' }}>
@@ -1889,15 +1889,15 @@ export default function App() {
                       <button
                         className="icon-btn"
                         onClick={() => { setMoreOpen(false); openRecordings(); }}
-                        data-tip={`My recordings (${works.length})`}
-                        aria-label={`Open my recordings (${works.length})`}
+                        data-tip={`我的錄音（${works.length}）`}
+                        aria-label={`開啟我的錄音（${works.length}）`}
                       >
                         <RecordingsIcon size={19} />
                       </button>
                     )}
-                    <button className={`icon-btn ${synthState.arpeggiate ? 'active' : ''}`} onClick={() => { trackSettingChanged('arpeggiate', synthState.arpeggiate ? 'off' : 'on'); setSynthState(prev => ({ ...prev, arpeggiate: !prev.arpeggiate })); }} data-tip="Arpeggiator">⟿</button>
-                    <button className={`icon-btn ${synthState.autoBass ? 'active' : ''}`} onClick={() => { trackSettingChanged('auto_bass', synthState.autoBass ? 'off' : 'on'); setSynthState(prev => ({ ...prev, autoBass: !prev.autoBass })); }} data-tip="Auto Bass">∿</button>
-                    <button className={`icon-btn ${showSkeleton ? 'active' : ''}`} onClick={() => setShowSkeleton(!showSkeleton)} data-tip="Hand skeleton" style={showSkeleton ? {background:'rgba(0,255,204,0.12)',borderColor:'rgba(0,255,204,0.3)',color:'var(--neon-cyan)'} : {}}>
+                    <button className={`icon-btn ${synthState.arpeggiate ? 'active' : ''}`} onClick={() => { trackSettingChanged('arpeggiate', synthState.arpeggiate ? 'off' : 'on'); setSynthState(prev => ({ ...prev, arpeggiate: !prev.arpeggiate })); }} data-tip="琶音">⟿</button>
+                    <button className={`icon-btn ${synthState.autoBass ? 'active' : ''}`} onClick={() => { trackSettingChanged('auto_bass', synthState.autoBass ? 'off' : 'on'); setSynthState(prev => ({ ...prev, autoBass: !prev.autoBass })); }} data-tip="自動低音">∿</button>
+                    <button className={`icon-btn ${showSkeleton ? 'active' : ''}`} onClick={() => setShowSkeleton(!showSkeleton)} data-tip="手部骨架" style={showSkeleton ? {background:'rgba(82, 113, 255,0.12)',borderColor:'rgba(82, 113, 255,0.3)',color:'var(--neon-cyan)'} : {}}>
                       {/* Same 21-landmark skeleton glyph as the desktop toolbar */}
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path d="M11 21.2 L9.4 17.6 L7.1 15.6 L5.4 13.1 L4.7 11.3 M11 21.2 L9.7 14.9 L9.5 10.6 L9.5 7.6 L9.6 5.3 M9.7 14.9 L11.3 14.9 L11.5 9.9 L11.6 6.5 L11.7 3.9 M11.3 14.9 L12.9 14.9 L13.3 10.6 L13.6 7.6 L13.9 5.3 M12.9 14.9 L14.5 15.5 L15.5 12.1 L16.2 9.6 L16.9 7.5 M11 21.2 L14.5 15.5"
@@ -1907,7 +1907,7 @@ export default function App() {
                         </g>
                       </svg>
                     </button>
-                    <button className="icon-btn" onClick={() => { setMoreOpen(false); setShowSettings(!showSettings); }} data-tip="Settings" style={showSettings ? {background:'rgba(0,255,204,0.12)',borderColor:'rgba(0,255,204,0.3)',color:'var(--neon-cyan)'} : {}}>
+                    <button className="icon-btn" onClick={() => { setMoreOpen(false); setShowSettings(!showSettings); }} data-tip="設定" style={showSettings ? {background:'rgba(82, 113, 255,0.12)',borderColor:'rgba(82, 113, 255,0.3)',color:'var(--neon-cyan)'} : {}}>
                       {/* Same iOS-Settings cog as the desktop toolbar */}
                       <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
                         <circle cx="12" cy="12" r="5.7" stroke="currentColor" strokeWidth="2.7" />
@@ -1922,7 +1922,7 @@ export default function App() {
                         })}
                       </svg>
                     </button>
-                    <button className="icon-btn" onClick={() => { setMoreOpen(false); stopCamera(); }} data-tip="Stop camera">
+                    <button className="icon-btn" onClick={() => { setMoreOpen(false); stopCamera(); }} data-tip="停止相機">
                       {/* Same video.slash glyph as the desktop toolbar (NOT a ✕ —
                           ✕ is reserved for closing the ⋯ panel itself) */}
                       <svg width="20" height="17" viewBox="0 0 24 24" fill="none">
@@ -1981,7 +1981,7 @@ export default function App() {
                 detection, once per session, 3s) ───────────────────── */}
         {showHandsReady && (
           <div className="hands-ready-badge">
-            <span style={{ color: 'var(--neon-cyan)' }}>✓</span> Both hands detected — play!
+            <span style={{ color: 'var(--neon-cyan)' }}>✓</span> 已偵測到雙手 — 開始演奏！
           </div>
         )}
 
@@ -2004,18 +2004,18 @@ export default function App() {
             <button
               className="whatsnew-dot"
               onClick={() => setWhatsNewCollapsed(false)}
-              aria-label="What's new"
+              aria-label="新功能"
               title={whatsNewEntry.title}
             >
-              NEW
+              新
             </button>
           ) : (
           <div className="whatsnew-card whatsnew-card--scene">
             <button
               className="whatsnew-close"
               onClick={() => { markWhatsNewDismissed(); setWhatsNewDismissedState(true); }}
-              aria-label="Dismiss what's new"
-              title="Dismiss"
+              aria-label="關閉新功能提示"
+              title="關閉"
             >
               {/* Feather X (MIT) */}
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
@@ -2024,7 +2024,7 @@ export default function App() {
               </svg>
             </button>
             <div className="whatsnew-body">
-              <span className="whatsnew-badge">NEW</span>
+              <span className="whatsnew-badge">新</span>
               <span>
                 <strong>{whatsNewEntry.title}</strong>
                 {/* Teaching line (from the entry, per-mode): points at the
@@ -2095,12 +2095,12 @@ export default function App() {
         {isRunning && (
           <>
             {hasLeftHand && (
-              <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', zIndex: 15, padding: '6px 10px', background: 'var(--frost-bg)', backdropFilter: 'var(--frost-blur)', border: '1px solid rgba(0,255,204,0.3)', borderRadius: '12px', color: 'var(--neon-cyan)', fontSize: '0.7rem', fontFamily: 'var(--font-display)', letterSpacing: '0.1em' }}>
+              <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', zIndex: 15, padding: '6px 10px', background: 'var(--frost-bg)', backdropFilter: 'var(--frost-blur)', border: '1px solid rgba(82, 113, 255,0.3)', borderRadius: '12px', color: 'var(--neon-cyan)', fontSize: '0.7rem', fontFamily: 'var(--font-display)', letterSpacing: '0.1em' }}>
                 L
               </div>
             )}
             {hasRightHand && (
-              <div style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', zIndex: 15, padding: '6px 10px', background: 'var(--frost-bg)', backdropFilter: 'var(--frost-blur)', border: '1px solid rgba(255,0,255,0.3)', borderRadius: '12px', color: 'var(--neon-magenta)', fontSize: '0.7rem', fontFamily: 'var(--font-display)', letterSpacing: '0.1em' }}>
+              <div style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', zIndex: 15, padding: '6px 10px', background: 'var(--frost-bg)', backdropFilter: 'var(--frost-blur)', border: '1px solid rgba(0, 153, 255,0.3)', borderRadius: '12px', color: 'var(--neon-magenta)', fontSize: '0.7rem', fontFamily: 'var(--font-display)', letterSpacing: '0.1em' }}>
                 R
               </div>
             )}
@@ -2115,7 +2115,7 @@ export default function App() {
             {/* Brand anchored at a FIXED top position — it never moves
                 when the content below switches between button and block. */}
             <div className="camera-placeholder-brand">
-              <span className="camera-placeholder-brand-text">Gesture Synth Weld</span>
+              <span className="camera-placeholder-brand-text">數實資研社附設資音組樂器</span>
             </div>
             <div className="camera-placeholder-content">
             {loadingVisible ? (
@@ -2128,7 +2128,7 @@ export default function App() {
                     the bar IS the loading semantics, no title row needed. */}
                 <div className="loading-bar-track">
                   <div className="loading-bar-fill" style={{ width: `${loadProgress}%` }} />
-                  <span className="loading-bar-label">Loading… {loadProgress}%</span>
+                  <span className="loading-bar-label">載入中… {loadProgress}%</span>
                 </div>
 
                 <div className="loading-divider" />
@@ -2139,13 +2139,13 @@ export default function App() {
                     the changing chord gesture (cyan), right = fixed 1-finger
                     posture (magenta, mirrored — same color code as the Help
                     panel), since the right hand plays volume by height. */}
-                <div className="loading-zone-label">How to play</div>
+                <div className="loading-zone-label">怎麼玩</div>
                 <div className="loading-demo-row">
                   {renderHandArt(LOADING_STEPS[loadingDemoStep].art, 26, 'var(--neon-cyan)')}
                   {renderHandArt('1', 26, 'var(--neon-magenta)', true)}
                   <div>
                     <div className="loading-demo-name">{gradeNameFor(LOADING_STEPS[loadingDemoStep].row)}</div>
-                    <div className="loading-demo-hint">{LOADING_STEPS[loadingDemoStep].hint} · Right: height = volume</div>
+                    <div className="loading-demo-hint">{LOADING_STEPS[loadingDemoStep].hint} · 右手：高度 = 音量</div>
                   </div>
                 </div>
 
@@ -2153,9 +2153,9 @@ export default function App() {
 
                 <div className="loading-hint">
                   {loadingTimeoutShown ? (
-                    <span>Still downloading — it continues in the background either way, so your next start will be instant.</span>
+                    <span>仍在下載中 — 無論如何都會在背景繼續，下次啟動就會秒開。</span>
                   ) : (
-                    <span>Downloading the hand-tracking model (~20 MB) — the first load takes a moment on slow connections.</span>
+                    <span>正在下載手部追蹤模型（約 20 MB）— 網路較慢時第一次載入需要一點時間。</span>
                   )}
                 </div>
 
@@ -2168,8 +2168,8 @@ export default function App() {
                     if (loadTimeoutTimerRef.current) window.clearTimeout(loadTimeoutTimerRef.current);
                     setIsLoading(false);
                   }}
-                  data-tip="Cancel — the download continues in the background, next start is instant"
-                >✕ Cancel</button>
+                  data-tip="取消 — 下載會在背景繼續，下次啟動即可秒開"
+                >✕ 取消</button>
               </div>
             ) : (
               <>
@@ -2188,12 +2188,12 @@ export default function App() {
                       <path fillRule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2H4zm10 1.5l3.5-2.25A.75.75 0 0118.5 5v10a.75.75 0 01-1 .69L14 13.5V6.5z" clipRule="evenodd" />
                     )}
                   </svg>
-                  <span>{keyboardMode ? 'Start Playing (Keyboard)' : 'Enable Camera'}</span>
+                  <span>{keyboardMode ? '開始演奏（鍵盤）' : '開啟相機'}</span>
                 </button>
                 <p className="camera-placeholder-hint">
                   {keyboardMode
-                    ? 'Hold 1-7 to play · [ ] major-minor · 8/9/0/- style · Shift octave · arrows volume/filter · Space stop'
-                    : 'Allow camera access to start playing with hand gestures'}
+                    ? '按住 1-7 演奏 · [ ] 大小調 · 8/9/0/- 風格 · Shift 降八度 · 方向鍵 音量／濾波 · 空白鍵 停止'
+                    : '允許相機存取，即可用手勢開始演奏'}
                 </p>
                 {/* LANDING hint — TIME-based conversion assist: shows
                     while the announcement is active (14-day window), then
@@ -2208,9 +2208,9 @@ export default function App() {
                 {!keyboardMode && whatsNewEntry?.landingClick === 'keyboard-mode' && !(whatsNewEntry.desktopOnly && isMobile) && whatsNewActive() && (
                   <div className="whatsnew-card">
                     <button className="whatsnew-body" onClick={() => startKeyboardMode('landing_hint')}>
-                      <span className="whatsnew-badge">NEW</span>
+                      <span className="whatsnew-badge">新</span>
                       <span>
-                        <strong>Keyboard mode</strong> — no camera needed
+                        <strong>鍵盤模式</strong> — 不需要相機
                       </span>
                     </button>
                   </div>
@@ -2233,7 +2233,7 @@ export default function App() {
         {error && (
           <div className="camera-placeholder error-state">
             <div className="camera-placeholder-brand">
-              <span className="camera-placeholder-brand-text">Gesture Synth Weld</span>
+              <span className="camera-placeholder-brand-text">數實資研社附設資音組樂器</span>
             </div>
             <div className="camera-error-message">{error}</div>
             {/* Personalized single path — camera-related errors only
@@ -2246,13 +2246,13 @@ export default function App() {
                     {isIOS ? 'iPhone / iPad' : isAndroid ? 'Android' : /Mac/i.test(navigator.userAgent) ? 'Mac' : 'Windows'}
                   </span>
                   {isIOS ? (
-                    <>Settings → Privacy &amp; Security → <strong>Camera</strong> → turn on your browser. Then reload.</>
+                    <>設定 → 隱私權與安全性 → <strong>相機</strong> → 開啟你的瀏覽器，然後重新整理。</>
                   ) : isAndroid ? (
-                    <>Settings → Apps → your browser → Permissions → <strong>Camera</strong> → Allow. Then reload.</>
+                    <>設定 → 應用程式 → 你的瀏覽器 → 權限 → <strong>相機</strong> → 允許，然後重新整理。</>
                   ) : /Mac/i.test(navigator.userAgent) ? (
-                    <>System Settings → Privacy &amp; Security → <strong>Camera</strong> → turn on your browser. Then reload.</>
+                    <>系統設定 → 隱私權與安全性 → <strong>相機</strong> → 開啟你的瀏覽器，然後重新整理。</>
                   ) : (
-                    <>Settings → Privacy &amp; Security → <strong>Camera</strong> → Camera access: On → make sure your browser is allowed. Then reload.</>
+                    <>設定 → 隱私權與安全性 → <strong>相機</strong> → 相機存取：開啟 → 確認你的瀏覽器已被允許，然後重新整理。</>
                   )}
                 </div>
               </div>
@@ -2271,9 +2271,9 @@ export default function App() {
                   <span className="err-dots">⋯</span>
                 </div>
                 <div className="err-steps">
-                  <span><b>①</b> Click the lock</span>
-                  <span><b>②</b> Camera: Allow</span>
-                  <span><b>③</b> Reload &amp; retry</span>
+                  <span><b>①</b> 點擊鎖頭</span>
+                  <span><b>②</b> 相機：允許</span>
+                  <span><b>③</b> 重新整理並重試</span>
                 </div>
               </div>
             )}
@@ -2290,9 +2290,9 @@ export default function App() {
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
               </svg>
-              View the full troubleshooting guide →
+              查看完整疑難排解指南 →
             </a>
-            <button className="enable-camera-btn retry" onClick={() => startCamera('retry')}>Retry</button>
+            <button className="enable-camera-btn retry" onClick={() => startCamera('retry')}>重試</button>
           </div>
         )}
 
@@ -2347,16 +2347,16 @@ export default function App() {
                     const name = key?.name?.split('/')[0] ?? '?';
                     return isDegreeMinor(i) ? name.toLowerCase() : name;
                   };
-                  const kk = (a: KbAction) => `key ${displayKey(keymap[a])}`;
+                  const kk = (a: KbAction) => `按鍵 ${displayKey(keymap[a])}`;
                   const keyNotes = [
-                    { note: mkNote(0), roman: 'I',   hint: keyboardMode ? kk('degree1') : '1 finger' },
-                    { note: mkNote(1), roman: 'II',  hint: keyboardMode ? kk('degree2') : '2 fingers' },
-                    { note: mkNote(2), roman: 'III', hint: keyboardMode ? kk('degree3') : '3 fingers' },
-                    { note: mkNote(3), roman: 'IV',  hint: keyboardMode ? kk('degree4') : '4 fingers' },
-                    { note: mkNote(4), roman: 'V',   hint: keyboardMode ? kk('degree5') : '5 fingers' },
-                    { note: mkNote(5), roman: 'VI',  hint: keyboardMode ? kk('degree6') : 'idx + pky' },
-                    { note: mkNote(6), roman: 'VII', hint: keyboardMode ? kk('degree7') : 'i + p + t' },
-                    { note: mkNote(0), roman: 'I\'', hint: keyboardMode ? `${displayKey(keymap.octaveDown)} = 8vb` : '1 fing (oct)' },
+                    { note: mkNote(0), roman: 'I',   hint: keyboardMode ? kk('degree1') : '1 指' },
+                    { note: mkNote(1), roman: 'II',  hint: keyboardMode ? kk('degree2') : '2 指' },
+                    { note: mkNote(2), roman: 'III', hint: keyboardMode ? kk('degree3') : '3 指' },
+                    { note: mkNote(3), roman: 'IV',  hint: keyboardMode ? kk('degree4') : '4 指' },
+                    { note: mkNote(4), roman: 'V',   hint: keyboardMode ? kk('degree5') : '5 指' },
+                    { note: mkNote(5), roman: 'VI',  hint: keyboardMode ? kk('degree6') : '食 + 小' },
+                    { note: mkNote(6), roman: 'VII', hint: keyboardMode ? kk('degree7') : '食+小+拇' },
+                    { note: mkNote(0), roman: 'I\'', hint: keyboardMode ? `${displayKey(keymap.octaveDown)} = 8vb` : '1 指（八度）' },
                   ];
                   return keyNotes.map((block, i) => {
                     const isActive = synthState.chordIndex === i && synthState.isPlaying;
@@ -2366,17 +2366,17 @@ export default function App() {
                         style={{
                           width: '70px',
                           padding: '0.6rem 0.3rem',
-                          background: isActive ? 'rgba(0, 255, 204, 0.2)' : 'rgba(22, 22, 32, 0.35)',
+                          background: isActive ? 'rgba(82, 113, 255, 0.2)' : 'rgba(255, 255, 255, 0.35)',
                           backdropFilter: 'var(--frost-blur)',
                           WebkitBackdropFilter: 'var(--frost-blur)',
-                          border: `2px solid ${isActive ? 'rgba(0, 255, 204, 0.6)' : 'rgba(255, 255, 255, 0.04)'}`,
+                          border: `2px solid ${isActive ? 'rgba(82, 113, 255, 0.6)' : 'rgba(0, 0, 0, 0.04)'}`,
                           borderRadius: '10px',
                           display: 'flex',
                           flexDirection: 'column',
                           alignItems: 'center',
                           justifyContent: 'center',
                           transition: 'all 0.2s ease',
-                          boxShadow: isActive ? '0 0 20px rgba(0, 255, 204, 0.6)' : 'none',
+                          boxShadow: isActive ? '0 0 20px rgba(82, 113, 255, 0.6)' : 'none',
                           textAlign: 'center',
                         }}
                       >
@@ -2399,7 +2399,7 @@ export default function App() {
                         </span>
                         <span style={{
                           fontSize: '0.6rem',
-                          color: isActive ? 'rgba(0, 255, 204, 0.7)' : 'var(--text-muted)',
+                          color: isActive ? 'rgba(82, 113, 255, 0.7)' : 'var(--text-muted)',
                           marginTop: '0.15rem',
                           whiteSpace: 'nowrap',
                         }}>
@@ -2434,21 +2434,21 @@ export default function App() {
                 }}>
                   {/* Scale-degree chip — left ear (Inter, small, quiet) */}
                   <span style={{
-                    fontFamily: 'Inter, system-ui, sans-serif',
+                    fontFamily: 'var(--font-body)',
                     fontSize: '1.1rem',
                     fontWeight: 600,
-                    color: 'rgba(150, 255, 235, 0.45)',
+                    color: 'rgba(124, 148, 255, 0.45)',
                     marginRight: '0.45em',
                     letterSpacing: '0.08em',
                   }}>
                     {GRADE_NAMES[synthState.chordIndex % GRADE_NAMES.length]}
                   </span>
                   {/* Root + quality — the main note */}
-                  <span style={{ fontSize: '5rem', fontWeight: 900, color: 'rgba(0, 255, 204, 0.15)', lineHeight: 1 }}>
+                  <span style={{ fontSize: '5rem', fontWeight: 900, color: 'rgba(82, 113, 255, 0.15)', lineHeight: 1 }}>
                     {synthState.chordBase}
                   </span>
                   {/* Extension — right-hand thickness, smaller + dimmer */}
-                  <span style={{ fontSize: '2rem', fontWeight: 500, color: 'rgba(0, 255, 204, 0.08)', marginLeft: '0.15em' }}>
+                  <span style={{ fontSize: '2rem', fontWeight: 500, color: 'rgba(82, 113, 255, 0.08)', marginLeft: '0.15em' }}>
                     {synthState.chordExt}
                   </span>
                   {/* Octave badge — floats just outside the chord symbol's
@@ -2460,7 +2460,7 @@ export default function App() {
                       top: '-0.4em',
                       right: 0,
                       transform: 'translateX(100%)',
-                      fontFamily: 'Inter, system-ui, sans-serif',
+                      fontFamily: 'var(--font-body)',
                       fontSize: '1rem',
                       fontWeight: 700,
                       color: '#ffb84d',
@@ -2507,13 +2507,13 @@ export default function App() {
                 🎵 {synthState.chordName}
               </div>
               <div className="status-volume">
-                <span className="status-label">Vol</span>
+                <span className="status-label">音量</span>
                 <div className="status-volume-track">
                   <div className="status-volume-fill" style={{ width: `${synthState.volume * 100}%` }} />
                 </div>
               </div>
               <div className="status-mode">
-                {synthState.appMode === 'gesture' ? 'Gesture' : synthState.appMode === 'theremin' ? 'Theremin' : 'Piano'}
+                {synthState.appMode === 'gesture' ? '手勢' : synthState.appMode === 'theremin' ? '特雷門' : '鋼琴'}
               </div>
 
               {/* Metronome controls */}
@@ -2521,7 +2521,7 @@ export default function App() {
                 type="number"
                 value={metronomeBpm}
                 onChange={(e) => { trackSettingChanged('metronome_bpm', e.target.value); setMetronomeBpm(Number(e.target.value)); }}
-                style={{ width: '36px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '3px', color: 'var(--text-secondary)', fontSize: '0.6rem', textAlign: 'center', padding: '1px' }}
+                style={{ width: '36px', background: 'transparent', border: '1px solid rgba(0, 0, 0, 0.1)', borderRadius: '3px', color: 'var(--text-secondary)', fontSize: '0.6rem', textAlign: 'center', padding: '1px' }}
               />
               <span style={{ fontSize: '0.6rem' }}>BPM</span>
               <button
@@ -2536,24 +2536,24 @@ export default function App() {
                     setMetronomeBpm(Math.max(40, Math.min(240, Math.round(60000 / avgMs))));
                   }
                 }}
-                style={{ background: 'none', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '3px', color: 'var(--text-muted)', fontSize: '0.55rem', padding: '1px 4px', cursor: 'pointer' }}
+                style={{ background: 'none', border: '1px solid rgba(0, 0, 0, 0.08)', borderRadius: '3px', color: 'var(--text-muted)', fontSize: '0.55rem', padding: '1px 4px', cursor: 'pointer' }}
               >
-                TAP
+                點拍
               </button>
-              <select value={metronomeTimeSig} onChange={(e) => { trackSettingChanged('metronome_time_sig', e.target.value); setMetronomeTimeSig(e.target.value); }} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '3px', color: 'var(--text-secondary)', fontSize: '0.6rem', padding: '1px' }}>
+              <select value={metronomeTimeSig} onChange={(e) => { trackSettingChanged('metronome_time_sig', e.target.value); setMetronomeTimeSig(e.target.value); }} style={{ background: 'transparent', border: '1px solid rgba(0, 0, 0, 0.08)', borderRadius: '3px', color: 'var(--text-secondary)', fontSize: '0.6rem', padding: '1px' }}>
                 <option>3/4</option><option>4/4</option><option>5/4</option><option>6/8</option><option>7/8</option>
               </select>
-              <select value={metronomeBars} onChange={(e) => { trackSettingChanged('metronome_bars', e.target.value); setMetronomeBars(e.target.value); }} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '3px', color: 'var(--text-secondary)', fontSize: '0.6rem', padding: '1px' }}>
-                <option value="1">1 bar</option><option value="2">2 bars</option><option value="4">4 bars</option><option value="8">8 bars</option><option value="16">16 bars</option>
+              <select value={metronomeBars} onChange={(e) => { trackSettingChanged('metronome_bars', e.target.value); setMetronomeBars(e.target.value); }} style={{ background: 'transparent', border: '1px solid rgba(0, 0, 0, 0.08)', borderRadius: '3px', color: 'var(--text-secondary)', fontSize: '0.6rem', padding: '1px' }}>
+                <option value="1">1 小節</option><option value="2">2 小節</option><option value="4">4 小節</option><option value="8">8 小節</option><option value="16">16 小節</option>
               </select>
-              <select value={metronomeSound} onChange={(e) => { trackSettingChanged('metronome_sound', e.target.value); setMetronomeSound(e.target.value); }} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '3px', color: 'var(--text-secondary)', fontSize: '0.6rem', padding: '1px' }}>
-                <option value="click">Click</option><option value="wood">Wood</option><option value="beep">Beep</option><option value="hihat">Hi-hat</option>
+              <select value={metronomeSound} onChange={(e) => { trackSettingChanged('metronome_sound', e.target.value); setMetronomeSound(e.target.value); }} style={{ background: 'transparent', border: '1px solid rgba(0, 0, 0, 0.08)', borderRadius: '3px', color: 'var(--text-secondary)', fontSize: '0.6rem', padding: '1px' }}>
+                <option value="click">喀噠</option><option value="wood">木魚</option><option value="beep">嗶聲</option><option value="hihat">腳踏鈸</option>
               </select>
               <button
                 onClick={() => { trackSettingChanged('metronome', metronomeOn ? 'off' : 'on'); setMetronomeOn(!metronomeOn); }}
                 style={{
-                  background: metronomeOn ? 'rgba(0,255,204,0.15)' : 'transparent',
-                  border: `1px solid ${metronomeOn ? 'rgba(0,255,204,0.3)' : 'rgba(255,255,255,0.08)'}`,
+                  background: metronomeOn ? 'rgba(82, 113, 255,0.15)' : 'transparent',
+                  border: `1px solid ${metronomeOn ? 'rgba(82, 113, 255,0.3)' : 'rgba(0, 0, 0, 0.08)'}`,
                   borderRadius: '3px', color: metronomeOn ? 'var(--neon-cyan)' : 'var(--text-muted)',
                   fontSize: '0.6rem', padding: '1px 5px', cursor: 'pointer',
                 }}
@@ -2565,7 +2565,7 @@ export default function App() {
 
               <span style={{ flex: 1 }} />
 
-              <a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener" title="Open source on GitHub" style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', opacity: 0.6 }}>
+              <a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener" title="GitHub 開放原始碼" style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', opacity: 0.6 }}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                   <path fillRule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
                 </svg>

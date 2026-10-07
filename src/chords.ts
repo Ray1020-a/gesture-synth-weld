@@ -66,14 +66,14 @@ export type ChordStyle =
   | 'dominant7th';   // dominant 7th
 
 export const CHORD_STYLE_OPTIONS: { id: ChordStyle; label: string }[] = [
-  { id: 'majorTriad', label: 'Major Triad' },
-  { id: 'major1stInv', label: 'Major 1st Inversion' },
-  { id: 'minorTriad', label: 'Minor Triad' },
-  { id: 'dimTriad', label: 'Diminished Triad' },
+  { id: 'majorTriad', label: '大三和弦' },
+  { id: 'major1stInv', label: '大三和弦第一轉位' },
+  { id: 'minorTriad', label: '小三和弦' },
+  { id: 'dimTriad', label: '減三和弦' },
   { id: 'sus2', label: 'Sus2' },
   { id: 'sus4', label: 'Sus4' },
-  { id: 'major7th', label: 'Major 7th' },
-  { id: 'dominant7th', label: 'Dominant 7th' },
+  { id: 'major7th', label: '大七和弦' },
+  { id: 'dominant7th', label: '屬七和弦' },
 ];
 
 /** Base MIDI note: C3 — matches competitor's A3=220Hz root */

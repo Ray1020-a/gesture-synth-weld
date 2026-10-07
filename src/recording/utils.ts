@@ -44,15 +44,15 @@ export function makeCoverBlob(): Promise<Blob> {
 
   // brand: metal wordmark centered — auto-shrink so it never touches the edges
   // (target width = 80% of the canvas, leaving breathing room on both sides)
-  const text = 'GESTURE SYNTH WELD';
+  const text = '數實資研社附設資音組樂器';
   let size = 44;
-  ctx.font = `800 ${size}px Orbitron, monospace`;
+  ctx.font = `800 ${size}px system-ui, "Noto Sans TC", sans-serif`;
   ctx.textAlign = 'center';
   const targetW = 480;
   const measureW = ctx.measureText(text).width;
   if (measureW > targetW) {
     size = Math.floor(size * (targetW / measureW));
-    ctx.font = `800 ${size}px Orbitron, monospace`;
+    ctx.font = `800 ${size}px system-ui, "Noto Sans TC", sans-serif`;
   }
   ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
   ctx.fillText(text, 300, 306);

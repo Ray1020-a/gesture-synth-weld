@@ -67,9 +67,9 @@ export function RecordingsEntry({ works, onOpen }: {
 }) {
   if (works === null || works.length === 0) return null;
   return (
-    <button className="works-entry" onClick={onOpen} data-tip="Replay your previous recordings">
-      <span className="works-entry-icon"><RecordingsIcon size={14} /></span> My recordings ({works.length})
-      {whatsNewLandingBadge() && <span className="works-entry-new">NEW</span>}
+    <button className="works-entry" onClick={onOpen} data-tip="重播你之前的錄音">
+      <span className="works-entry-icon"><RecordingsIcon size={14} /></span> 我的錄音（{works.length}）
+      {whatsNewLandingBadge() && <span className="works-entry-new">新</span>}
     </button>
   );
 }
@@ -163,10 +163,10 @@ export default function WorksPanel({ works, onDelete, open, onOpenChange }: Work
     <div className="works-modal-overlay" onClick={closeModal}>
       <div className="works-modal" onClick={(e) => e.stopPropagation()}>
         <div className="works-modal-head">
-          <span className="works-modal-title">My recordings</span>
-          <button className="works-close" onClick={closeModal} aria-label="Close my recordings">✕</button>
+          <span className="works-modal-title">我的錄音</span>
+          <button className="works-close" onClick={closeModal} aria-label="關閉我的錄音">✕</button>
         </div>
-        <div className="works-modal-sub">Saved in this browser - replay, re-download, or delete.</div>
+        <div className="works-modal-sub">儲存在此瀏覽器中 — 可重播、重新下載或刪除。</div>
         <ul className="works-list">
           {works.map((w) => (
             <li key={w.id} className={`works-item${playingId === w.id ? ' active' : ''}`}>
@@ -176,11 +176,11 @@ export default function WorksPanel({ works, onDelete, open, onOpenChange }: Work
                 <span className="works-item-dur">{Math.floor(w.durationSec / 60)}:{String(w.durationSec % 60).padStart(2, '0')}</span>
               </span>
               <span className="works-item-actions">
-                <button className="works-btn" onClick={() => replay(w)} data-tip="Replay">
+                <button className="works-btn" onClick={() => replay(w)} data-tip="重播">
                   {playingId === w.id ? '■' : '▶'}
                 </button>
-                <button className="works-btn" onClick={() => download(w)} data-tip="Download">💾</button>
-                <button className="works-btn" onClick={() => remove(w)} data-tip="Delete">🗑</button>
+                <button className="works-btn" onClick={() => download(w)} data-tip="下載">💾</button>
+                <button className="works-btn" onClick={() => remove(w)} data-tip="刪除">🗑</button>
               </span>
             </li>
           ))}

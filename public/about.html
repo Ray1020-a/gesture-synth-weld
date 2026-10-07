@@ -1,29 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>About — Gesture Synth Weld</title>
+<meta name="theme-color" content="#5271ff" />
+<title>關於 — 數實資研社附設資音組樂器</title>
 <link rel="canonical" href="https://gesturesynthweld.com/about" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3" />
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,system-ui,sans-serif;background:#0a0a1a;color:#d0d0e8;line-height:1.7;max-width:780px;margin:0 auto;padding:2rem 1.2rem}a{color:#00ffcc}h1{font-family:Orbitron,monospace;color:#00ffcc}h2{font-family:Orbitron,monospace;color:#00ffcc;font-size:1rem;margin:1.4rem 0 0.5rem}p,li{font-size:0.9rem;color:#b0b0d0;margin-bottom:0.6rem}ul{padding-left:1.2rem}.nav{margin-bottom:1.2rem;font-size:0.85rem}.nav a{margin-right:0.8rem}.muted{color:#606090;font-size:0.8rem;margin-top:2rem;border-top:1px solid rgba(0,255,204,0.12);padding-top:1rem}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:system-ui,"Segoe UI","Noto Sans TC",Roboto,sans-serif;background:radial-gradient(1200px 600px at 80% 0%,rgba(82,113,255,.08),transparent 60%),#fff;color:#000;line-height:1.7;max-width:780px;margin:0 auto;padding:2.5rem 1.2rem}a{color:#5271ff;text-decoration:none}a:hover{text-decoration:underline}.label{display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;color:#5271ff;font-size:14px;font-weight:700;letter-spacing:.18em}.label::before{content:"";width:28px;height:2px;background:#5271ff}h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;letter-spacing:-.01em;margin-bottom:1rem}h2{font-size:1.1rem;font-weight:700;margin:1.8rem 0 .5rem;padding-left:12px;border-left:4px solid #5271ff}p,li{font-size:.95rem;color:#3a3a3a;margin-bottom:.6rem}ul{padding-left:1.2rem}.nav{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem;font-size:.85rem}.nav a{border:1px solid rgba(0,0,0,.08);border-radius:999px;padding:.3rem .9rem;color:#000;background:#fff}.nav a:hover{border-color:#5271ff;color:#5271ff;text-decoration:none}.muted{color:#666;font-size:.8rem;margin-top:2.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:1rem}
 </style>
 </head>
 <body>
-<div class="nav"><a href="/">← Gesture Synth Weld</a> <a href="/gesture-synth">Gesture Synth</a> <a href="/guide">Guide</a> <a href="/privacy">Privacy</a> <a href="/contact">Contact</a></div>
-<h1>About Gesture Synth Weld</h1>
-<p>Gesture Synth Weld is an open-source, browser-based <a href="/gesture-synth">hand gesture synth</a>. Your left hand controls harmony (key / scale degree / major-minor), your right hand controls expression (chord style / volume / tone / octave). No downloads, no plugins, no accounts — just your webcam (or keyboard mode) and your hands.</p>
+<div class="nav"><a href="/">← 數實資研社附設資音組樂器</a> <a href="/gesture-synth">手勢合成器</a> <a href="/guide">教學</a> <a href="/privacy">隱私權</a> <a href="/contact">聯絡我們</a></div>
+<span class="label">數實資研社 · 資音組</span>
+<h1>關於數實資研社附設資音組樂器</h1>
+<p>數實資研社附設資音組樂器是一款開放原始碼、在瀏覽器中執行的<a href="/gesture-synth">手勢合成器</a>。左手控制和聲（調性／音級／大小調），右手控制表情（和弦風格／音量／音色／八度）。不用下載、不用外掛、不用帳號 — 只要你的網路攝影機（或鍵盤模式）和雙手。</p>
 
-<h2>Open Source</h2>
-<p>MIT licensed. Source, issues and contributions: <a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener">github.com/rainbow686/gesture-synth-weld</a>. We welcome PRs — see the repo for contribution notes. Funding is optional and transparent: only non-intrusive ads below the fold, if any, to cover hosting; no paywall on playing or recording.</p>
+<h2>開放原始碼</h2>
+<p>以 MIT 授權釋出。原始碼、問題回報與貢獻：<a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener">github.com/rainbow686/gesture-synth-weld</a>。歡迎發 PR — 貢獻說明請見儲存庫。經費來源是選擇性且透明的：只有在首屏下方放置不干擾的廣告（如有）來支付主機費用；演奏與錄製都沒有付費牆。</p>
 
-<h2>Tech</h2>
-<p>Vite + React + TypeScript, Tone.js (Web Audio) for synthesis, MediaPipe Tasks Vision (HandLandmarker) for hand tracking. Web app on Vercel; hand model on Cloudflare. All processing is local — camera feed never leaves your device.</p>
+<h2>技術</h2>
+<p>Vite + React + TypeScript，以 Tone.js（Web Audio）合成聲音，MediaPipe Tasks Vision（HandLandmarker）追蹤手部。網頁應用部署在 Vercel；手部模型放在 Cloudflare。所有運算都在本機進行 — 相機畫面絕不會離開你的裝置。</p>
 
-<h2>Who's behind it</h2>
-<p>Built and maintained by <a href="https://github.com/rainbow686" target="_blank" rel="noopener">rainbow686</a>. Contact: see <a href="/contact">Contact</a>.</p>
+<h2>製作團隊</h2>
+<p>由 <a href="https://github.com/rainbow686" target="_blank" rel="noopener">rainbow686</a> 開發與維護。聯絡方式請見<a href="/contact">聯絡我們</a>。</p>
 
-<p class="muted">© Gesture Synth Weld — MIT License.</p>
+<p class="muted">© 數實資研社附設資音組樂器 — MIT 授權。</p>
 </body>
 </html>

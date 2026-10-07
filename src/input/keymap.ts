@@ -25,24 +25,24 @@ export interface KbActionMeta {
 }
 
 export const ACTION_META: Record<KbAction, KbActionMeta> = {
-  degree1: { label: 'I (tonic)', group: 'harmony' },
+  degree1: { label: 'I（主和弦）', group: 'harmony' },
   degree2: { label: 'II', group: 'harmony' },
   degree3: { label: 'III', group: 'harmony' },
   degree4: { label: 'IV', group: 'harmony' },
   degree5: { label: 'V', group: 'harmony' },
   degree6: { label: 'VI', group: 'harmony' },
   degree7: { label: 'VII', group: 'harmony' },
-  minor: { label: 'Minor', group: 'harmony' },
-  major: { label: 'Major', group: 'harmony' },
-  chordStyle1: { label: 'Triad', group: 'expression' },
-  chordStyle2: { label: '1st inversion', group: 'expression' },
-  chordStyle3: { label: '7th chord', group: 'expression' },
-  chordStyle4: { label: '9th chord', group: 'expression' },
-  octaveDown: { label: 'Octave down (8vb)', group: 'expression' },
-  volumeUp: { label: 'Volume up', group: 'expression' },
-  volumeDown: { label: 'Volume down', group: 'expression' },
-  filterLeft: { label: 'Filter sweep left', group: 'expression' },
-  filterRight: { label: 'Filter sweep right', group: 'expression' },
+  minor: { label: '小調', group: 'harmony' },
+  major: { label: '大調', group: 'harmony' },
+  chordStyle1: { label: '三和弦', group: 'expression' },
+  chordStyle2: { label: '第一轉位', group: 'expression' },
+  chordStyle3: { label: '七和弦', group: 'expression' },
+  chordStyle4: { label: '九和弦', group: 'expression' },
+  octaveDown: { label: '降八度（8vb）', group: 'expression' },
+  volumeUp: { label: '音量增加', group: 'expression' },
+  volumeDown: { label: '音量減少', group: 'expression' },
+  filterLeft: { label: '濾波往左掃', group: 'expression' },
+  filterRight: { label: '濾波往右掃', group: 'expression' },
 };
 
 export const ACTION_ORDER: KbAction[] = [
@@ -74,8 +74,8 @@ export interface KeymapPreset {
  *  degree row, no AltGr on any layout). Everything else (digits, Shift,
  *  arrows) is layout-agnostic already, so only minor/major needs to move. */
 export const KEYMAP_PRESETS: KeymapPreset[] = [
-  { id: 'qwerty', label: 'QWERTY (default)', map: { ...DEFAULT_KEYMAP } },
-  { id: 'qwertz', label: 'German (QWERTZ)', map: { ...DEFAULT_KEYMAP, minor: 'q', major: 'w' } },
+  { id: 'qwerty', label: 'QWERTY（預設）', map: { ...DEFAULT_KEYMAP } },
+  { id: 'qwertz', label: '德文（QWERTZ）', map: { ...DEFAULT_KEYMAP, minor: 'q', major: 'w' } },
 ];
 
 /** Which preset (if any) exactly matches the current map — 'custom' when
@@ -101,7 +101,7 @@ export function displayKey(key: string): string {
     case 'ArrowDown': return '↓';
     case 'ArrowLeft': return '←';
     case 'ArrowRight': return '→';
-    case ' ': return 'Space';
+    case ' ': return '空白鍵';
     default: return key.length === 1 ? key.toUpperCase() : key;
   }
 }

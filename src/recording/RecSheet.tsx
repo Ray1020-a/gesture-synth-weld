@@ -132,7 +132,7 @@ export function RecSheet(props: RecSheetProps) {
       {/* 3-2-1 countdown overlay */}
       {recPhase === 'countdown' && (
         <div className="countdown-overlay">
-          <div className="countdown-hint">Get ready</div>
+          <div className="countdown-hint">準備好</div>
           <div key={recCount} className="countdown-num">{recCount}</div>
         </div>
       )}
@@ -140,8 +140,8 @@ export function RecSheet(props: RecSheetProps) {
       {/* Wrap-up 3-2-1 during the last 3s — same language as the opening,
           lighter dim so the hands stay visible; DOM-only, never in the video */}
       {endCount !== null && (
-        <div className="countdown-overlay" style={{ background: 'rgba(5, 5, 15, 0.42)' }}>
-          <div className="countdown-hint">Wrap up</div>
+        <div className="countdown-overlay" style={{ background: 'rgba(255, 255, 255, 0.42)' }}>
+          <div className="countdown-hint">即將結束</div>
           <div key={endCount} className="countdown-num wrap-up">{endCount}</div>
         </div>
       )}
@@ -150,11 +150,11 @@ export function RecSheet(props: RecSheetProps) {
       {recPhase === 'choosing' && (
         <div className="rec-sheet">
           <div className="rec-body">
-            <div className="rec-sheet-title">Record performance</div>
+            <div className="rec-sheet-title">錄製演奏</div>
             <div className="rec-sheet-sub">
               {keyboardMode
-                ? 'Keyboard mode records audio only — no camera feed to capture'
-                : 'What should the recording capture?'}
+                ? '鍵盤模式只錄音訊 — 沒有相機畫面可錄'
+                : '要錄下什麼內容？'}
             </div>
             <div className="rec-options">
               {((keyboardMode ? ['audio'] : ['video', 'skeleton', 'audio']) as RecMode[]).map((id) => (
@@ -166,22 +166,22 @@ export function RecSheet(props: RecSheetProps) {
                   {REC_SVG_PREVIEWS[id]}
                   <span>
                     <strong>
-                      {id === 'video' ? 'Full' : id === 'skeleton' ? 'Skeleton' : 'Audio only'}
+                      {id === 'video' ? '完整畫面' : id === 'skeleton' ? '骨架' : '只錄音訊'}
                       {/* "default" only makes sense for first-time choosers —
                           returning players see their own saved choice */}
-                      {id === 'skeleton' && !savedRecModeExists && <span className="rec-default-tag">default</span>}
+                      {id === 'skeleton' && !savedRecModeExists && <span className="rec-default-tag">預設</span>}
                     </strong>
                     {/* Intent labels — kept short enough to fit ONE line
                         on mobile buttons (~160px), so the chooser doesn't
                         grow rows. */}
-                    <em>{id === 'video' ? 'Real you — best for sharing' : id === 'skeleton' ? 'Privacy-friendly' : 'Just the sound'}</em>
+                    <em>{id === 'video' ? '真人入鏡 — 最適合分享' : id === 'skeleton' ? '保護隱私' : '只有聲音'}</em>
                   </span>
                 </button>
               ))}
             </div>
             {recMode !== 'audio' && (
               <>
-                <div className="rec-sheet-sub">Aspect ratio</div>
+                <div className="rec-sheet-sub">畫面比例</div>
                 <div className="rec-ratios">
                   {(['9:16', '16:9', '1:1'] as RecRatio[]).map((r) => (
                     <button key={r} className={`rec-ratio-btn ${recRatio === r ? 'active' : ''}`} onClick={() => setRecRatio(r)}>{r}</button>
@@ -191,19 +191,19 @@ export function RecSheet(props: RecSheetProps) {
               </>
             )}
             {recMode !== 'audio' && !VIDEO_REC_SUPPORTED && (
-              <div className="rec-warn">Video recording isn't supported in this browser — choose Audio only.</div>
+              <div className="rec-warn">此瀏覽器不支援錄影 — 請選擇「只錄音訊」。</div>
             )}
             {/* Mic section: ALWAYS visible so users know the sing-along
                 feature exists — grayed out until the mic is enabled */}
             <div className={`rec-mic-section ${micStreamRef.current ? '' : 'disabled'}`}>
               <label className="rec-mic-toggle">
                 <input type="checkbox" checked={micOn} onChange={(e) => { trackMicToggled(e.target.checked); setMicOn(e.target.checked); }} disabled={!micStreamRef.current} />
-                <span>🎤 Include my voice — sing along with the chords</span>
+                <span>🎤 加入我的聲音 — 跟著和弦一起唱</span>
               </label>
               {micStreamRef.current ? (
                 <>
                   {/* Liquid-glass mic level meter */}
-                  <div className="rec-mic-meter" title="Microphone level — speak to test">
+                  <div className="rec-mic-meter" title="麥克風音量 — 說話測試看看">
                     {Array.from({ length: 14 }, (_, i) => {
                       const h = micLevel > 0.02 ? Math.max(14, Math.min(100, micLevel * 100 * (0.55 + 0.45 * ((i % 3) / 2)))) : 5;
                       return <span key={i} style={{ height: `${h}%`, opacity: micLevel > 0.02 ? 1 : 0.25 }} />;
@@ -211,46 +211,46 @@ export function RecSheet(props: RecSheetProps) {
                   </div>
                   {micDevices.length > 1 && (
                     <>
-                      <div className="rec-sheet-sub">Microphone</div>
+                      <div className="rec-sheet-sub">麥克風</div>
                       <select className="rec-device-select" value={micDeviceId} onChange={(e) => switchMicDevice(e.target.value)}>
                         {micDevices.map((d) => (
-                          <option key={d.deviceId} value={d.deviceId}>{d.label || 'Microphone'}</option>
+                          <option key={d.deviceId} value={d.deviceId}>{d.label || '麥克風'}</option>
                         ))}
                       </select>
                     </>
                   )}
-                  <div className="rec-sheet-sub">Recording mix <span className="rec-mix-desc">— balance your voice against the chords</span></div>
+                  <div className="rec-sheet-sub">錄音混音 <span className="rec-mix-desc">— 調整人聲與和弦的平衡</span></div>
                   <div className="rec-mix-row">
-                    <span>Voice</span>
+                    <span>人聲</span>
                     <input type="range" min={50} max={200} value={Math.round(recVoice * 100)} onChange={(e) => setRecVoice(Number(e.target.value) / 100)} className="rec-mix-slider" />
-                    <span>Chords</span>
+                    <span>和弦</span>
                   </div>
-                  <div className="rec-mix-value">Voice {Math.round(recVoice * 100)}% in the final video</div>
-                  <div className="rec-sheet-sub">Vocal polish <span className="rec-mix-desc">— voice effects in the recording</span></div>
+                  <div className="rec-mix-value">成品中人聲 {Math.round(recVoice * 100)}%</div>
+                  <div className="rec-sheet-sub">人聲修飾 <span className="rec-mix-desc">— 錄音中的人聲效果</span></div>
                   <select
                     className="rec-device-select"
                     value={recPolish}
                     onChange={(e) => { trackSettingChanged('vocal_polish', e.target.value); setRecPolish(e.target.value as VocalPolish); }}
                   >
-                    <option value="off">Off — raw voice</option>
-                    <option value="light">Light — subtle</option>
-                    <option value="standard">Standard — recommended</option>
-                    <option value="strong">Strong — roomy</option>
+                    <option value="off">關閉 — 原音</option>
+                    <option value="light">輕度 — 細微</option>
+                    <option value="standard">標準 — 推薦</option>
+                    <option value="strong">強烈 — 空間感</option>
                   </select>
                 </>
               ) : micPermState === 'denied' ? (
                 <div className="rec-mic-notice">
-                  <strong>Sing along?</strong> You can record your voice over the chords — but the
-                  microphone is <strong>blocked for this site</strong>. Click the <strong>🔒 lock icon</strong> in the
-                  address bar → Site settings → Microphone → <strong>Allow</strong>, then come back here.
+                  <strong>想一起唱嗎？</strong>你可以在和弦上錄下自己的聲音 — 但此網站的
+                  麥克風<strong>已被封鎖</strong>。請點網址列的 <strong>🔒 鎖頭圖示</strong>
+                  → 網站設定 → 麥克風 → <strong>允許</strong>，再回到這裡。
                 </div>
               ) : (
                 <>
                   <div className="rec-mic-notice">
-                    <strong>Sing along?</strong> You can record your voice over the chords — but the
-                    microphone isn't enabled yet.
+                    <strong>想一起唱嗎？</strong>你可以在和弦上錄下自己的聲音 — 但
+                    麥克風尚未開啟。
                   </div>
-                  <button className="rec-mic-enable-btn" onClick={() => requestMic()}>🎤 Enable microphone</button>
+                  <button className="rec-mic-enable-btn" onClick={() => requestMic()}>🎤 開啟麥克風</button>
                 </>
               )}
             </div>
@@ -264,11 +264,11 @@ export function RecSheet(props: RecSheetProps) {
             onClick={() => trackProGateClicked('rec_chooser')}
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); trackProGateClicked('rec_chooser'); } }}
           >
-            🔒 <strong>Pro</strong> (coming soon): unlimited recording · no watermark · more instruments
+            🔒 <strong>Pro</strong>（即將推出）：無限錄製 · 無浮水印 · 更多樂器
           </div>
           <div className="rec-actions">
-            <button className="rec-btn" onClick={() => setRecPhase('idle')}>Cancel</button>
-            <button className="rec-btn primary" onClick={handleStartRecording}>Start · 3s countdown</button>
+            <button className="rec-btn" onClick={() => setRecPhase('idle')}>取消</button>
+            <button className="rec-btn primary" onClick={handleStartRecording}>開始 · 倒數 3 秒</button>
           </div>
         </div>
       )}
@@ -276,7 +276,7 @@ export function RecSheet(props: RecSheetProps) {
       {/* Result panel: download (all), share (mobile via Web Share API) */}
       {recPhase === 'result' && recBlob && (
         <div className="rec-sheet">
-          <div className="rec-sheet-title">✓ Recording ready</div>
+          <div className="rec-sheet-title">✓ 錄製完成</div>
           <div className="rec-sheet-sub">{recBlob.filename} · {(recBlob.blob.size / 1048576).toFixed(1)} MB</div>
           {/* In-page playback of the take — video plays immediately
               (muted for autoplay policy; tap the controls for sound).
@@ -302,7 +302,7 @@ export function RecSheet(props: RecSheetProps) {
           })()}
           {/* Previewing an earlier recording - say so (default = THIS recording). */}
           {histUrl && (
-            <div className="rec-previewing">▶ Previewing an earlier recording - the buttons below still apply to this recording</div>
+            <div className="rec-previewing">▶ 正在預覽較早的錄音 — 下方按鈕仍作用於這次的錄音</div>
           )}
           {/* History list (2026-08-18, feedback - full version): the recordings
               from this browser, newest first (the just-saved one on top,
@@ -312,7 +312,7 @@ export function RecSheet(props: RecSheetProps) {
               App's shared works state. */}
           {works && works.length > 0 && (
             <>
-              <div className="rec-works-title">My recordings ({works.length})</div>
+              <div className="rec-works-title">我的錄音（{works.length}）</div>
               <ul className="rec-works-list">
                 {works.map((w) => (
                   <li key={w.id} className={`rec-works-item${histId === w.id ? ' active' : ''}`}>
@@ -326,7 +326,7 @@ export function RecSheet(props: RecSheetProps) {
                         setHistId(w.id);
                         trackWorkReplayed();
                       }}
-                      title="Preview this recording"
+                      title="預覽這段錄音"
                     >{histId === w.id ? '■' : '▶'}</button>
                     <span className="rec-works-icon">{w.type === 'audio' ? '🎵' : '🎬'}</span>
                     <span className="rec-works-date">
@@ -336,12 +336,12 @@ export function RecSheet(props: RecSheetProps) {
                     <button
                       className="works-btn"
                       onClick={() => { trackWorkDownloaded(); const u = URL.createObjectURL(w.blob); const a = document.createElement('a'); a.href = u; a.download = w.filename; a.click(); URL.revokeObjectURL(u); }}
-                      title="Download"
+                      title="下載"
                     >💾</button>
                     <button
                       className="works-btn"
                       onClick={() => { trackWorkDeleted('result_panel'); onDeleteWork(w.id); if (histId === w.id) { setHistId(null); setHistUrl(null); } }}
-                      title="Delete"
+                      title="刪除"
                     >🗑</button>
                   </li>
                 ))}
@@ -349,36 +349,36 @@ export function RecSheet(props: RecSheetProps) {
             </>
           )}
           <div className="rec-actions">
-            <button className="rec-btn" onClick={() => setRecPhase('idle')}>Close</button>
-            <button className="rec-btn primary" onClick={() => { trackDownload(); downloadRec(); }}>💾 Download</button>
+            <button className="rec-btn" onClick={() => setRecPhase('idle')}>關閉</button>
+            <button className="rec-btn primary" onClick={() => { trackDownload(); downloadRec(); }}>💾 下載</button>
             {/* Share: mobile gets the Web Share sheet; desktop has no
                 Web Share API — the caption button opens that loop
                 (2026-10-07; before this, desktop had NO share path). */}
             {canFileShare
-              ? <button className="rec-btn primary" onClick={shareRec}>📤 Share</button>
-              : <button className="rec-btn primary" onClick={copyCaption}>📋 Copy caption</button>}
+              ? <button className="rec-btn primary" onClick={shareRec}>📤 分享</button>
+              : <button className="rec-btn primary" onClick={copyCaption}>📋 複製文案</button>}
           </div>
           {canFileShare ? (
             <div className="rec-sheet-sub" style={{ marginTop: 10, lineHeight: 1.6 }}>
-              Share directly: WhatsApp · WeChat · Telegram<br />
-              TikTok · Instagram · 抖音: Save to Photos, then upload in-app
+              直接分享：WhatsApp · WeChat · Telegram<br />
+              TikTok · Instagram · 抖音：先存到相簿，再到 App 內上傳
             </div>
           ) : (
             <div className="rec-sheet-sub" style={{ marginTop: 10, lineHeight: 1.6 }}>
-              Post it: download it, upload on TikTok · Instagram · YouTube Shorts, then paste the caption:<br />
+              發布方式：先下載，上傳到 TikTok · Instagram · YouTube Shorts，再貼上文案：<br />
               {captionCopied
-                ? <span style={{ color: 'var(--neon-cyan)' }}>✓ Caption copied — ready to paste</span>
+                ? <span style={{ color: 'var(--neon-cyan)' }}>✓ 文案已複製 — 可以貼上了</span>
                 : <em style={{ color: 'var(--text-muted)' }}>{POST_CAPTION}</em>}
             </div>
           )}
           {shareFailed && (
-            <div className="rec-warn" style={{ marginTop: 8 }}>Sharing isn't available in this browser — use Download instead.</div>
+            <div className="rec-warn" style={{ marginTop: 8 }}>此瀏覽器無法分享 — 請改用下載。</div>
           )}
           {/* Local recordings library discoverability: the recording was auto-saved
               to this browser - tell the player they have a reason to come
               back (2026-08-17 retention experiment). */}
           <div className="rec-sheet-sub" style={{ marginTop: 8 }}>
-            ✓ Auto-saved to this browser - "My recordings" appears under the start button on your next visit
+            ✓ 已自動存到此瀏覽器 — 下次造訪時，「我的錄音」會出現在開始按鈕下方
           </div>
           {/* Pro-gate probe (result panel): the "keep the recording" moment —
               the most natural place to test paid-intent for removal of
@@ -390,7 +390,7 @@ export function RecSheet(props: RecSheetProps) {
             onClick={() => trackProGateClicked('rec_result')}
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); trackProGateClicked('rec_result'); } }}
           >
-            🔒 <strong>Pro</strong> (coming soon): unlimited recording · no watermark · more instruments
+            🔒 <strong>Pro</strong>（即將推出）：無限錄製 · 無浮水印 · 更多樂器
           </div>
         </div>
       )}

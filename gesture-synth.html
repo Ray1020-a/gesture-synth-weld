@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TF2TBSZFT"></script>
@@ -21,12 +21,12 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4516753695428109" crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0a0a1a" />
+  <meta name="theme-color" content="#5271ff" />
 
-  <title>Gesture Synth — Play Music with Your Hands, No Hardware</title>
-  <meta name="description" content="What is a gesture synth? An instrument you play with hand gestures. Play free in your browser — webcam only, no hardware, no downloads." />
-  <meta name="keywords" content="gesture synth, what is a gesture synth, hand gesture synth, gesture synth app, play gesture synth online, browser gesture instrument" />
-  <meta name="author" content="Gesture Synth Weld" />
+  <title>手勢合成器 — 用雙手演奏音樂，不需硬體｜數實資研社附設資音組樂器</title>
+  <meta name="description" content="什麼是手勢合成器？一種用手勢演奏的樂器。在瀏覽器免費演奏 — 只要網路攝影機，不需硬體、不用下載。" />
+  <meta name="keywords" content="手勢合成器, 什麼是手勢合成器, 手部手勢合成器, 手勢合成器 App, 線上手勢合成器, 瀏覽器手勢樂器, 數實資研社, 資音組, gesture synth" />
+  <meta name="author" content="數實資研社附設資音組" />
   <!-- Author identity — Google authorship signal (free; matches the GitHub repo owner) -->
   <link rel="author" href="https://github.com/rainbow686" />
   <link rel="canonical" href="https://gesturesynthweld.com/gesture-synth" />
@@ -34,38 +34,40 @@
        page, so the first camera start skips a full RTT (crossorigin needed
        for the cross-origin fetch of wasm/task files). -->
   <link rel="preconnect" href="https://assets.gesturesynthweld.com" crossorigin />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
-  <link rel="shortcut icon" href="/favicon.svg?v=2" />
-  <link rel="apple-touch-icon" href="/favicon.svg?v=2" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3" />
+  <link rel="shortcut icon" href="/favicon.svg?v=3" />
+  <link rel="apple-touch-icon" href="/favicon.svg?v=3" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Gesture Synth — Play Music with Your Hands, No Hardware" />
-  <meta property="og:description" content="A gesture synth turns hand movements into music. This one runs free in your browser — webcam only, nothing to install." />
+  <meta property="og:title" content="手勢合成器 — 用雙手演奏音樂，不需硬體｜數實資研社附設資音組樂器" />
+  <meta property="og:description" content="手勢合成器把手部動作變成音樂。這一把在瀏覽器免費執行 — 只要網路攝影機，什麼都不用裝。" />
   <meta property="og:url" content="https://gesturesynthweld.com/gesture-synth" />
-  <meta property="og:site_name" content="Gesture Synth Weld" />
+  <meta property="og:site_name" content="數實資研社附設資音組樂器" />
   <meta property="og:image" content="https://gesturesynthweld.com/og-image.png" />
-  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale" content="zh_TW" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Gesture Synth — Play Music with Your Hands, No Hardware" />
-  <meta name="twitter:description" content="Turn hand movements into music. Free in your browser — webcam only, nothing to install." />
+  <meta name="twitter:title" content="手勢合成器 — 用雙手演奏音樂，不需硬體｜數實資研社附設資音組樂器" />
+  <meta name="twitter:description" content="把手部動作變成音樂。在瀏覽器免費使用 — 只要網路攝影機，什麼都不用裝。" />
   <meta name="twitter:image" content="https://gesturesynthweld.com/og-image.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet" />
 
   <!-- WebApplication JSON-LD Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Gesture Synth Weld",
+    "name": "數實資研社附設資音組樂器",
+    "alternateName": ["Gesture Synth Weld", "數實資研社資音組"],
+    "inLanguage": "zh-Hant",
     "url": "https://gesturesynthweld.com/gesture-synth",
-    "description": "A browser-based hand gesture music synthesizer with two-hand control. Left hand sets harmony (key, scale, major/minor), right hand controls expression (chord type, volume, tone). Includes 3 modes, arpeggiator, auto bass, and audio/video recording.",
+    "description": "在瀏覽器中執行的雙手手勢音樂合成器。左手設定和聲（調性、音階、大小調），右手控制表情（和弦類型、音量、音色）。內建 3 種模式、琶音、自動低音與音訊／影片錄製。",
     "applicationCategory": "MultimediaApplication",
     "operatingSystem": "Any",
     "offers": {
@@ -73,17 +75,17 @@
       "price": "0",
       "priceCurrency": "USD"
     },
-    "browserRequirements": "Requires a modern browser with Web Audio API, getUserMedia, and JavaScript enabled. Chrome 90+, Firefox 90+, Edge 90+, Safari 15+.",
+    "browserRequirements": "需要支援 Web Audio API、getUserMedia 並啟用 JavaScript 的新版瀏覽器。Chrome 90+、Firefox 90+、Edge 90+、Safari 15+。",
     "featureList": [
-      "Two-hand gesture control with independent left/right hand roles",
-      "Left hand: 12-key selector with scale degree and major/minor toggle via wrist tilt",
-      "Right hand: dynamic chord recognition (triad, 7th, 9th) or fixed chord style (8 types)",
-      "Synthesized sawtooth wave engine with real-time filter control",
-      "Arpeggiator with 3 speed settings (Slow/Normal/Fast)",
-      "Auto Bass line generator with independent volume control",
-      "Audio & video recording (MP4/M4A, up to 120 seconds) — capture and download your performances",
-      "Theremin mode: continuous pitch and volume control with both hands",
-      "Mono Piano mode: single-note melody with finger-count intervals"
+      "雙手手勢控制，左右手各司其職",
+      "左手：12 調選擇，手指選音級、手腕傾斜切換大小調",
+      "右手：動態和弦辨識（三和弦、七和弦、九和弦）或固定和弦風格（8 種）",
+      "鋸齒波合成引擎，可即時控制濾波",
+      "三段速度的琶音（慢／一般／快）",
+      "自動低音，音量獨立控制",
+      "音訊與影片錄製（MP4/M4A，最長 120 秒）— 錄下並下載你的演奏",
+      "特雷門模式：雙手連續控制音高與音量",
+      "單音鋼琴模式：以手指數決定音程的單音旋律"
     ],
     "screenshot": "https://gesturesynthweld.com/og-image.png",
     "softwareVersion": "2.0.0",
@@ -99,90 +101,90 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "What is a gesture synth?",
+        "name": "什麼是手勢合成器？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A gesture synth is a musical instrument played with hand or body gestures instead of keys: a sensor reads your movements and software turns them into sound. Gesture Synth Weld is a free browser-based gesture synth — your webcam tracks your hands and each finger maps to a different note."
+          "text": "手勢合成器是一種用手部或肢體手勢、而非按鍵來演奏的樂器：感測器讀取你的動作，軟體把它變成聲音。數實資研社附設資音組樂器是一款免費的瀏覽器手勢合成器 — 網路攝影機追蹤你的雙手，每根手指對應不同的音。"
         }
       },
       {
         "@type": "Question",
-        "name": "Is there a gesture synth app for Android or iPhone?",
+        "name": "有 Android 或 iPhone 的手勢合成器 App 嗎？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "There is deliberately no app to install — no download, no storage, no account. This page is the online version: open it on any phone, tablet or laptop, allow the camera, and play. The URL is the app; your browser's Add to Home Screen gives you the same one-tap icon."
+          "text": "我們刻意不做需要安裝的 App — 不用下載、不佔空間、不用帳號。這個頁面就是線上版本：在任何手機、平板或筆電打開、允許相機，就能演奏。網址就是 App；用瀏覽器的「加入主畫面」也能得到一鍵開啟的圖示。"
         }
       },
       {
         "@type": "Question",
-        "name": "Do I need any special equipment?",
+        "name": "需要任何特殊設備嗎？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. All you need is a computer or laptop with a built-in or USB webcam, and a modern browser like Chrome, Edge, or Firefox. No MIDI controllers, no external sensors, no downloads. Prefer no camera at all? Keyboard mode turns your physical keyboard into the instrument — no webcam and no model download required."
+          "text": "不需要。只要一台有內建或 USB 網路攝影機的電腦，以及 Chrome、Edge 或 Firefox 等新版瀏覽器。不需 MIDI 控制器、外接感測器，也不用下載。完全不想用相機？鍵盤模式能把實體鍵盤變成樂器 — 不需攝影機也不用下載模型。"
         }
       },
       {
         "@type": "Question",
-        "name": "What browsers are supported?",
+        "name": "支援哪些瀏覽器？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Gesture Synth Weld works in any modern browser that supports Web Audio API and getUserMedia — including Chrome 90+, Firefox 90+, Edge 90+, and Safari 15+. For the best hand tracking experience, Chrome or Edge is recommended."
+          "text": "支援 Web Audio API 與 getUserMedia 的新版瀏覽器都能使用 — 包括 Chrome 90+、Firefox 90+、Edge 90+ 與 Safari 15+。想要最好的手部追蹤體驗，建議使用 Chrome 或 Edge。"
         }
       },
       {
         "@type": "Question",
-        "name": "Can I record my performance?",
+        "name": "可以錄下我的演奏嗎？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes! Click the Record button to start capturing your performance (up to 120 seconds). A 3-2-1 countdown gets you ready, and a 3-2-1 wrap-up warns you before the recording ends. Choose from three modes: audio only, full video (camera with neon hand skeleton), or skeleton animation without the camera feed — plus an aspect ratio for social platforms (9:16 for TikTok/Reels/Shorts, 16:9 for YouTube, 1:1 for Instagram). After recording, download the file or share it straight to your apps from the mobile share sheet (the share message carries our brand and gesturesynthweld.com). Your camera feed is never uploaded to any server."
+          "text": "可以！點錄製按鈕開始錄下你的演奏（最長 120 秒）。開始前有 3-2-1 倒數，結束前有 3-2-1 收尾提醒。可選三種模式：只錄音訊、完整影片（相機畫面 + 手部骨架），或不含相機畫面的骨架動畫 — 並可選擇社群平台的畫面比例（9:16 適合 TikTok／Reels／Shorts、16:9 適合 YouTube、1:1 適合 Instagram）。錄完後可下載檔案，或在手機上直接從分享選單分享（分享訊息會附上品牌與 gesturesynthweld.com）。你的相機畫面絕不會上傳到任何伺服器。"
         }
       },
       {
         "@type": "Question",
-        "name": "What chords can I play?",
+        "name": "可以彈哪些和弦？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Gesture Synth Weld supports all 12 keys (C through B) with two right-hand modes. In Finger Layout mode: 1 finger = triad, 2 fingers = 1st inversion, 3 fingers = 7th chord, 4 fingers = 9th chord. In Fixed Chord mode, choose from 8 chord types: Major Triad, Major 1st Inversion, Minor Triad, Diminished, Sus2, Sus4, Major 7th, and Dominant 7th. Lock to a fixed major or minor mode, or enable Scale+Tilt to switch between them with left-hand wrist tilt."
+          "text": "支援全部 12 個調（C 到 B）以及兩種右手模式。手指排列模式：1 指 = 三和弦、2 指 = 第一轉位、3 指 = 七和弦、4 指 = 九和弦。固定和弦模式可從 8 種和弦類型中選擇：大三和弦、大三和弦第一轉位、小三和弦、減三和弦、Sus2、Sus4、大七和弦與屬七和弦。可以鎖定在大調或小調，或開啟「音階 + 傾斜」用左手腕傾斜切換。"
         }
       },
       {
         "@type": "Question",
-        "name": "Can I play without a camera?",
+        "name": "沒有相機也能玩嗎？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes — Keyboard Mode (desktop) turns your physical keyboard into the instrument: press 1-7 for scale degrees I-VII (hold to play, release to stop), [ / ] for minor/major, 8/9/0/- for chord styles, Shift for octave down, arrow keys for volume and filter sweeps, Space to stop. Enable it in Settings — no camera permission, no MediaPipe model download. A real-keyboard interactive guide with a demo animation teaches every key; recording captures audio (voice optional) since there's no camera feed to record as video."
+          "text": "可以 — 鍵盤模式（桌機）把實體鍵盤變成樂器：按 1-7 演奏音級 I-VII（按住發聲、放開停止）、[ / ] 切換小調／大調、8/9/0/- 切換和弦風格、Shift 降八度、方向鍵調整音量與濾波、空白鍵停止。在設定中開啟 — 不需相機權限，也不用下載 MediaPipe 模型。附示範動畫的實體鍵盤互動教學會教你每個按鍵；因為沒有相機畫面，錄製只錄音訊（可選擇加入人聲）。"
         }
       },
       {
         "@type": "Question",
-        "name": "What makes Gesture Synth Weld different from other gesture synthesizers?",
+        "name": "這把樂器和其他手勢合成器有什麼不同？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Gesture Synth Weld features a unique two-hand division system: your left hand controls harmony (key selection, scale degree, major/minor toggle) while your right hand controls expression (chord complexity, volume, tone). Unlike basic gesture synths, it includes an arpeggiator for harp-like sweeps, an auto bass generator for low-end foundation, support for 7 diatonic chords with VI/VII special gestures, 8 fixed chord styles, and built-in MP4/M4A recording. It's also open source under the MIT license."
+          "text": "它採用獨特的雙手分工系統：左手控制和聲（選調、音級、大小調切換），右手控制表情（和弦複雜度、音量、音色）。和一般的手勢合成器不同，它內建豎琴般的琶音、提供低頻基礎的自動低音，支援 7 個順階和弦與 VI/VII 特殊手勢、8 種固定和弦風格，以及內建的 MP4/M4A 錄製。它也是以 MIT 授權釋出的開放原始碼專案。"
         }
       },
       {
         "@type": "Question",
-        "name": "Is Gesture Synth Weld free?",
+        "name": "可以免費使用嗎？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes! Gesture Synth Weld is free to use. We support the development and hosting of this tool through non-intrusive advertising. No registration, no sign-up, no paywall — just open and play."
+          "text": "可以！完全免費使用。我們透過不干擾的廣告支持開發與主機費用。不用註冊、不用登入、沒有付費牆 — 打開就能玩。"
         }
       },
       {
         "@type": "Question",
-        "name": "Is Gesture Synth Weld the same as a \"gesture synth\"?",
+        "name": "這把樂器就等於「手勢合成器」嗎？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Gesture Synth Weld is one specific gesture synth: a two-hand browser instrument — left hand harmony, right hand expression — with recording built in. \"Gesture synth\" is the generic category, and it includes hardware gloves, DIY kits and DAW plugins too."
+          "text": "數實資研社附設資音組樂器是一款特定的手勢合成器：雙手瀏覽器樂器 — 左手和聲、右手表情 — 並內建錄製。「手勢合成器」則是泛稱，也包含硬體手套、自造套件與 DAW 外掛。"
         }
       },
       {
         "@type": "Question",
-        "name": "Can I build my own?",
+        "name": "我可以自己做一個嗎？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes — this site is MIT-licensed open source on GitHub. The stack is MediaPipe hand tracking plus a Tone.js synth, all running locally in the browser."
+          "text": "可以 — 本站以 MIT 授權在 GitHub 開放原始碼。技術組合是 MediaPipe 手部追蹤加上 Tone.js 合成器，全部在瀏覽器本機執行。"
         }
       }
     ]
@@ -194,9 +196,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      background: #0a0a1a;
-      color: #e0e0ff;
-      font-family: 'Inter', system-ui, sans-serif;
+      background: radial-gradient(1200px 600px at 80% 0%, rgba(82, 113, 255, 0.08), transparent 60%) no-repeat, #ffffff;
+      color: #111111;
+      font-family: system-ui, 'Segoe UI', 'Noto Sans TC', Roboto, sans-serif;
       line-height: 1.6;
       min-height: 100vh;
     }
@@ -218,28 +220,43 @@
     }
     .seo-eyebrow {
       display: inline-block;
-      font-family: 'Orbitron', monospace;
+      font-family: inherit;
       font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.22em;
-      color: #00ffcc;
-      border: 1px solid rgba(0, 255, 204, 0.35);
+      color: #5271ff;
+      border: 1px solid rgba(82, 113, 255, 0.35);
       border-radius: 999px;
       padding: 0.3rem 0.9rem;
       margin-bottom: 0.9rem;
     }
     .seo-hero h1 {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(1.6rem, 4vw, 2.5rem);
-      font-weight: 900;
-      margin: 0 0 0.7rem;
-      background: linear-gradient(135deg, #00ffcc, #ff00ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-family: inherit;
+      font-size: clamp(1.9rem, 4.5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #000000;
+      margin: 0 0 0.9rem;
+    }
+    /* TSCSC-style eyebrow: blue label with a leading rule */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: #5271ff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+    }
+    .section-label::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: #5271ff;
     }
     .seo-lede {
-      color: #b0b0d0;
+      color: #3a3a3a;
       font-size: 1rem;
       max-width: 620px;
       margin: 0 auto;
@@ -253,31 +270,31 @@
     }
     .seo-chip {
       font-size: 0.78rem;
-      color: #a0a0d0;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #3a3a3a;
+      border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 999px;
       padding: 0.25rem 0.8rem;
     }
-    .seo-chip b { color: #00ffcc; }
+    .seo-chip b { color: #5271ff; }
     /* Scroll cue pinned to the hero's bottom edge */
     .seo-scroll-cue {
       position: absolute;
       bottom: 1.2rem;
       left: 50%;
       transform: translateX(-50%);
-      color: #606090;
+      color: #666666;
       font-size: 0.75rem;
       letter-spacing: 0.08em;
     }
     .seo-scroll-cue a {
-      color: #00ffcc;
+      color: #5271ff;
       text-decoration: none;
     }
     .seo-scroll-cue .bounce {
       display: block;
       text-align: center;
       font-size: 1.1rem;
-      color: #00ffcc;
+      color: #5271ff;
       animation: cue-bob 2s ease-in-out infinite;
     }
     @keyframes cue-bob {
@@ -297,8 +314,8 @@
       max-width: 800px;
       margin: 0 auto;
       padding: 0.9rem 1.5rem;
-      color: #00ffcc;
-      font-family: 'Orbitron', monospace;
+      color: #5271ff;
+      font-family: inherit;
       font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.28em;
@@ -308,7 +325,7 @@
       content: '';
       flex: 1;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.4), rgba(255, 0, 255, 0.4), transparent);
+      background: linear-gradient(90deg, transparent, rgba(82, 113, 255, 0.4), rgba(0, 153, 255, 0.4), transparent);
     }
 
     /* React mount point = full-screen camera area (second viewport) */
@@ -321,7 +338,7 @@
 
     /* SEO content area below the fold */
     .seo-content {
-      background: linear-gradient(180deg, #0a0a1a 0%, #0d0d2b 5%, #111133 100%);
+      background: #ffffff;
       padding: 3rem 0 2rem;
     }
     .seo-inner {
@@ -330,68 +347,73 @@
       padding: 0 1.5rem;
     }
     .seo-content h1 {
-      font-family: 'Orbitron', monospace;
+      font-family: inherit;
       font-size: clamp(1.6rem, 4vw, 2.5rem);
       font-weight: 900;
       text-align: center;
       margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, #00ffcc, #ff00ff);
+      background: linear-gradient(135deg, #5271ff, #0099ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .seo-content h2 {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.3rem;
-      color: #00ffcc;
-      margin: 2.5rem 0 1rem;
-      filter: drop-shadow(0 0 8px rgba(0, 255, 204, 0.2));
+      font-family: inherit;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #000000;
+      margin: 2rem 0 1rem;
+      padding-left: 14px;
+      border-left: 4px solid #5271ff;
+      line-height: 1.3;
     }
+    .seo-section > h2:first-child { margin-top: 0; }
     .seo-content h3 {
-      font-family: 'Inter', sans-serif;
+      font-family: inherit;
       font-size: 1rem;
       font-weight: 600;
-      color: #e0e0ff;
+      color: #111111;
       margin: 1rem 0 0.4rem;
     }
     .seo-content p {
-      color: #b0b0d0;
+      color: #3a3a3a;
       font-size: 0.95rem;
       margin-bottom: 0.8rem;
     }
     .seo-section {
-      background: rgba(10, 20, 40, 0.5);
-      border: 1px solid rgba(0, 255, 204, 0.08);
-      border-radius: 12px;
-      padding: 1.5rem;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 20px;
+      padding: 1.75rem;
       margin-bottom: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     }
     /* SEO-CTA play buttons (2026-09-11, Step 3): dispatch gsw:seo-play —
        the React instrument above starts directly, no page jump. */
     .seo-play-btn {
       display: inline-block;
-      font-family: 'Orbitron', monospace;
+      font-family: inherit;
       font-weight: 700;
       font-size: 1rem;
-      letter-spacing: 0.04em;
-      color: #06131a;
-      background: linear-gradient(135deg, #00ffcc, #66ffd9);
+      letter-spacing: 0.02em;
+      color: #ffffff;
+      background: #5271ff;
       border: none;
       border-radius: 999px;
       padding: 0.8rem 2rem;
       margin: 0.6rem 0.4rem 0;
       cursor: pointer;
-      box-shadow: 0 0 24px rgba(0, 255, 204, 0.35);
+      box-shadow: 0 8px 22px rgba(82, 113, 255, 0.32);
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
     .seo-play-btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 0 32px rgba(0, 255, 204, 0.5);
+      box-shadow: 0 12px 28px rgba(82, 113, 255, 0.4);
     }
     .seo-play-btn.ghost {
-      color: #00ffcc;
+      color: #5271ff;
       background: transparent;
-      border: 1px solid rgba(0, 255, 204, 0.4);
+      border: 1px solid rgba(82, 113, 255, 0.4);
       box-shadow: none;
     }
     .final-cta {
@@ -399,7 +421,7 @@
       padding: 1rem 0 0.5rem;
     }
     .final-cta p {
-      color: #a0a0d0;
+      color: #3a3a3a;
       font-size: 0.95rem;
       margin-bottom: 0.2rem;
     }
@@ -414,22 +436,22 @@
        keeps the 1→2→3→4 order left-to-right, top-to-bottom. */
     .step-grid.steps-4 { grid-template-columns: repeat(2, 1fr); }
     .step-card {
-      background: rgba(10, 20, 40, 0.6);
-      border-radius: 10px;
+      background: #f6f7ff;
+      border-radius: 18px;
       padding: 1.2rem;
-      border: 1px solid rgba(0, 255, 204, 0.1);
+      border: 1px solid rgba(82, 113, 255, 0.12);
     }
     .step-num {
-      font-family: 'Orbitron', monospace;
+      font-family: inherit;
       font-size: 1.8rem;
       font-weight: 900;
     }
-    .step-card:nth-child(1) .step-num { color: #00ffcc; }
-    .step-card:nth-child(2) .step-num { color: #ff00ff; }
-    .step-card:nth-child(3) .step-num { color: #7850ff; }
-    .step-card:nth-child(4) .step-num { color: #ffaa00; }
+    .step-card:nth-child(1) .step-num { color: #5271ff; }
+    .step-card:nth-child(2) .step-num { color: #0099ff; }
+    .step-card:nth-child(3) .step-num { color: #3a51c4; }
+    .step-card:nth-child(4) .step-num { color: #e08a00; }
     .step-card h3 { margin: 0.5rem 0 0.3rem; font-size: 0.95rem; }
-    .step-card p { font-size: 0.85rem; color: #a0a0d0; margin: 0; }
+    .step-card p { font-size: 0.85rem; color: #3a3a3a; margin: 0; }
 
     /* Ad slots (live units render themselves; min-height only reserves
        layout space so the ad never pushes content when it loads) */
@@ -442,25 +464,25 @@
 
     /* FAQ */
     .faq-item {
-      background: rgba(10, 20, 40, 0.6);
-      border: 1px solid rgba(0, 255, 204, 0.08);
-      border-radius: 10px;
+      background: #f6f7ff;
+      border: 1px solid rgba(82, 113, 255, 0.12);
+      border-radius: 18px;
       padding: 1rem 1.5rem;
       margin-bottom: 0.75rem;
     }
     .faq-item summary {
       font-weight: 600;
       cursor: pointer;
-      color: #e0e0ff;
+      color: #111111;
       list-style: none;
     }
     .faq-item summary::before {
       content: '▸ ';
-      color: #00ffcc;
+      color: #5271ff;
     }
     .faq-item p {
       margin-top: 0.75rem;
-      color: #b0b0d0;
+      color: #3a3a3a;
       font-size: 0.9rem;
     }
 
@@ -474,32 +496,32 @@
     }
     .seo-toc a {
       font-size: 0.78rem;
-      color: #a0a0d0;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #3a3a3a;
+      border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 999px;
       padding: 0.25rem 0.8rem;
       text-decoration: none;
     }
-    .seo-toc a:hover { color: #00ffcc; border-color: rgba(0, 255, 204, 0.4); }
+    .seo-toc a:hover { color: #5271ff; border-color: rgba(82, 113, 255, 0.4); }
     .seo-toc span {
       align-self: center;
-      font-family: 'Orbitron', monospace;
+      font-family: inherit;
       font-size: 0.6rem;
       letter-spacing: 0.2em;
-      color: #606090;
+      color: #666666;
     }
 
     /* Callout — Bottom line under the comparison table */
     .seo-callout {
-      background: rgba(0, 255, 204, 0.05);
-      border: 1px solid rgba(0, 255, 204, 0.2);
-      border-radius: 10px;
+      background: rgba(82, 113, 255, 0.05);
+      border: 1px solid rgba(82, 113, 255, 0.2);
+      border-radius: 18px;
       padding: 1rem 1.2rem;
       margin-top: 1rem;
       font-size: 0.9rem;
-      color: #d0d0e8;
+      color: #222222;
     }
-    .seo-callout b { color: #00ffcc; }
+    .seo-callout b { color: #5271ff; }
 
     /* Gesture guide tables */
     .gesture-table {
@@ -511,28 +533,28 @@
     .gesture-table th {
       text-align: left;
       padding: 0.5rem 0.7rem;
-      color: #00ffcc;
-      font-family: 'Orbitron', monospace;
+      color: #5271ff;
+      font-family: inherit;
       font-size: 0.65rem;
       letter-spacing: 0.08em;
-      border-bottom: 1px solid rgba(0, 255, 204, 0.2);
-      background: rgba(0, 255, 204, 0.04);
+      border-bottom: 1px solid rgba(82, 113, 255, 0.2);
+      background: rgba(82, 113, 255, 0.04);
     }
     .gesture-table td {
       padding: 0.45rem 0.7rem;
-      color: #d0d0e8;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #222222;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       vertical-align: top;
     }
     .gesture-table tr:hover td {
-      background: rgba(0, 255, 204, 0.03);
+      background: rgba(82, 113, 255, 0.03);
     }
     .gesture-table td.special {
-      color: #ff00ff;
+      color: #0099ff;
       font-weight: 600;
     }
     .gesture-table td em {
-      color: #9090b8;
+      color: #3a3a3a;
       font-style: italic;
     }
 
@@ -542,19 +564,19 @@
       margin: 0 auto;
       padding: 2rem 1.5rem;
       text-align: center;
-      border-top: 1px solid rgba(0, 255, 204, 0.08);
-      color: #606090;
+      border-top: 1px solid rgba(82, 113, 255, 0.08);
+      color: #666666;
       font-size: 0.8rem;
     }
     .site-footer a {
-      color: #00ffcc;
+      color: #5271ff;
       text-decoration: none;
     }
     .site-footer a:hover { text-decoration: underline; }
     .footer-links { margin-top: 0.5rem; }
     .footer-links a + a::before {
       content: ' · ';
-      color: #606090;
+      color: #666666;
     }
 
     @media (max-width: 768px) {
@@ -612,20 +634,20 @@
   <!-- Thin hero FIRST (Step 3 A): search traffic lands on words, then the
        instrument. Play = one click, starts the instrument in place. -->
   <header class="seo-hero">
-    <span class="seo-eyebrow">PLAY IN YOUR BROWSER — NO HARDWARE</span>
-    <h1>Gesture Synth — Play Music with Your Hands, No Hardware</h1>
-    <p class="seo-lede">A <strong>gesture synth</strong> — also searched as <strong>hand gesture synth</strong> — is an instrument you play with hand movements instead of keys: a camera reads your hands, software turns motion into sound. <strong>Gesture Synth Weld</strong> is a free one that runs entirely in your browser: webcam on, hands up, music out.</p>
+    <span class="section-label">數實資研社 · 資音組</span>
+    <h1>手勢合成器 — 用雙手演奏音樂，不需任何硬體</h1>
+    <p class="seo-lede"><strong>手勢合成器</strong>（gesture synth，也常被搜尋為<strong>手部手勢合成器</strong>）是一種用手部動作取代按鍵來演奏的樂器：攝影機讀取你的雙手，軟體把動作變成聲音。<strong>數實資研社附設資音組樂器</strong>就是一款完全在瀏覽器中執行的免費手勢合成器：打開攝影機、舉起雙手、音樂就出來了。</p>
     <div>
-      <button class="seo-play-btn" data-seo-play>▶ Play now — it's free</button>
-      <a class="seo-play-btn ghost" href="#what-is" style="text-decoration:none;">What is it? ↓</a>
+      <button class="seo-play-btn" data-seo-play>▶ 立即演奏 — 完全免費</button>
+      <a class="seo-play-btn ghost" href="#what-is" style="text-decoration:none;">這是什麼？ ↓</a>
     </div>
     <div class="seo-stats">
-      <span class="seo-chip"><b>100%</b> free</span>
-      <span class="seo-chip"><b>0</b> hardware · webcam only</span>
-      <span class="seo-chip"><b>30s</b> to first note</span>
+      <span class="seo-chip"><b>100%</b> 免費</span>
+      <span class="seo-chip"><b>0</b> 硬體 · 只要攝影機</span>
+      <span class="seo-chip"><b>30 秒</b>彈出第一個音</span>
     </div>
     <div class="seo-scroll-cue">
-      <a href="#live">The live instrument is next — one click starts it</a>
+      <a href="#live">下方就是真正的樂器 — 點一下就能啟動</a>
       <span class="bounce">↓</span>
     </div>
   </header>
@@ -655,15 +677,15 @@
   <div class="seo-content">
     <div class="seo-inner">
 
-      <nav class="seo-toc" aria-label="On this page">
-        <span>ON THIS PAGE ·</span>
-        <a href="#what-is">What it is</a>
-        <a href="#which">Which one</a>
-        <a href="#how-it-works">What it does</a>
-        <a href="#how-to-play">How to play</a>
-        <a href="#showdown">Browser vs hardware</a>
-        <a href="#no-app">Why no app</a>
-        <a href="#faq">FAQ</a>
+      <nav class="seo-toc" aria-label="本頁目錄">
+        <span>本頁目錄 ·</span>
+        <a href="#what-is">它是什麼</a>
+        <a href="#which">你要找哪一種</a>
+        <a href="#how-it-works">能做什麼</a>
+        <a href="#how-to-play">怎麼玩</a>
+        <a href="#showdown">瀏覽器 vs 硬體</a>
+        <a href="#no-app">為什麼沒有 App</a>
+        <a href="#faq">常見問題</a>
       </nav>
 
       <!-- Ad Slot (gsw-read-2, square-responsive; top of READ zone: cold search
@@ -674,278 +696,249 @@
 
       <!-- What is a gesture synth? -->
       <div class="seo-section" id="what-is">
-        <h2>🔍 What is a gesture synth?</h2>
+        <h2>🔍 什麼是手勢合成器？</h2>
         <p>
-          A <strong>gesture synth</strong> — a <strong>hand gesture synth</strong> in full — replaces the
-          keyboard with movement. Instead of pressing keys, you move your hands in the air: a sensor —
-          a webcam, a depth camera, or a sensor glove — reads the position of your hands and fingers,
-          and software maps that motion onto musical parameters like pitch, volume and tone. Raise a
-          hand, the volume rises. Spread your fingers, the chord opens up.
+          <strong>手勢合成器</strong>（完整說法是<strong>手部手勢合成器</strong>）用動作取代鍵盤。
+          你不需要按鍵，而是在空中移動雙手：感測器 — 網路攝影機、深度攝影機或感應手套 — 讀取你雙手與手指的位置，
+          再由軟體把動作對應到音高、音量、音色等音樂參數。舉起手，音量變大；張開手指，和弦跟著展開。
         </p>
         <p>
-          <strong>Gesture Synth Weld</strong> is a browser-based gesture synth with a fixed two-hand
-          division: your <strong>left hand picks the harmony</strong> (finger count selects scale degrees
-          I–VII, wrist tilt picks major or minor) while your <strong>right hand shapes the
-          expression</strong> (height is volume, tilt is tone, finger count sets chord thickness).
-          Nothing to install, nothing to buy — if your device has a camera, you already own the
-          instrument above. The <a href="/guide" style="color:#00ffcc">full gesture tutorial</a> maps every move.
+          <strong>數實資研社附設資音組樂器</strong>是一款瀏覽器手勢合成器，採用固定的雙手分工：
+          <strong>左手選和聲</strong>（手指數選擇音級 I–VII，手腕傾斜選大調或小調），
+          <strong>右手塑造表情</strong>（高度是音量、傾斜是音色、手指數決定和弦厚度）。
+          不用安裝、不用花錢 — 只要你的裝置有攝影機，上方的樂器就已經是你的了。
+          <a href="/guide" style="color:#5271ff">完整手勢教學</a>列出了每個動作。
         </p>
       </div>
 
       <!-- Which gesture synth are you looking for? (intent triage) -->
       <div class="seo-section" id="which">
-        <h2>🧭 Which gesture synth are you looking for?</h2>
-        <p>The same two words mean different things to different people. Pick your path — all three are answered on this page:</p>
+        <h2>🧭 你在找哪一種手勢合成器？</h2>
+        <p>同樣的詞對不同人有不同意思。選擇你的路線 — 三種答案都在本頁：</p>
         <div class="step-grid">
           <div class="step-card">
             <div class="step-num">1</div>
-            <h3>Play right now</h3>
-            <p>You want music in seconds, in a browser tab. That's the instrument above — one click starts it.</p>
-            <p><button class="seo-play-btn" data-seo-play>▶ Play now</button></p>
+            <h3>現在就玩</h3>
+            <p>你想在幾秒內、在瀏覽器分頁裡就聽到音樂。那就是上方的樂器 — 點一下就啟動。</p>
+            <p><button class="seo-play-btn" data-seo-play>▶ 立即演奏</button></p>
           </div>
           <div class="step-card">
             <div class="step-num">2</div>
-            <h3>Hardware / DIY builds</h3>
-            <p>Sensor gloves, Arduino kits, Leap Motion rigs — real, but soldering, drivers and €100+ in parts. The zero-solder route is the instrument above.</p>
+            <h3>硬體／自造專案</h3>
+            <p>感應手套、Arduino 套件、Leap Motion 裝置 — 確實可行，但要焊接、裝驅動，零件動輒數千元。免焊接的路線就是上方的樂器。</p>
           </div>
           <div class="step-card">
             <div class="step-num">3</div>
-            <h3>Read the code</h3>
-            <p>MediaPipe hand tracking + Tone.js synth, MIT open source. <a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener" style="color:#00ffcc">GitHub →</a></p>
+            <h3>讀程式碼</h3>
+            <p>MediaPipe 手部追蹤 + Tone.js 合成器，MIT 開放原始碼。<a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener" style="color:#5271ff">GitHub →</a></p>
           </div>
         </div>
       </div>
 
       <!-- How It Works -->
       <div class="seo-section" id="how-it-works">
-        <h2>🎛 What can a gesture synth do?</h2>
+        <h2>🎛 手勢合成器能做什麼？</h2>
         <p>
-          A gesture synth turns body movement into sound. Browser-based gesture synths use your
-          webcam to track your hands — no hardware controller needed. Gesture Synth Weld pushes
-          the format further: each finger becomes a musical command, your left hand picks harmony
-          while your right hand shapes expression, and everything runs live in the browser with
-          zero installs.
+          手勢合成器把肢體動作轉換成聲音。瀏覽器版的手勢合成器用網路攝影機追蹤你的雙手 — 不需要任何硬體控制器。
+          這把樂器更進一步：每根手指都是一個音樂指令，左手選和聲、右手塑造表情，全部在瀏覽器中即時運作，完全免安裝。
         </p>
         <p>
-          Compare that to hardware gesture synths (gloves, ring sensors, MIDI theremins): they're
-          powerful, but they cost hundreds of dollars and need setup. A webcam gesture synth gets
-          you the same experience for free — as long as your hands are in the frame. That's the
-          trade-off: no hardware cost, just your two hands.
+          相較之下，硬體手勢合成器（感應手套、戒指感測器、MIDI 特雷門）雖然強大，但動輒數千元、還需要設定。
+          網路攝影機手勢合成器則免費提供相同的體驗 — 只要雙手在畫面內就行。這就是取捨：零硬體成本，只靠你的雙手。
         </p>
 
-        <h3 id="showdown" style="margin-top:1.5rem">⚔ Browser vs hardware: which gesture instrument?</h3>
-        <p>Three ways to play music with gestures — here's how they compare:</p>
+        <h3 id="showdown" style="margin-top:1.5rem">⚔ 瀏覽器 vs 硬體：該選哪種手勢樂器？</h3>
+        <p>用手勢演奏音樂的三種方式比較：</p>
         <table class="gesture-table">
           <thead>
-            <tr><th>Approach</th><th>Cost</th><th>Setup</th><th>Pros</th><th>Cons</th></tr>
+            <tr><th>方式</th><th>成本</th><th>設定</th><th>優點</th><th>缺點</th></tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>Browser gesture synth</strong> (webcam + hand tracking)</td>
-              <td>Free</td>
-              <td>None — open the page, allow camera</td>
-              <td>Zero install, zero cost, runs on any device</td>
-              <td>Needs light and clear hand visibility</td>
+              <td><strong>瀏覽器手勢合成器</strong>（攝影機 + 手部追蹤）</td>
+              <td>免費</td>
+              <td>無 — 打開網頁、允許相機</td>
+              <td>免安裝、零成本、任何裝置都能跑</td>
+              <td>需要足夠光線且雙手清楚可見</td>
             </tr>
             <tr>
-              <td><strong>Hardware gesture synth</strong> (gloves, ring sensors, MIDI theremins)</td>
-              <td>$100 – $1,000+</td>
-              <td>Drivers, calibration, MIDI wiring</td>
-              <td>Precise, low latency, works in any light</td>
-              <td>Expensive, bulky, needs setup</td>
+              <td><strong>硬體手勢合成器</strong>（手套、戒指感測器、MIDI 特雷門）</td>
+              <td>US$100 – $1,000+</td>
+              <td>驅動程式、校正、MIDI 接線</td>
+              <td>精準、低延遲、任何光線都能用</td>
+              <td>昂貴、笨重、需要設定</td>
             </tr>
             <tr>
-              <td><strong>DAW + MIDI controller</strong></td>
-              <td>Software + hardware cost</td>
-              <td>Install DAW, configure mappings</td>
-              <td>Full production power, unlimited tracks</td>
-              <td>Steep learning curve, desk-bound, not gesture-based</td>
+              <td><strong>DAW + MIDI 控制器</strong></td>
+              <td>軟體 + 硬體費用</td>
+              <td>安裝 DAW、設定對應</td>
+              <td>完整製作能力、軌數無限</td>
+              <td>學習曲線陡、只能在桌前、不是手勢操作</td>
             </tr>
           </tbody>
         </table>
-        <div class="seo-callout"><p style="margin:0"><b>Bottom line:</b> hardware wins on raw precision; the browser wins on everything else — zero cost, zero setup, record and share from the same tab. That's why this page exists: press play and <a href="#live" style="color:#00ffcc">try the free one first →</a></p></div>
+        <div class="seo-callout"><p style="margin:0"><b>結論：</b>硬體在純粹的精準度上勝出；其他方面瀏覽器全贏 — 零成本、零設定，在同一個分頁就能錄製與分享。這就是本頁存在的原因：按下播放，<a href="#live" style="color:#5271ff">先試試免費的這把 →</a></p></div>
         <p style="margin-top:0.8rem">
-          Prefer an instrument you can pick up in seconds? See the <a href="/guide" style="color:#00ffcc">step-by-step tutorial</a> — or just press play below and start with the instrument above.
-          <div style="text-align:center;margin-top:0.6rem;"><button class="seo-play-btn" data-seo-play>▶ Play now — it's free</button></div>
+          想要幾秒鐘就能上手的樂器？看看<a href="/guide" style="color:#5271ff">逐步教學</a> — 或直接按下方的播放，從上方的樂器開始。
+          <div style="text-align:center;margin-top:0.6rem;"><button class="seo-play-btn" data-seo-play>▶ 立即演奏 — 完全免費</button></div>
         </p>
 
-        <h2 id="how-to-play">⚡ How it plays — 30 seconds to your first chord</h2>
+        <h2 id="how-to-play">⚡ 怎麼玩 — 30 秒彈出第一個和弦</h2>
         <div class="step-grid steps-4">
           <div class="step-card">
             <div class="step-num">1</div>
-            <h3>Allow Camera</h3>
-            <p>Press play above, grant camera permission. Tracking runs on your device — video is never uploaded.</p>
+            <h3>允許相機</h3>
+            <p>按上方的播放，允許相機權限。追蹤在你的裝置上執行 — 影像絕不會上傳。</p>
           </div>
           <div class="step-card">
             <div class="step-num">2</div>
-            <h3>Left Hand → Harmony</h3>
-            <p>Choose a key (C–B, default A). 1–5 fingers select scale degrees I–V. Index+Pinky = VI, +Thumb = VII. Default mode is locked to Major — switch to Scale+Tilt in settings to control major/minor with wrist tilt.</p>
+            <h3>左手 → 和聲</h3>
+            <p>選擇調性（C–B，預設 A）。1–5 指選擇音級 I–V。食指＋小指 = VI，再加拇指 = VII。預設鎖定大調 — 在設定中切換到「音階 + 傾斜」即可用手腕傾斜控制大小調。</p>
           </div>
           <div class="step-card">
             <div class="step-num">3</div>
-            <h3>Right Hand → Expression</h3>
-            <p>Fingers set chord complexity (1=triad, 2=inversion, 3=7th, 4=9th). Height = volume, tilt = tone. <strong>Both hands required</strong> for sound — left fist mutes it, right fist restores octave. Full map: <a href="/guide" style="color:#00ffcc">gesture tutorial →</a></p>
+            <h3>右手 → 表情</h3>
+            <p>手指數決定和弦複雜度（1 = 三和弦、2 = 轉位、3 = 七和弦、4 = 九和弦）。高度 = 音量，傾斜 = 音色。<strong>需要雙手</strong>才會發聲 — 左手握拳靜音，右手握拳恢復原八度。完整對照：<a href="/guide" style="color:#5271ff">手勢教學 →</a></p>
           </div>
           <div class="step-card">
             <div class="step-num">4</div>
-            <h3>Record &amp; Share</h3>
-            <p>Up to 120 seconds per take — audio, full video, or skeleton animation — then download or share.</p>
+            <h3>錄製與分享</h3>
+            <p>每次最長 120 秒 — 音訊、完整影片或骨架動畫 — 然後下載或分享。</p>
           </div>
         </div>
       </div>
 
       <!-- No app needed (app-intent capture: gesture synth app android/iphone/ios) -->
       <div class="seo-section" id="no-app">
-        <h2>📱 Why there's no app — and why that's better</h2>
+        <h2>📱 為什麼沒有 App — 以及為什麼這樣更好</h2>
         <p>
-          Searching for a <strong>gesture synth app</strong> for Android or iPhone? There is
-          deliberately no app to install — no App Store download, no storage space, no updates,
-          no account. <strong>The URL is the app</strong>: open this page on any phone, tablet
-          or laptop, allow the camera, and you're playing the instrument above in seconds.
+          在找 Android 或 iPhone 的<strong>手勢合成器 App</strong>？我們刻意不做需要安裝的 App —
+          不用從商店下載、不佔空間、不用更新、不用帳號。<strong>網址就是 App</strong>：在任何手機、平板或筆電打開這個頁面，
+          允許相機，幾秒內就能演奏上方的樂器。
         </p>
         <p>
-          A download would only add friction — the full instrument already runs in the browser
-          on Android and iOS alike, and a link is all it takes to share it with a friend.
-          Prefer a home-screen icon? Use your browser's "Add to Home Screen" — it opens this
-          same page, always up to date.
-          <div style="text-align:center;margin-top:0.6rem;"><button class="seo-play-btn" data-seo-play>▶ Play now — it's free</button></div>
+          下載只會增加門檻 — 完整的樂器早已能在 Android 與 iOS 的瀏覽器中執行，分享給朋友也只需要一個連結。
+          想要主畫面圖示？使用瀏覽器的「加入主畫面」— 它會開啟同一個頁面，永遠是最新版本。
+          <div style="text-align:center;margin-top:0.6rem;"><button class="seo-play-btn" data-seo-play>▶ 立即演奏 — 完全免費</button></div>
         </p>
       </div>
 
       <!-- FAQ -->
       <div class="seo-section" id="faq">
-        <h2>❓ Frequently Asked Questions</h2>
-        <p style="margin-bottom:1rem;"><a href="#how-it-works" style="color:#00ffcc;font-size:0.9rem;">How it works ↑</a></p>
+        <h2>❓ 常見問題</h2>
+        <p style="margin-bottom:1rem;"><a href="#how-it-works" style="color:#5271ff;font-size:0.9rem;">運作方式 ↑</a></p>
 
         <details class="faq-item">
-          <summary>What is a gesture synth?</summary>
+          <summary>什麼是手勢合成器？</summary>
           <p>
-            A gesture synth is a musical instrument played with hand or body gestures instead of keys:
-            a sensor reads your movements and software turns them into sound. Gesture Synth Weld is a
-            free browser-based gesture synth — the instrument at the top of this page. Webcam on,
-            hands up, music out.
+            手勢合成器是一種用手部或肢體手勢、而非按鍵來演奏的樂器：感測器讀取你的動作，軟體把它變成聲音。
+            數實資研社附設資音組樂器是一款免費的瀏覽器手勢合成器 — 就是本頁最上方的那把樂器。
+            打開攝影機、舉起雙手、音樂就出來了。
           </p>
         </details>
 
         <details class="faq-item">
-          <summary>Is there a gesture synth app for Android or iPhone?</summary>
+          <summary>有 Android 或 iPhone 的手勢合成器 App 嗎？</summary>
           <p>
-            This page <em>is</em> the online version — no app to install. Play in the
-            browser above: allow the camera and you're playing. That's the whole point of a
-            browser-based hand gesture synth: the URL is the app.
-            Full answer: <a href="#no-app" style="color:#00ffcc">why there's no app →</a>
+            這個頁面<em>就是</em>線上版本 — 不需要安裝 App。在上方的瀏覽器中直接演奏：允許相機就能開始。
+            這正是瀏覽器手勢合成器的重點：網址就是 App。
+            完整說明：<a href="#no-app" style="color:#5271ff">為什麼沒有 App →</a>
           </p>
         </details>
 
         <details class="faq-item">
-          <summary>Do I need any special equipment?</summary>
+          <summary>需要任何特殊設備嗎？</summary>
           <p>
-            No. All you need is a computer or laptop with a built-in or USB webcam, and a modern browser
-            like Chrome, Edge, or Firefox. No MIDI controllers, no external sensors, no downloads.
-            Your webcam handles all the input — MediaPipe's hand tracking model runs entirely on your device.
+            不需要。只要一台有內建或 USB 網路攝影機的電腦，以及 Chrome、Edge 或 Firefox 等新版瀏覽器。
+            不需 MIDI 控制器、外接感測器，也不用下載。所有輸入都來自你的攝影機 — MediaPipe 手部追蹤模型完全在你的裝置上執行。
           </p>
         </details>
 
         <details class="faq-item">
-          <summary>What browsers are supported?</summary>
+          <summary>支援哪些瀏覽器？</summary>
           <p>
-            Gesture Synth Weld works in any modern browser that supports the Web Audio API and
-            getUserMedia — including Chrome 90+, Firefox 90+, Edge 90+, and Safari 15+.
-            For the best hand tracking experience, Chrome or Edge is recommended since they
-            support MediaPipe's WebGL2 backend most efficiently.
+            支援 Web Audio API 與 getUserMedia 的新版瀏覽器都能使用 — 包括 Chrome 90+、Firefox 90+、Edge 90+ 與 Safari 15+。
+            想要最好的手部追蹤體驗，建議使用 Chrome 或 Edge，它們對 MediaPipe 的 WebGL2 後端支援最有效率。
           </p>
         </details>
 
         <details class="faq-item">
-          <summary>Can I record my performance?</summary>
+          <summary>可以錄下我的演奏嗎？</summary>
           <p>
-            Yes! Click the <strong>Record</strong> button to start capturing your performance (up to 120 seconds).
-            A 3-2-1 countdown gets you ready, and a 3-2-1 wrap-up warns you before the recording stops.
-            Choose what to capture: <strong>audio only</strong>, <strong>full video</strong> (camera with neon skeleton),
-            or <strong>skeleton animation</strong> (no camera feed — privacy-friendly). Pick an aspect ratio for
-            your sharing platform: 9:16 for TikTok/Reels/Shorts, 16:9 for YouTube, 1:1 for Instagram.
-            Sing along? Your <strong>microphone is mixed into the recording</strong> (toggleable) — perfect for
-            singing over your own chords. Pick your microphone in the chooser if needed (some Macs
-            default to a virtual device that records silence), and balance <strong>voice vs chords</strong> with
-            the recording-mix slider — headphones give the cleanest mix. After recording, download the
-            file — or on mobile, share it straight to your apps from the share sheet (the share message
-            carries our brand and gesturesynthweld.com). Your camera feed is never uploaded to any server.
+            可以！點<strong>錄製</strong>按鈕開始錄下你的演奏（最長 120 秒）。
+            開始前有 3-2-1 倒數，結束前也有 3-2-1 收尾提醒。
+            選擇要錄的內容：<strong>只錄音訊</strong>、<strong>完整影片</strong>（相機畫面 + 手部骨架），
+            或<strong>骨架動畫</strong>（不含相機畫面 — 保護隱私）。再依分享平台選擇畫面比例：
+            9:16 適合 TikTok／Reels／Shorts、16:9 適合 YouTube、1:1 適合 Instagram。
+            想邊彈邊唱？<strong>麥克風會混進錄音</strong>（可開關）— 很適合替自己的歌聲伴奏。
+            需要的話可在選單中挑選麥克風（有些 Mac 預設會用到錄不到聲音的虛擬裝置），
+            並用錄音混音滑桿調整<strong>人聲與和弦</strong>的平衡 — 戴耳機的混音效果最乾淨。
+            錄完後下載檔案 — 或在手機上直接從分享選單分享到你的 App（分享訊息會附上品牌與 gesturesynthweld.com）。
+            你的相機畫面絕不會上傳到任何伺服器。
           </p>
         </details>
 
         <details class="faq-item">
-          <summary>What chords can I play?</summary>
+          <summary>可以彈哪些和弦？</summary>
           <p>
-            Gesture Synth Weld supports all 12 keys (C through B) with two right-hand modes.
-            In <strong>Finger Layout mode</strong>: 1 finger = triad, 2 fingers = 1st inversion,
-            3 fingers = 7th chord, 4 fingers = 9th chord. In <strong>Fixed Chord mode</strong>,
-            choose from 8 chord types: Major Triad, Major 1st Inversion, Minor Triad, Diminished,
-            Sus2, Sus4, Major 7th, and Dominant 7th. Lock to a fixed major or minor mode, or enable Scale+Tilt in settings
-            to switch between major and minor with left-hand wrist tilt. See the <a href="/guide" style="color:#00ffcc">full gesture table →</a>
+            支援全部 12 個調（C 到 B）以及兩種右手模式。
+            <strong>手指排列模式</strong>：1 指 = 三和弦、2 指 = 第一轉位、3 指 = 七和弦、4 指 = 九和弦。
+            <strong>固定和弦模式</strong>可從 8 種和弦類型中選擇：大三和弦、大三和弦第一轉位、小三和弦、減三和弦、
+            Sus2、Sus4、大七和弦與屬七和弦。可以鎖定在大調或小調，或在設定中開啟「音階 + 傾斜」，
+            用左手腕傾斜切換大小調。請看<a href="/guide" style="color:#5271ff">完整手勢表 →</a>
           </p>
         </details>
 
         <details class="faq-item">
-          <summary>Can I play without a camera?</summary>
+          <summary>沒有相機也能玩嗎？</summary>
           <p>
-            Yes — <strong>Keyboard Mode</strong> turns your physical keyboard into the instrument
-            (desktop only, no camera permission and no model download needed). Enable it in
-            <strong>Settings → "No camera? Keyboard mode"</strong> or with the <strong>⌨ Keyboard</strong>
-            button in the top toolbar (in keyboard mode it becomes <strong>📷 Camera</strong> — one click
-            switches back to hand gestures), then press <strong>1-7</strong>
-            for scale degrees I-VII (hold to play, release to stop), <strong>[ / ]</strong> for
-            minor/major, <strong>8/9/0/-</strong> for chord styles, <strong>Shift</strong> for
-            octave down, <strong>↑/↓</strong> for volume and <strong>←/→</strong> for the filter
-            sweep, and <strong>Space</strong> to stop. A real-keyboard guide with a demo animation
-            shows you every key the first time — replayable anytime from the <strong>?</strong> help
-            panel. Recording in keyboard mode captures audio (add your voice with the mic) — video
-            modes need a camera feed, so they're hidden there.
+            可以 — <strong>鍵盤模式</strong>把實體鍵盤變成樂器（僅限桌機，不需相機權限也不用下載模型）。
+            在<strong>設定 →「沒有相機？用鍵盤模式」</strong>開啟，或點上方工具列的 <strong>⌨ 鍵盤</strong>按鈕
+            （在鍵盤模式下會變成 <strong>📷 相機</strong> — 點一下就切回手勢），接著按 <strong>1-7</strong>
+            演奏音級 I-VII（按住發聲、放開停止）、<strong>[ / ]</strong> 切換小調／大調、
+            <strong>8/9/0/-</strong> 切換和弦風格、<strong>Shift</strong> 降八度、
+            <strong>↑/↓</strong> 調整音量、<strong>←/→</strong> 掃動濾波，<strong>空白鍵</strong>停止。
+            第一次使用時會有附示範動畫的實體鍵盤教學 — 之後隨時可從 <strong>?</strong> 說明面板重播。
+            鍵盤模式的錄製只錄音訊（可用麥克風加入你的聲音）— 影片模式需要相機畫面，所以在這裡會隱藏。
           </p>
         </details>
 
         <details class="faq-item">
-          <summary>What makes Gesture Synth Weld different from other gesture synthesizers?</summary>
+          <summary>這把樂器和其他手勢合成器有什麼不同？</summary>
           <p>
-            Gesture Synth Weld features a unique <strong>two-hand division system</strong>: your
-            left hand controls harmony (key selection, scale degree, major/minor toggle) while your
-            right hand controls expression (chord complexity, volume, tone, octave). Unlike basic
-            gesture synths, it includes an <strong>arpeggiator</strong> for harp-like sweeps, an
-            <strong>auto bass generator</strong> for low-end foundation, a <strong>sawtooth synth engine</strong>
-            with real-time filter sweep, support for <strong>9th chords</strong>
-            (4-finger), <strong>8 fixed chord styles</strong>, and built-in <strong>MP4/M4A recording</strong>.
-            It's also open source under the MIT license.
+            它採用獨特的<strong>雙手分工系統</strong>：左手控制和聲（選調、音級、大小調切換），
+            右手控制表情（和弦複雜度、音量、音色、八度）。和一般的手勢合成器不同，它內建可做出豎琴般掃弦的<strong>琶音</strong>、
+            提供低頻基礎的<strong>自動低音</strong>、可即時掃動濾波的<strong>鋸齒波合成引擎</strong>，
+            支援<strong>九和弦</strong>（4 指）、<strong>8 種固定和弦風格</strong>，以及內建的 <strong>MP4/M4A 錄製</strong>。
+            它也是以 MIT 授權釋出的開放原始碼專案。
           </p>
         </details>
 
         <details class="faq-item">
-          <summary>Is Gesture Synth Weld free?</summary>
+          <summary>可以免費使用嗎？</summary>
           <p>
-            Yes! Gesture Synth Weld is free to use. We support the development and hosting of
-            this tool through non-intrusive advertising. No registration, no sign-up, no paywall
-            — just open and play. The source code is also available
-            <a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener" style="color:#00ffcc">on GitHub</a>
-            under the MIT license for anyone who wants to study, modify, or contribute.
+            可以！完全免費使用。我們透過不干擾的廣告支持開發與主機費用。不用註冊、不用登入、沒有付費牆 —
+            打開就能玩。原始碼也以 MIT 授權公開在
+            <a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener" style="color:#5271ff">GitHub</a>
+            上，歡迎任何人研究、修改或貢獻。
           </p>
         </details>
 
         <details class="faq-item">
-          <summary>Is Gesture Synth Weld the same as a "gesture synth"?</summary>
+          <summary>這把樂器就等於「手勢合成器」嗎？</summary>
           <p>
-            <strong>Gesture Synth Weld</strong> is one specific gesture synth: a two-hand browser
-            instrument — left hand harmony, right hand expression — with recording built in.
-            "Gesture synth" is the generic category, and it includes hardware gloves, DIY kits
-            and DAW plugins too. If you searched the generic term, this page is the free
-            browser member of that family — press play above and try it.
+            <strong>數實資研社附設資音組樂器</strong>是一款特定的手勢合成器：雙手瀏覽器樂器 — 左手和聲、右手表情 — 並內建錄製。
+            「手勢合成器」則是泛稱，也包含硬體手套、自造套件與 DAW 外掛。
+            如果你搜尋的是這個泛稱，本頁就是這個家族中免費的瀏覽器成員 — 按上方的播放試試看。
           </p>
         </details>
 
         <details class="faq-item">
-          <summary>Can I build my own?</summary>
+          <summary>我可以自己做一個嗎？</summary>
           <p>
-            Yes — this site is MIT-licensed
-            <a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener" style="color:#00ffcc">open source on GitHub</a>.
-            The stack is MediaPipe hand tracking plus a Tone.js synth, all running locally in
-            the browser.
+            可以 — 本站以 MIT 授權在
+            <a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener" style="color:#5271ff">GitHub 開放原始碼</a>。
+            技術組合是 MediaPipe 手部追蹤加上 Tone.js 合成器，全部在瀏覽器本機執行。
           </p>
         </details>
       </div>
@@ -954,23 +947,23 @@
   </div>
 
   <div class="final-cta">
-    <p>Theory over — your hands already know what to do.</p>
-    <button class="seo-play-btn" data-seo-play>▶ Open the gesture synth and play</button>
+    <p>理論講完了 — 你的雙手早就知道該怎麼做。</p>
+    <button class="seo-play-btn" data-seo-play>▶ 打開手勢合成器開始演奏</button>
   </div>
 
   <footer class="site-footer">
-    <p>Gesture Synth Weld — the free browser gesture synth.
-      <a href="/guide">Tutorial</a> · Open Source under the
-      <a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener">MIT License</a>
-      · <a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener">Star us on GitHub ⭐</a>.
-      Not affiliated with third-party tutorial sites using our name.
+    <p>數實資研社附設資音組樂器 — 免費的瀏覽器手勢合成器。
+      <a href="/guide">教學</a> · 以
+      <a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener">MIT 授權</a>開放原始碼
+      · <a href="https://github.com/rainbow686/gesture-synth-weld" target="_blank" rel="noopener">在 GitHub 給我們一顆星 ⭐</a>。
+      與使用我們名稱的第三方教學網站無關。
     </p>
     <div class="footer-links">
-      <a href="/">Play</a>
-      <a href="/guide">Guide</a>
-      <a href="/about">About</a>
-      <a href="/privacy">Privacy</a>
-      <a href="/contact">Contact</a>
+      <a href="/">演奏</a>
+      <a href="/guide">教學</a>
+      <a href="/about">關於</a>
+      <a href="/privacy">隱私權</a>
+      <a href="/contact">聯絡我們</a>
       <a href="https://gesturesynthweld.com">gesturesynthweld.com</a>
       <a href="https://gesturesynthweld.io">gesturesynthweld.io</a>
     </div>

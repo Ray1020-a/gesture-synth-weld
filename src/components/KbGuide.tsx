@@ -62,17 +62,17 @@ interface KbKey {
  *  the actual arrow keys (a "→" mapping arrow next to an arrow-key glyph
  *  reads as a second key to press — bug 2026-08-09). */
 const CAPTION_TEXT: Record<KbAction, string> = {
-  degree1: 'I (tonic)', degree2: 'II', degree3: 'III', degree4: 'IV', degree5: 'V', degree6: 'VI', degree7: 'VII',
-  minor: 'minor', major: 'major',
-  chordStyle1: 'triad', chordStyle2: '1st inversion', chordStyle3: '7th chord', chordStyle4: '9th chord',
-  octaveDown: 'octave down (8vb)',
-  volumeUp: 'volume up', volumeDown: 'volume down', filterLeft: 'filter sweep left', filterRight: 'filter sweep right',
+  degree1: 'I（主和弦）', degree2: 'II', degree3: 'III', degree4: 'IV', degree5: 'V', degree6: 'VI', degree7: 'VII',
+  minor: '小調', major: '大調',
+  chordStyle1: '三和弦', chordStyle2: '第一轉位', chordStyle3: '七和弦', chordStyle4: '九和弦',
+  octaveDown: '降八度（8vb）',
+  volumeUp: '音量增加', volumeDown: '音量減少', filterLeft: '濾波往左掃', filterRight: '濾波往右掃',
 };
 const CAPTION_HOLD = new Set<KbAction>(['octaveDown', 'volumeUp', 'volumeDown', 'filterLeft', 'filterRight']);
 const CAPTION_COLON = new Set<KbAction>(['volumeUp', 'volumeDown', 'filterLeft', 'filterRight']);
 
 function captionFor(action: KbAction, key: string): string {
-  const verb = CAPTION_HOLD.has(action) ? 'Hold' : 'Press';
+  const verb = CAPTION_HOLD.has(action) ? '按住' : '按';
   const sep = CAPTION_COLON.has(action) ? ':' : '→';
   return `${verb} ${displayKey(key)} ${sep} ${CAPTION_TEXT[action]}`;
 }
@@ -140,7 +140,7 @@ const ROW_3: KbKey[] = [
 
 const ROW_4: KbKey[] = [
   { key: 'Shift', cap: 'Shift', wide: 2.25 },
-  { key: ' ', cap: 'Space', label: 'Stop all', wide: 5.5, color: 'stop' },
+  { key: ' ', cap: 'Space', label: '全部停止', wide: 5.5, color: 'stop' },
   { key: 'ArrowUp', cap: '↑' },
   { key: 'ArrowDown', cap: '↓' },
   { key: 'ArrowLeft', cap: '←' },
@@ -166,7 +166,7 @@ export function KbGuide({ keymap, onDismiss }: KbGuideProps) {
 
   const demoSteps = useMemo(() => {
     const steps = ACTION_ORDER.map((a) => ({ key: keymap[a], caption: captionFor(a, keymap[a]) }));
-    steps.push({ key: ' ', caption: 'Press Space → stop all notes' });
+    steps.push({ key: ' ', caption: '按 空白鍵 → 停止所有音' });
     return steps;
   }, [keymap]);
   // Set (not single key) so 'hold 5 + press 8' highlights both.
@@ -262,8 +262,8 @@ export function KbGuide({ keymap, onDismiss }: KbGuideProps) {
       <button
         className="kb-guide-close"
         onClick={(e) => { e.stopPropagation(); onDismiss('x'); }}
-        aria-label="Close keyboard guide"
-        title="Close"
+        aria-label="關閉鍵盤教學"
+        title="關閉"
       >
         {/* Feather X (MIT) — consistent with the rest of the UI, no emoji */}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
@@ -271,8 +271,8 @@ export function KbGuide({ keymap, onDismiss }: KbGuideProps) {
           <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
       </button>
-      <div className="kb-guide-title">Keyboard Mode — how to play</div>
-      <div className="kb-guide-sub">Watch the demo, then press the keys yourself — they light up as you play</div>
+      <div className="kb-guide-title">鍵盤模式 — 怎麼玩</div>
+      <div className="kb-guide-sub">先看示範，再自己按按看 — 按下的鍵會亮起來</div>
       <div className="kb-keyboard">
         {renderRow(ROW_0)}
         {renderRow(ROW_1)}
@@ -281,13 +281,13 @@ export function KbGuide({ keymap, onDismiss }: KbGuideProps) {
         {renderRow(ROW_4)}
       </div>
       <div className={`kb-guide-demo${caption ? ' visible' : ''}`}>
-        {caption ?? 'Press any key above to see what it does'}
+        {caption ?? '按上方任一鍵，看看它的功能'}
       </div>
       <button className="kb-guide-close-btn" onClick={(e) => { e.stopPropagation(); onDismiss('close'); }}>
-        Close
+        關閉
       </button>
       <div className="kb-guide-hint">
-        Hold {displayKey(keymap.degree1)}–{displayKey(keymap.degree7)} to play · {displayKey(keymap.minor)} {displayKey(keymap.major)} minor/major · {displayKey(keymap.octaveDown)} = octave down · back to camera: top toolbar camera button
+        按住 {displayKey(keymap.degree1)}–{displayKey(keymap.degree7)} 演奏 · {displayKey(keymap.minor)} {displayKey(keymap.major)} 小調／大調 · {displayKey(keymap.octaveDown)} = 降八度 · 回到相機：上方工具列的相機按鈕
       </div>
     </div>
   );
