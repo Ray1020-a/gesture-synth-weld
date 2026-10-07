@@ -1,4 +1,4 @@
-// PM2 process config — serves the production build (dist/) on port 3005.
+// PM2 process config — serves the production build (dist/) on port 3007.
 // .cjs (not .js): package.json is "type": "module", and PM2 loads ecosystem
 // files with require().
 //
@@ -13,7 +13,7 @@ module.exports = {
       name: 'gesture-synth-weld',
       cwd: __dirname,
       script: 'node_modules/vite/bin/vite.js',
-      args: 'preview --host 0.0.0.0 --port 3005 --strictPort',
+      args: 'preview --host 0.0.0.0 --port 3007 --strictPort',
       instances: 1,
       exec_mode: 'fork',
       autorestart: true,
