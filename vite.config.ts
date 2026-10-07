@@ -23,6 +23,12 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  // Self-hosted via PM2 (ecosystem.config.cjs → vite preview on 3007).
+  // Vite blocks unknown Host headers; leading dot = domain + all subdomains
+  // (e.g. music.xn--w8yuyt86b.tw).
+  preview: {
+    allowedHosts: ['.xn--w8yuyt86b.tw'],
+  },
   test: {
     environment: 'jsdom',
   },
