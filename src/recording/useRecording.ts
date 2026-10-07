@@ -36,7 +36,7 @@ import { makeCoverBlob, pickRecMimeType } from './utils';
 /** Brand caption for sharing (2026-10-07): used by the mobile share sheet
  *  AND the desktop copy-caption button — one string, one voice. */
 export const POST_CAPTION =
-  'I just played this with Gesture Synth Weld 🎹 — play music with hand gestures. gesturesynthweld.com';
+  '我剛用「數實資研社附設資音組樂器」演奏了這段 🎹 — 用手勢玩音樂。gesturesynthweld.com';
 
 export interface UseRecordingDeps {
   isRunning: boolean;
@@ -300,7 +300,7 @@ export function useRecording(deps: UseRecordingDeps) {
     try {
       await navigator.share({
         files: [file],
-        title: 'Gesture Synth Weld — hand gesture music synthesizer',
+        title: '數實資研社附設資音組樂器 — 手勢音樂合成器',
         text: brandText,
       });
       setShareFailed(false);
@@ -314,7 +314,7 @@ export function useRecording(deps: UseRecordingDeps) {
       // the brand message still reaches the share sheet.
       try {
         await navigator.share({
-          title: 'Gesture Synth Weld — hand gesture music synthesizer',
+          title: '數實資研社附設資音組樂器 — 手勢音樂合成器',
           text: brandText,
           url: 'https://gesturesynthweld.com',
         });
@@ -475,9 +475,9 @@ export function useRecording(deps: UseRecordingDeps) {
             : undefined;
           blob = await injectBrandTags(
             raw,
-            'Gesture Synth Weld',
+            '數實資研社附設資音組樂器',
             'gesturesynthweld.com',
-            'Created with Gesture Synth Weld — gesturesynthweld.com',
+            '由 數實資研社附設資音組樂器 製作 — gesturesynthweld.com',
             cover
           );
         }

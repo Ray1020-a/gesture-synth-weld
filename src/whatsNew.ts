@@ -92,8 +92,8 @@ export const WHATS_NEW: WhatsNewEntry[] = [
     // the record flow itself teaches the new limit), not desktopOnly.
     version: 'v2.3',
     releasedAt: '2026-09-01',
-    title: 'Recordings now run 120 seconds',
-    body: 'Takes auto-stop at 120s — twice the room before the wrap-up countdown. Same three modes, aspect ratios and share flow; the magenta wrap-up still warns at the last 3 seconds.',
+    title: '錄製時間延長到 120 秒',
+    body: '錄製會在 120 秒自動停止 — 收尾倒數前的空間多了一倍。三種模式、畫面比例與分享流程不變；最後 3 秒仍會有收尾倒數提醒。',
   },
   {
     // Retention experiment (2026-08-17): announcing this in the PLAYING
@@ -106,18 +106,18 @@ export const WHATS_NEW: WhatsNewEntry[] = [
     version: 'v2.2',
     releasedAt: '2026-08-18',
     landingBadge: true, // NEW badge on the landing's My recordings entry (expires with the window)
-    title: 'My recordings - saved in this browser',
-    body: 'Every recording you make is auto-saved now (audio and video). Come back anytime: "My recordings" appears under the start button - replay, re-download, or delete. Nothing is uploaded; your recordings live only in your browser.',
+    title: '我的錄音 — 存在此瀏覽器中',
+    body: '你錄的每段作品現在都會自動儲存（音訊與影片）。隨時回來：「我的錄音」會出現在開始按鈕下方 — 可重播、重新下載或刪除。不會上傳任何東西；錄音只存在你的瀏覽器裡。',
   },
   {
     version: 'v2.1',
     releasedAt: '2026-08-09',
-    title: 'Keyboard mode — no camera needed',
-    body: 'Turn your physical keyboard into the instrument: hold 1-7 for chords, [ ] for major/minor, Shift for octave down, arrows for volume & filter. Enable it in Settings — no camera permission, no model download. An interactive real-keyboard guide teaches every key.',
+    title: '鍵盤模式 — 不需要相機',
+    body: '把實體鍵盤變成樂器：按住 1-7 彈和弦、[ ] 切換大小調、Shift 降八度、方向鍵控制音量與濾波。在設定中開啟 — 不需相機權限、不用下載模型。互動式實體鍵盤教學會帶你認識每個按鍵。',
     pulseTarget: 'mode-switch',
     teach: {
-      camera: 'Switch via the keyboard button in the top toolbar',
-      keyboard: 'Switch back via the Camera button in the top toolbar',
+      camera: '用上方工具列的鍵盤按鈕切換',
+      keyboard: '用上方工具列的相機按鈕切換回來',
     },
     desktopOnly: true, // keyboard mode is desktop-only (no physical keys on phones)
     landingClick: 'keyboard-mode', // the landing hint enters keyboard mode

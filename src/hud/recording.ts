@@ -62,7 +62,7 @@ export function composeRecordingFrame({
   const H = rec.height;
   const sw = src.width;
   const sh = src.height;
-  const modeLabel = s.appMode === 'gesture' ? 'Gesture' : s.appMode === 'theremin' ? 'Theremin' : 'Piano';
+  const modeLabel = s.appMode === 'gesture' ? '手勢' : s.appMode === 'theremin' ? '特雷門' : '鋼琴';
   const now = performance.now();
 
   // ── Blur-fill background (cheap: draw via a tiny copy, then upscale) ──
@@ -143,7 +143,7 @@ export function composeRecordingFrame({
     rctx.drawImage(src, dx, dy, dw, dh);
     wy = 0;
     winH = H;
-    rctx.strokeStyle = 'rgba(0, 255, 204, 0.3)';
+    rctx.strokeStyle = 'rgba(82, 113, 255, 0.3)';
     rctx.lineWidth = 2;
     rctx.strokeRect(0, wy, W, winH);
   }
@@ -159,10 +159,10 @@ export function composeRecordingFrame({
   drawChordHud(rctx, W / 2, chordY, chordSize, s.chordBase || '—', s.chordExt || '', !!s.octaveDown);
 
   if (ratio !== '16:9') {
-    rctx.font = '500 16px Inter, system-ui, sans-serif';
+    rctx.font = '500 16px system-ui, "Noto Sans TC", sans-serif';
     rctx.textAlign = 'center';
     rctx.fillStyle = 'rgba(160, 160, 208, 0.8)';
-    rctx.fillText(`${modeLabel} · Key ${KEYS[s.keyOffset]?.name ?? 'A'}`, W / 2, chordY + 28);
+    rctx.fillText(`${modeLabel} · 調 ${KEYS[s.keyOffset]?.name ?? 'A'}`, W / 2, chordY + 28);
   }
 
   if (mode !== 'skeleton' && analyser) {
@@ -176,9 +176,9 @@ export function composeRecordingFrame({
       if (i === 0) rctx.moveTo(x, y);
       else rctx.lineTo(x, y);
     }
-    rctx.strokeStyle = 'rgba(0, 255, 204, 0.5)';
+    rctx.strokeStyle = 'rgba(82, 113, 255, 0.5)';
     rctx.lineWidth = 2;
-    rctx.shadowColor = 'rgba(0, 255, 204, 0.3)';
+    rctx.shadowColor = 'rgba(82, 113, 255, 0.3)';
     rctx.shadowBlur = 6;
     rctx.stroke();
     rctx.shadowBlur = 0;

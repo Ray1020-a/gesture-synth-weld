@@ -34,7 +34,7 @@ export function drawUrlPill(
   centered: boolean,
 ): void {
   const url = 'gesturesynthweld.com';
-  ctx.font = `700 ${fontSize}px "JetBrains Mono", monospace`;
+  ctx.font = `700 ${fontSize}px ui-monospace, Consolas, monospace`;
   const w = ctx.measureText(url).width;
   const pillH = fontSize + 14;
   const textMid = baseY - fontSize * 0.35; // visual center of the glyphs
@@ -58,8 +58,8 @@ export function drawMetalBrand(
   y: number,
   size: number,
 ): void {
-  const text = 'GESTURE SYNTH WELD';
-  ctx.font = `800 ${size}px Orbitron, monospace`;
+  const text = '數實資研社附設資音組樂器';
+  ctx.font = `800 ${size}px system-ui, "Noto Sans TC", sans-serif`;
   ctx.textAlign = 'left';
   // subtle dark drop for a raised, dimensional look
   ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
@@ -102,17 +102,17 @@ export function drawChordHud(
   ext: string,
   octaveDown: boolean,
 ): void {
-  ctx.font = `700 ${size}px Orbitron, monospace`;
+  ctx.font = `700 ${size}px system-ui, "Noto Sans TC", sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = 'rgba(0, 255, 204, 0.88)';
-  ctx.shadowColor = 'rgba(0, 255, 204, 0.3)';
+  ctx.fillStyle = 'rgba(82, 113, 255, 0.88)';
+  ctx.shadowColor = 'rgba(82, 113, 255, 0.3)';
   ctx.shadowBlur = 6;
   const baseWidth = ctx.measureText(base).width;
   ctx.fillText(base, cx, baseY);
   if (ext) {
-    ctx.font = `500 ${Math.round(size * 0.4)}px Orbitron, monospace`;
-    ctx.fillStyle = 'rgba(0, 255, 204, 0.55)';
+    ctx.font = `500 ${Math.round(size * 0.4)}px system-ui, "Noto Sans TC", sans-serif`;
+    ctx.fillStyle = 'rgba(82, 113, 255, 0.55)';
     ctx.shadowBlur = 0;
     ctx.fillText(ext, cx + baseWidth / 2 + Math.round(size * 0.25), baseY);
   }
@@ -121,7 +121,7 @@ export function drawChordHud(
     // Amber pill (Inter — never Orbitron: its geometric glyphs turn
     // "8ve" into "81B"). Anchored to the base text's top-right.
     const badgeFont = Math.round(size * 0.22);
-    ctx.font = `700 ${badgeFont}px Inter, system-ui, sans-serif`;
+    ctx.font = `700 ${badgeFont}px system-ui, "Noto Sans TC", sans-serif`;
     ctx.textAlign = 'left';
     const bw = ctx.measureText('8vb').width;
     const bh = Math.round(size * 0.32);
@@ -155,10 +155,10 @@ export function drawChordText(
   size: number,
   text: string,
 ): void {
-  ctx.font = `700 ${size}px Orbitron, monospace`;
+  ctx.font = `700 ${size}px system-ui, "Noto Sans TC", sans-serif`;
   ctx.textAlign = 'center';
-  ctx.fillStyle = 'rgba(0, 255, 204, 0.88)';
-  ctx.shadowColor = 'rgba(0, 255, 204, 0.3)';
+  ctx.fillStyle = 'rgba(82, 113, 255, 0.88)';
+  ctx.shadowColor = 'rgba(82, 113, 255, 0.3)';
   ctx.shadowBlur = 6;
   ctx.fillText(text, cx, baseY);
   ctx.shadowBlur = 0;
@@ -174,19 +174,19 @@ export function drawStageBackground(
   ctx.fillRect(0, 0, w, h);
   // website-style radial glows (cyan above, purple mid)
   let g = ctx.createRadialGradient(w * 0.5, h * 0.35, 0, w * 0.5, h * 0.35, Math.max(w, h) * 0.6);
-  g.addColorStop(0, 'rgba(0, 255, 204, 0.07)');
-  g.addColorStop(1, 'rgba(0, 255, 204, 0)');
+  g.addColorStop(0, 'rgba(82, 113, 255, 0.07)');
+  g.addColorStop(1, 'rgba(82, 113, 255, 0)');
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, w, h);
   g = ctx.createRadialGradient(w * 0.5, h * 0.7, 0, w * 0.5, h * 0.7, Math.max(w, h) * 0.7);
-  g.addColorStop(0, 'rgba(120, 80, 255, 0.06)');
-  g.addColorStop(1, 'rgba(120, 80, 255, 0)');
+  g.addColorStop(0, 'rgba(58, 81, 196, 0.06)');
+  g.addColorStop(1, 'rgba(58, 81, 196, 0)');
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, w, h);
   // stage footlight (merges with the waveform zone)
   const f = ctx.createLinearGradient(0, h * 0.85, 0, h);
-  f.addColorStop(0, 'rgba(0, 255, 204, 0)');
-  f.addColorStop(1, 'rgba(0, 255, 204, 0.09)');
+  f.addColorStop(0, 'rgba(82, 113, 255, 0)');
+  f.addColorStop(1, 'rgba(82, 113, 255, 0.09)');
   ctx.fillStyle = f;
   ctx.fillRect(0, Math.round(h * 0.85), w, Math.round(h * 0.15));
 }
