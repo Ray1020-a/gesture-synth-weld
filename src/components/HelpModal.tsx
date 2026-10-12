@@ -179,6 +179,13 @@ export function HelpModal({ onClose, isMobile, gradeNameFor, onReplayKeyboardGui
         <span style={{ color: '#3a3a3a' }}>需要雙手 · 左手握拳靜音 · 右手握拳延續 · ⟿ 琶音  ∿ 低音  ● 錄製  ♪ 節拍器</span>
       </div>
 
+      {/* Other instruments (2026-10-12) — picked on the landing or in the toolbar */}
+      <div style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)', margin: '6px 0', paddingTop: '6px', fontSize: '0.58rem', lineHeight: 1.6 }}>
+        <span style={{ color: 'var(--neon-cyan)', fontWeight: 600 }}>🥁 鼓</span> — 食指放在鼓墊上往下快速一敲，越快越大聲，雙手都能打<br/>
+        <span style={{ color: 'var(--neon-cyan)', fontWeight: 600 }}>🎵 主旋律</span> — 手左右移動選琴鍵，捏合拇指與食指發聲，捏著滑動可滑音<br/>
+        <span style={{ color: '#3a3a3a' }}>在上方工具列切換：和弦 · 鼓 · 旋律 · 特雷門</span>
+      </div>
+
       <a href="#gesture-guide" onClick={onClose} style={{ color: 'var(--neon-cyan)', fontSize: '0.58rem', textDecoration: 'underline' }}>
         完整教學與技巧在下方 ↓
       </a>
