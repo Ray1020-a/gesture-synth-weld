@@ -3,6 +3,8 @@ import type { ChordStyle } from './chords';
 import { getChordFreqs, getChordName, midiToFreq } from './chords';
 import type { ArpSpeed } from './types';
 import { ARP_SPEED_MS } from './types';
+import { createDrumKit, createMelodySynth, type DrumKit } from './instruments/sound';
+import type { DrumId } from './instruments/drums';
 
 /* ─── Tone.js Audio Engine ───────────────────────────────────────────── */
 
@@ -360,6 +362,50 @@ export class AudioEngine {
     this.activeNotes.add(freq);
   }
 
+  /* ─── Drums + melody instruments (2026-10-12) ─────────────────── */
+
+  private drumKit: DrumKit | null = null;
+  private melodySynth: ReturnType<typeof createMelodySynth> | null = null;
+  /** Melody voice (one per hand) → the MIDI note it is holding. */
+  private melodyVoices = new Map<string, number>();
+
+  /** One drum strike. Lazily builds the kit on first use. */
+  playDrum(id: DrumId, velocity: number): void {
+    if (!this.initCalled || !this.masterGain) return;
+    if (!this.drumKit) this.drumKit = createDrumKit(this.masterGain);
+    this.drumKit.hit(id, velocity);
+  }
+
+  /**
+   * Hold `midi` on melody voice `voice` (idempotent: the same note keeps
+   * sounding; a different note releases the old one first — a glide).
+   * `null` releases the voice.
+   */
+  setMelodyNote(voice: string, midi: number | null, velocity = 0.8): void {
+    if (!this.initCalled || !this.masterGain) return;
+    const held = this.melodyVoices.get(voice);
+    if (held === midi) return;
+    if (!this.melodySynth) this.melodySynth = createMelodySynth(this.masterGain);
+    const now = Tone.now();
+    if (held !== undefined) {
+      // Another voice may share the note — only release when nobody holds it.
+      this.melodyVoices.delete(voice);
+      if (![...this.melodyVoices.values()].includes(held)) {
+        this.melodySynth.triggerRelease(midiToFreq(held), now);
+      }
+    }
+    if (midi === null) return;
+    if (![...this.melodyVoices.values()].includes(midi)) {
+      this.melodySynth.triggerAttack(midiToFreq(midi), now, velocity);
+    }
+    this.melodyVoices.set(voice, midi);
+  }
+
+  private releaseMelody(): void {
+    if (this.melodySynth) this.melodySynth.releaseAll(Tone.now());
+    this.melodyVoices.clear();
+  }
+
   /**
    * Update auto bass note.
    */
@@ -480,6 +526,7 @@ export class AudioEngine {
     this.stopArpeggiator();
     this.releaseAllNotes();
     this.stopBassImmediately();
+    this.releaseMelody();
 
     // Force stop all oscillators immediately (not just release)
     const instrument = this.instruments.get(this.currentTimbre);

@@ -30,8 +30,17 @@ export interface ChordDef {
 
 export type WaveformType = 'sine' | 'triangle' | 'sawtooth' | 'square';
 
-/** App mode: Gesture (two-hand) or Theremin (single-hand) or MonoPiano (single-note per finger) */
-export type AppMode = 'gesture' | 'theremin' | 'monoPiano';
+/** App mode = the instrument being played: chords (two-hand gesture),
+ *  drums (strike pads), melody (pinch scale keys) or theremin. */
+export type AppMode = 'gesture' | 'drums' | 'melody' | 'theremin';
+
+/** Display names, shared by the picker, toolbar, status bar and HUD. */
+export const APP_MODE_LABELS: Record<AppMode, string> = {
+  gesture: '和弦',
+  drums: '鼓',
+  melody: '旋律',
+  theremin: '特雷門',
+};
 
 /** Left hand mode: how left hand controls harmony */
 export type LeftHandMode = 'scaleTilt' | 'scaleLocked';
@@ -46,16 +55,6 @@ export const ARP_SPEED_MS: Record<ArpSpeed, number> = {
   slow: 120,
   normal: 80,
   fast: 50,
-};
-
-// Right hand finger count → note interval (semitones from root)
-// Used in monoPiano mode for single-note-per-finger playing
-export const FINGER_TO_NOTE_INTERVAL: Record<number, number> = {
-  1: 0,   // Thumb/root → root
-  2: 4,   // Index → major 3rd
-  3: 7,   // Middle → perfect 5th
-  4: 12,  // Ring → octave
-  5: 14,  // Pinky → 9th
 };
 
 /** Maps finger count (1-5) to diatonic chord index (0-6), cycling */

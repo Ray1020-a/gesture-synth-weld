@@ -20,6 +20,7 @@
 
 import { KEYS } from '../chords';
 import type { RecMode, RecRatio, SynthState } from '../types';
+import { APP_MODE_LABELS } from '../types';
 import { drawChordHud, drawMetalBrand, drawUrlPill } from './draw';
 
 /** Minimal structural type for the analyser — avoids coupling to Tone.js. */
@@ -62,7 +63,7 @@ export function composeRecordingFrame({
   const H = rec.height;
   const sw = src.width;
   const sh = src.height;
-  const modeLabel = s.appMode === 'gesture' ? '手勢' : s.appMode === 'theremin' ? '特雷門' : '鋼琴';
+  const modeLabel = APP_MODE_LABELS[s.appMode];
   const now = performance.now();
 
   // ── Blur-fill background (cheap: draw via a tiny copy, then upscale) ──

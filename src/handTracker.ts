@@ -1,6 +1,7 @@
 import type { HandLandmarker, HandLandmarkerResult } from '@mediapipe/tasks-vision';
 import type { HandData, LandmarkPoint } from './types';
 import { modelSourceLabel, trackModelLoad } from './analytics';
+import { getExtendedFingers } from './fingers';
 
 /* ─── MediaPipe Hand Tracking Wrapper ────────────────────────────────── */
 
@@ -156,12 +157,16 @@ export function detectHands(
   if (!handLandmarker) return [];
 
   const result = handLandmarker.detectForVideo(video, timestampMs);
-  return parseResults(result);
+  // Landmarks are normalized per axis; finger geometry needs the real
+  // aspect ratio (see fingers.ts).
+  const w = video instanceof HTMLVideoElement ? video.videoWidth : video.width;
+  const h = video instanceof HTMLVideoElement ? video.videoHeight : video.height;
+  return parseResults(result, w > 0 && h > 0 ? w / h : 4 / 3);
 }
 
 /* ─── Parse MediaPipe Results ────────────────────────────────────────── */
 
-function parseResults(result: HandLandmarkerResult): HandData[] {
+function parseResults(result: HandLandmarkerResult, aspect: number): HandData[] {
   if (!result.landmarks || result.landmarks.length === 0) return [];
 
   const hands: HandData[] = [];
@@ -178,7 +183,7 @@ function parseResults(result: HandLandmarkerResult): HandData[] {
       z: lm.z ?? 0,
     }));
 
-    const extendedFingers = getExtendedFingers(landmarks, label);
+    const extendedFingers = getExtendedFingers(landmarks, label, aspect);
     const fingerCount = extendedFingers.length;
     const tiltAngle = computeWristTilt(landmarks, label);
     const wrist = landmarks[0];
@@ -195,47 +200,6 @@ function parseResults(result: HandLandmarkerResult): HandData[] {
   }
 
   return hands;
-}
-
-/* ─── Finger Counting ────────────────────────────────────────────────── */
-
-/**
- * Get which fingers are extended on a single hand.
- * Uses Y-coordinate comparison: fingertip above PIP joint means extended.
- * This works consistently regardless of palm facing direction.
- */
-function getExtendedFingers(pts: LandmarkPoint[], label: 'Left' | 'Right'): string[] {
-  const extended: string[] = [];
-
-  // Thumb: use horizontal comparison (X-axis) with handedness awareness
-  const thumbTip = pts[4];
-  const thumbIp = pts[3];
-  // For right hand: thumb extends right (tip.x > ip.x)
-  // For left hand: thumb extends left (tip.x < ip.x)
-  const thumbExtended = label === 'Right' ? thumbTip.x > thumbIp.x : thumbTip.x < thumbIp.x;
-  if (thumbExtended) {
-    extended.push('thumb');
-  }
-
-  // Index / Middle / Ring: standard tip-vs-PIP (matching competitor)
-  const standardFingers: [number, number, string][] = [
-    [8, 6, 'index'],
-    [12, 10, 'middle'],
-    [16, 14, 'ring'],
-  ];
-
-  for (const [tipIdx, pipIdx, name] of standardFingers) {
-    if (pts[tipIdx].y < pts[pipIdx].y) {
-      extended.push(name);
-    }
-  }
-
-  // Pinky: standard tip-vs-PIP, same as other fingers
-  if (pts[20].y < pts[18].y) {
-    extended.push('pinky');
-  }
-
-  return extended;
 }
 
 /* ─── Wrist Tilt ─────────────────────────────────────────────────────── */

@@ -40,7 +40,7 @@ import {
 } from './chords';
 import {
   FINGER_TO_CHORD_INDEX,
-  FINGER_TO_NOTE_INTERVAL,
+  APP_MODE_LABELS,
   type GestureState,
   type HandData,
   type SynthState,
@@ -70,6 +70,17 @@ import {
   type KeyboardModeSource,
 } from './analytics';
 import { AFFILIATE_CARD_URL, ENABLE_AFFILIATE_CARD } from './config';
+import { DrumHitDetector } from './instruments/drums';
+import { PinchState, keyIndexAt, melodyKeys, pinchPoint, pinchRatio } from './instruments/melody';
+import { landmarkToScreen, type ScreenFrame } from './instruments/screen';
+import { drawDrumPads, drawMelodyKeys, type DrumOverlayState, type MelodyOverlayState } from './hud/instruments';
+
+/** Landing instrument picker (2026-10-12): pick one, play immediately. */
+const INSTRUMENT_CHOICES: { mode: AppMode; icon: string; title: string; desc: string }[] = [
+  { mode: 'gesture', icon: '🎹', title: '和弦', desc: '左手選和弦，右手控制音量與音色' },
+  { mode: 'drums', icon: '🥁', title: '鼓', desc: '食指往下快速敲，打擊畫面上的鼓墊' },
+  { mode: 'melody', icon: '🎵', title: '主旋律', desc: '手左右移動選琴鍵，捏合拇指與食指彈奏' },
+];
 // Config imports removed — external scripts feature not currently active
 
 /* Keys KeyboardSource maps — their default browser behavior (page
@@ -514,16 +525,33 @@ export default function App() {
 
   // Right hand finger count history for chord style smoothing
   const rightHandHistoryRef = useRef<number[]>([]);
-  // Pinky detection memory — extends pinky detection across frames
-  // to prevent flicker from resetting the stabilizer's HOLD timer
-  const pinkyMemoryRef = useRef<number>(0);
+  // Pinky vote — last 5 raw camera readings; pinky counts as extended on
+  // a 3/5 majority (~165ms). Replaced a 60-frame (~2s) "memory" that held
+  // one false pinky reading long enough to turn index-only (I) into
+  // index+pinky (VI) — bug 2026-10-12.
+  const pinkyHistoryRef = useRef<boolean[]>([]);
+
+  // Drums / melody instruments (2026-10-12): detectors + overlay state.
+  // screenFrameRef = the canvas size + video cover-crop of the latest
+  // frame, so hit-tests use exactly what is drawn.
+  const screenFrameRef = useRef<ScreenFrame>({ w: 640, h: 480 });
+  const drumDetectorRef = useRef(new DrumHitDetector());
+  const drumVisRef = useRef<DrumOverlayState>({ flashes: {}, tips: {} });
+  const pinchStateRef = useRef(new PinchState());
+  const melodyVisRef = useRef<Omit<MelodyOverlayState, 'keys'>>({ hover: {}, pressed: {}, points: {} });
+  const melodyStatusRef = useRef('');
 
   /* ─── Reset stabilizer on mode switch ────────────────────────────────── */
 
   useEffect(() => {
     stabilizerRef.current = { committed: null, pending: null, pendingSince: 0, lastSeen: 0 };
     rightHandHistoryRef.current = [];
-    pinkyMemoryRef.current = 0;
+    pinkyHistoryRef.current = [];
+    drumDetectorRef.current.reset();
+    drumVisRef.current = { flashes: {}, tips: {} };
+    pinchStateRef.current.reset();
+    melodyVisRef.current = { hover: {}, pressed: {}, points: {} };
+    melodyStatusRef.current = '';
     lastChordRef.current = '';
     // Full audio reset on mode switch: clears the engine chord dedup key
     // (otherwise a Gesture→Piano→Gesture round-trip with the same chord
@@ -683,67 +711,63 @@ export default function App() {
       return;
     }
 
-    // ─── Monophonic Piano Mode (single note per finger) ────────────
-    if (s.appMode === 'monoPiano') {
-      // CRITICAL: Piano mode requires BOTH hands
-      // Left hand determines note, right hand triggers it and controls volume
-      if (leftHand && rightHand) {
-        // Apply time-based stabilizer (same as Gesture mode)
-        const now = performance.now();
-        const rawFingerCount = leftHand.fingerCount;
-        const stabilizer = stabilizerRef.current;
+    // ─── Drums + Melody (camera instruments, 2026-10-12) ───────────
+    // One hand is enough for both; each hand plays independently.
+    if (s.appMode === 'drums' || s.appMode === 'melody') {
+      const now = performance.now();
+      const sf = screenFrameRef.current;
+      const aspect = sf.crop ? sf.crop.dw / sf.crop.dh : 4 / 3;
+      audioEngine.setVolume(0.9);
+      const hands = { Left: leftHand, Right: rightHand };
 
-        // Update last seen time
-        stabilizer.lastSeen = now;
-
-        // If we have a candidate, update pending
-        if (rawFingerCount !== stabilizer.pending) {
-          stabilizer.pending = rawFingerCount;
-          stabilizer.pendingSince = now;
+      if (s.appMode === 'drums') {
+        const vis = drumVisRef.current;
+        let hitLabel = '';
+        for (const label of ['Left', 'Right'] as const) {
+          const h = hands[label];
+          const lm = h && h.landmarks.length >= 21 ? h.landmarks : null;
+          const tip = lm ? landmarkToScreen(lm[8], sf.w, sf.h, sf.crop) : null;
+          if (tip) vis.tips[label] = tip; else delete vis.tips[label];
+          const hit = drumDetectorRef.current.update(label, tip, now);
+          if (hit) {
+            audioEngine.playDrum(hit.pad.id, hit.velocity);
+            vis.flashes[hit.pad.id] = { t: now, vel: hit.velocity };
+            hitLabel = hitLabel ? `${hitLabel} + ${hit.pad.label}` : hit.pad.label;
+          }
         }
+        if (hitLabel) setSynthState(prev => ({ ...prev, chordName: hitLabel, isPlaying: true }));
+        return;
+      }
 
-        // Commit if pending has been stable for HOLD_MS
-        if (now - stabilizer.pendingSince >= HOLD_MS) {
-          stabilizer.committed = stabilizer.pending;
-        } else if (stabilizer.committed === null) {
-          // First gesture: commit immediately
-          stabilizer.committed = rawFingerCount;
+      const keys = melodyKeys(s.keyOffset);
+      const vis = melodyVisRef.current;
+      const playing: string[] = [];
+      for (const label of ['Left', 'Right'] as const) {
+        const h = hands[label];
+        const lm = h && h.landmarks.length >= 21 ? h.landmarks : null;
+        if (!lm) {
+          pinchStateRef.current.update(label, null);
+          audioEngine.setMelodyNote(label, null);
+          delete vis.hover[label];
+          delete vis.pressed[label];
+          delete vis.points[label];
+          continue;
         }
-
-        // Use committed finger count for note selection
-        const stableFingerCount = stabilizer.committed ?? rawFingerCount;
-
-        // Left fist (0 fingers) = silence, consistent with the other modes
-        if (stableFingerCount === 0) {
-          audioEngine.stopAll();
-          lastChordRef.current = '';
-          setSynthState(prev => ({ ...prev, isPlaying: false }));
-          return;
-        }
-
-        // Each finger count maps to a different note interval
-        const interval = FINGER_TO_NOTE_INTERVAL[stableFingerCount] ?? 0;
-        const midiNote = 60 + interval + s.keyOffset; // Middle C + interval + key offset
-        const freq = midiToFreq(midiNote);
-
-        // Only trigger if note changed (use lastChordRef for fingerprint)
-        // Piano mode: sustain like other timbres
-        const pianoFingerprint = `mono|${midiNote}`;
-        if (pianoFingerprint !== lastChordRef.current) {
-          lastChordRef.current = pianoFingerprint;
-          // Play note and sustain (like other timbres)
-          audioEngine.playNote(freq);
-        }
-
-        // Volume: right hand height (since right hand is required)
-        const volume = Math.max(0.02, Math.min(1.0, 1.1 - rightHand.positionY));
-        setSynthState(prev => ({ ...prev, volume, isPlaying: true }));
-        audioEngine.setVolume(volume);
-      } else {
-        // No hands or missing one hand - stop all
-        audioEngine.stopAll();
-        lastChordRef.current = '';
-        setSynthState(prev => ({ ...prev, isPlaying: false }));
+        const pt = landmarkToScreen(pinchPoint(lm), sf.w, sf.h, sf.crop);
+        const idx = keyIndexAt(pt.u);
+        const pinched = pinchStateRef.current.update(label, pinchRatio(lm, aspect));
+        audioEngine.setMelodyNote(label, pinched ? keys[idx].midi : null);
+        vis.hover[label] = idx;
+        vis.pressed[label] = pinched;
+        vis.points[label] = pt;
+        if (pinched) playing.push(keys[idx].name);
+      }
+      const chordName = playing.join(' + ') || '—';
+      const isPlaying = playing.length > 0;
+      const status = `${chordName}|${isPlaying}`;
+      if (status !== melodyStatusRef.current) {
+        melodyStatusRef.current = status;
+        setSynthState(prev => ({ ...prev, chordName, isPlaying }));
       }
       return;
     }
@@ -760,19 +784,15 @@ export default function App() {
 
       // Compute raw chord index including VI/VII special gestures
       const extended = leftHand.extendedFingers;
-      // Pinky memory: if detected in last 60 frames (~2s), treat as extended.
-      // Long window compensates for unreliable Y-axis pinky detection.
-      // Camera-only: the keyboard source reports exact fingers, so a pinky
-      // it already released must not linger (bug: 7→1/2/3/4/5 passed through
-      // VI for ~2s after the camera-style memory).
+      // Pinky vote (camera only): 3 of the last 5 readings. Short enough
+      // that a stray reading can't hold VI, long enough to ride out a
+      // dropped frame. The keyboard source reports exact fingers.
       if (frame.source === 'camera') {
-        if (extended.includes('pinky')) {
-          pinkyMemoryRef.current = 60;
-        } else if (pinkyMemoryRef.current > 0) {
-          pinkyMemoryRef.current--;
-        }
+        const hist = pinkyHistoryRef.current;
+        hist.push(extended.includes('pinky'));
+        if (hist.length > 5) hist.shift();
       } else {
-        pinkyMemoryRef.current = 0;
+        pinkyHistoryRef.current = [];
       }
       // Camera reads the smoothed memory (compensates for flaky Y-axis
       // pinky detection); keyboard reports exact fingers instantaneously —
@@ -780,7 +800,9 @@ export default function App() {
       // (bug 2026-08-10: '6'/'7' resolved to II/III instead, since pinky
       // was always false so the VI/VII match never fired, falling through
       // to fingerCount 2/3).
-      const pinky = frame.source === 'camera' ? pinkyMemoryRef.current > 0 : extended.includes('pinky');
+      const pinky = frame.source === 'camera'
+        ? pinkyHistoryRef.current.filter(Boolean).length >= 3
+        : extended.includes('pinky');
       const thumb = extended.includes('thumb');
       const index = extended.includes('index');
       const middle = extended.includes('middle');
@@ -951,6 +973,13 @@ export default function App() {
 
   const drawOverlayRef = useRef<(ctx: CanvasRenderingContext2D, w: number, h: number, crop?: { dx: number; dy: number; dw: number; dh: number }) => void>();
   drawOverlayRef.current = (ctx, w, h, crop) => {
+    // Instrument surfaces first, so the skeleton draws on top of them.
+    const mode = synthRef.current.appMode;
+    if (mode === 'drums') {
+      drawDrumPads(ctx, w, h, drumVisRef.current, performance.now());
+    } else if (mode === 'melody') {
+      drawMelodyKeys(ctx, w, h, { ...melodyVisRef.current, keys: melodyKeys(synthRef.current.keyOffset) });
+    }
     if (!showSkeleton) return;
     const g = gestureRef.current;
     // Live canvas bitmap is display-size × dpr; skeleton params were tuned
@@ -1054,6 +1083,7 @@ export default function App() {
           canvas.height = 480;
         }
         drawStageBackground(ctx, canvas.width, canvas.height);
+        screenFrameRef.current = { w: canvas.width, h: canvas.height };
         try {
           const frame = keyboardSourceRef.current?.getFrame() ?? { left: null, right: null, source: 'keyboard' as const };
           processHandsRef.current?.(frame);
@@ -1097,6 +1127,7 @@ export default function App() {
 
       ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+      screenFrameRef.current = { w: canvas.width, h: canvas.height, crop: { dx, dy, dw, dh } };
 
       if (!isDetectingRef.current && timestamp - lastDetectRef.current > detectIntervalRef.current) {
         lastDetectRef.current = timestamp;
@@ -1538,7 +1569,9 @@ export default function App() {
     rightHandHistoryRef.current = [];
     cameraSourceRef.current?.reset();
     keyboardSourceRef.current?.reset();
-    pinkyMemoryRef.current = 0;
+    pinkyHistoryRef.current = [];
+    drumDetectorRef.current.reset();
+    pinchStateRef.current.reset();
 
     const canvas = canvasRef.current;
     if (canvas) {
@@ -1600,6 +1633,33 @@ export default function App() {
     }
     // (!on && !isRunning): just flips the mode on the landing — no start.
   }, [isRunning, startKeyboardMode, startCamera, stopCamera]);
+
+  // Instrument switch from the toolbar. Drums and melody read fingertip
+  // positions, which only the camera provides — leave keyboard mode.
+  const selectMode = (mode: AppMode) => {
+    trackSettingChanged('app_mode', mode);
+    setSynthState(prev => ({ ...prev, appMode: mode }));
+    if (keyboardMode && isRunning && (mode === 'drums' || mode === 'melody')) {
+      handleKeyboardToggle(false, 'toolbar');
+    }
+  };
+
+  // Landing picker: choose an instrument and start it in one click.
+  // Chords keep the keyboard option; drums/melody always use the camera.
+  const pickInstrument = (mode: AppMode) => {
+    trackSettingChanged('app_mode', mode);
+    setSynthState(prev => ({ ...prev, appMode: mode }));
+    if (mode === 'gesture' && keyboardMode) {
+      void startKeyboardMode('main_button');
+      return;
+    }
+    if (keyboardMode) {
+      try { localStorage.setItem('gsw-keyboard-mode', '0'); } catch { /* private mode */ }
+      keyboardModeRef.current = false;
+      setKeyboardMode(false);
+    }
+    void startCamera();
+  };
 
   // Keyboard session end on tab close/reload: visibilitychange fires
   // reliably on both, so the exit event's page_close source completes the
@@ -1717,9 +1777,10 @@ export default function App() {
         <div style={{ position: 'absolute', top: '12px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px', zIndex: 20 }}>
           <div className="frost-toolbar" style={{ position: 'relative', top: 'auto', left: 'auto', transform: 'none', gap: '3px', padding: '6px 14px', fontSize: '0.6rem', whiteSpace: 'nowrap', overflow: 'visible' }}>
             <span className="brand" style={{ fontSize: '0.6rem' }}>數實資研社附設資音組樂器</span>
-            <button className={`mobile-collapse ${synthState.appMode === 'gesture' ? 'active' : ''}`} onClick={() => { trackSettingChanged('app_mode', 'gesture'); setSynthState(prev => ({ ...prev, appMode: 'gesture' })); }} data-tip="雙手和弦模式 — 左手選和聲，右手控制表情">手勢</button>
-            <button className={`mobile-collapse ${synthState.appMode === 'theremin' ? 'active' : ''}`} onClick={() => { trackSettingChanged('app_mode', 'theremin'); setSynthState(prev => ({ ...prev, appMode: 'theremin' })); }} data-tip="特雷門模式 — 右手高度 = 音高，左手高度 = 音量">特雷門</button>
-            <button className={`mobile-collapse ${synthState.appMode === 'monoPiano' ? 'active' : ''}`} onClick={() => { trackSettingChanged('app_mode', 'monoPiano'); setSynthState(prev => ({ ...prev, appMode: 'monoPiano' })); }} data-tip="單音鋼琴模式 — 手指數決定單一音程">鋼琴</button>
+            <button className={`mobile-collapse ${synthState.appMode === 'gesture' ? 'active' : ''}`} onClick={() => selectMode('gesture')} data-tip="和弦 — 左手選和聲，右手控制表情">和弦</button>
+            <button className={`mobile-collapse ${synthState.appMode === 'drums' ? 'active' : ''}`} onClick={() => selectMode('drums')} data-tip="鼓 — 食指往下快速敲打鼓墊（需要相機）">鼓</button>
+            <button className={`mobile-collapse ${synthState.appMode === 'melody' ? 'active' : ''}`} onClick={() => selectMode('melody')} data-tip="旋律 — 左右移動選琴鍵，捏合拇指與食指彈奏（需要相機）">旋律</button>
+            <button className={`mobile-collapse ${synthState.appMode === 'theremin' ? 'active' : ''}`} onClick={() => selectMode('theremin')} data-tip="特雷門 — 右手高度 = 音高，左手高度 = 音量">特雷門</button>
             <span className="divider mobile-collapse" />
             <select className="mobile-collapse" value={KEYS[synthState.keyOffset]?.name ?? 'C'} onChange={(e) => { const ki = KEYS.findIndex(k => k.name === e.target.value); setSynthState(prev => ({ ...prev, keyOffset: ki })); }} data-tip="將所有和弦移到其他調">
               {KEYS.map(key => <option key={key.name} value={key.name}>{key.name}</option>)}
@@ -1876,9 +1937,9 @@ export default function App() {
               <div className="frost-panel mobile-more-panel">
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.62rem' }}>
                   <div style={{ display: 'flex', gap: '4px' }}>
-                    <button className={synthState.appMode === 'gesture' ? 'active' : ''} onClick={() => { trackSettingChanged('app_mode', 'gesture'); setSynthState(prev => ({ ...prev, appMode: 'gesture' })); setMoreOpen(false); }}>手勢</button>
-                    <button className={synthState.appMode === 'theremin' ? 'active' : ''} onClick={() => { trackSettingChanged('app_mode', 'theremin'); setSynthState(prev => ({ ...prev, appMode: 'theremin' })); setMoreOpen(false); }}>特雷門</button>
-                    <button className={synthState.appMode === 'monoPiano' ? 'active' : ''} onClick={() => { trackSettingChanged('app_mode', 'monoPiano'); setSynthState(prev => ({ ...prev, appMode: 'monoPiano' })); setMoreOpen(false); }}>鋼琴</button>
+                    {(['gesture', 'drums', 'melody', 'theremin'] as const).map((m) => (
+                      <button key={m} className={synthState.appMode === m ? 'active' : ''} onClick={() => { selectMode(m); setMoreOpen(false); }}>{APP_MODE_LABELS[m]}</button>
+                    ))}
                   </div>
                   {/* One row of icon buttons — same glyphs as the landscape/desktop toolbar */}
                   <div style={{ display: 'flex', gap: '4px' }}>
@@ -1982,6 +2043,15 @@ export default function App() {
         {showHandsReady && (
           <div className="hands-ready-badge">
             <span style={{ color: 'var(--neon-cyan)' }}>✓</span> 已偵測到雙手 — 開始演奏！
+          </div>
+        )}
+
+        {/* ─── Drums / melody how-to pill (always on while playing them) ── */}
+        {isRunning && (synthState.appMode === 'drums' || synthState.appMode === 'melody') && (
+          <div className="instrument-hint">
+            {synthState.appMode === 'drums'
+              ? '🥁 用食指往下快速敲鼓墊 · 敲得越快越大聲 · 雙手都能打'
+              : '🎵 手左右移動選琴鍵 · 捏合拇指與食指發聲 · 捏著滑動可以滑音'}
           </div>
         )}
 
@@ -2173,27 +2243,30 @@ export default function App() {
               </div>
             ) : (
               <>
-                <button
-                  className="enable-camera-btn"
-                  onClick={keyboardMode ? () => startKeyboardMode('main_button') : () => startCamera()}
-                  disabled={isLoading}
-                  onMouseEnter={prefetchTracking}
-                  onFocus={prefetchTracking}
-                  onTouchStart={prefetchTracking}
-                >
-                  <svg className="enable-camera-btn-icon" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
-                    {keyboardMode ? (
-                      <path fillRule="evenodd" d="M3 6a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V6zm2.5 1a.5.5 0 100 1 .5.5 0 000-1zm2 0a.5.5 0 100 1 .5.5 0 000-1zM5 9.5a.5.5 0 100 1 .5.5 0 000-1zm2 0a.5.5 0 100 1 .5.5 0 000-1zm4 0a.5.5 0 100 1 .5.5 0 000-1zM9 11.5a.5.5 0 100 1 .5.5 0 000-1zm2 0a.5.5 0 100 1 .5.5 0 000-1zm2 0a.5.5 0 100 1 .5.5 0 000-1zM5 13.5a.5.5 0 100 1 .5.5 0 000-1zm2 0a.5.5 0 100 1 .5.5 0 000-1zm4 0a.5.5 0 100 1 .5.5 0 000-1zm-1-3a.5.5 0 100 1 .5.5 0 000-1zm3 0a.5.5 0 100 1 .5.5 0 000-1z" clipRule="evenodd" />
-                    ) : (
-                      <path fillRule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2H4zm10 1.5l3.5-2.25A.75.75 0 0118.5 5v10a.75.75 0 01-1 .69L14 13.5V6.5z" clipRule="evenodd" />
-                    )}
-                  </svg>
-                  <span>{keyboardMode ? '開始演奏（鍵盤）' : '開啟相機'}</span>
-                </button>
+                <div className="instrument-picker">
+                  <div className="instrument-picker-title">選一個樂器開始演奏</div>
+                  <div className="instrument-picker-cards">
+                    {INSTRUMENT_CHOICES.map((c) => (
+                      <button
+                        key={c.mode}
+                        className={`instrument-card${synthState.appMode === c.mode ? ' last' : ''}`}
+                        onClick={() => pickInstrument(c.mode)}
+                        disabled={isLoading}
+                        onMouseEnter={prefetchTracking}
+                        onFocus={prefetchTracking}
+                        onTouchStart={prefetchTracking}
+                      >
+                        <span className="instrument-card-icon" aria-hidden="true">{c.icon}</span>
+                        <strong>{c.title}</strong>
+                        <span className="instrument-card-desc">{c.desc}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
                 <p className="camera-placeholder-hint">
                   {keyboardMode
-                    ? '按住 1-7 演奏 · [ ] 大小調 · 8/9/0/- 風格 · Shift 降八度 · 方向鍵 音量／濾波 · 空白鍵 停止'
-                    : '允許相機存取，即可用手勢開始演奏'}
+                    ? '鍵盤模式：和弦用鍵盤彈（按住 1-7）；鼓與主旋律需要相機'
+                    : '點選後會開啟相機，允許存取即可用手勢演奏'}
                 </p>
                 {/* LANDING hint — TIME-based conversion assist: shows
                     while the announcement is active (14-day window), then
@@ -2513,7 +2586,7 @@ export default function App() {
                 </div>
               </div>
               <div className="status-mode">
-                {synthState.appMode === 'gesture' ? '手勢' : synthState.appMode === 'theremin' ? '特雷門' : '鋼琴'}
+                {APP_MODE_LABELS[synthState.appMode]}
               </div>
 
               {/* Metronome controls */}
